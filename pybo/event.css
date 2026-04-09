@@ -1,0 +1,33 @@
+.container {
+    width: 1207px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.container h2 {
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+
+#event_1, #event_2, #event_3, #event_4 {
+    width: 1207px;
+    height: 227px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 70px;
+}
+
+.container img {
+    width: 387px;
+    height: auto;
+}
+
+.container a {
+    text-decoration: none;
+    color: #000;
+}
+
+.container .itm_date {
+    padding-top: 10px;
+}
