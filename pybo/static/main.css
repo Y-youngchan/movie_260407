@@ -77,6 +77,78 @@ main{
 /* footer */
 footer{
     width: 100%;
-    height: 571px;
-    background-color: violet;
+    height: 300px;
+    margin: 0 auto;
+    padding-top: 50px;
+    background-color: #eaeaea;
+}
+
+footer #inner{
+    width: 1207px;
+    margin: 0 auto;
+}
+
+footer #inner img{
+    width: 190px;
+    height: 50px;
+}
+#inner .footermenu ul{
+    display: flex;
+}
+#inner .footermenu ul li::after{
+    content: "|";
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 10px;
+}
+#inner .footermenu ul li:last-child:after{
+    content: "";
+}
+#inner .footermenu ul li a{
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+}
+#inner .footermenu ul li:nth-of-type(3) a{
+    font-size: 12px;
+    text-decoration: underline;
+    color: #000;
+}
+#inner .cominfo p:first-child{
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+}
+#inner .cominfo p:last-child{
+    color: #888;
+    font-size: 12px;
+}
+#inner .ceo ul{
+    display: flex;
+}
+#inner .ceo ul li::after {
+    content: "|";
+    margin-left: 6px;
+    margin-right: 6px;
+    font-size: 8px;
+    color: #888;
+}
+#inner .ceo ul li:nth-of-type(4)::after {
+    content: "";
+}
+#inner .ceo ul li:last-child::after {
+    content: "";
+}
+#inner .ceo ul li{
+    font-size: 12px;
+    color: #888;
+}
+#inner .ceo ul li a {
+    margin-left: 6px;
+    text-decoration: underline;
+    color: #000;
+}
+#inner p{
+    font-size: 12px;
+    color: #888;
 }
