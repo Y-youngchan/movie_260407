@@ -59,13 +59,14 @@ nav .topnav ul li:last-child::after {
 }
 nav .topnav ul a{
     color: #000;
+    font-size: 12px;
     font-weight: 600;
 }
 
 /* main */
 main{
     width: 1207px;
-    height: 1924px;
+    height: auto;
     margin: 0 auto;
     padding-top: 30px;
 }
@@ -73,6 +74,7 @@ main{
 #banner_AD{
     width: 1207px;
     height: 222px;
+    margin: 150px 0;
     display: flex;
     justify-content: center;
 }

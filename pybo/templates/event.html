@@ -1,7 +1,12 @@
-<link rel="stylesheet" href="./event.css">
+{% extends 'base.html' %}
 
-<!-- {% extends 'base.html' %}
-{% block content %} -->
+{% block title %}이벤트 - 필름아티크{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/event.css">
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <h2>전체 이벤트</h2>
         <h3>영화</h3>
@@ -65,4 +70,4 @@
             </a>
         </div>
     </div>
-<!-- {% endblock %}  -->
+{% endblock %} 
