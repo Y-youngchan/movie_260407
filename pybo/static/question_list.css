@@ -1,5 +1,35 @@
-.section1 .container {
-    width: 1206px; height: 276px;
-    background-color: #f4f4f5;
+.container{
 
+}
+header .container {
+    width: 1206px; height: 276px;
+    margin-top: 95px;
+    display: flex;
+    background: aliceblue;
+}
+
+header .service {
+    width: 902px; height: 67px;
+    background: blueviolet;
+    display: flex; justify-content: space-around;
+    flex-direction: row;
+}
+header .service ul {
+    display: flex; flex-direction: row;
+    text-align: center;
+    cursor: pointer;
+}
+
+.section1 .container {
+    width: 100%; height: 1400px;
+    background: antiquewhite;
+    margin-top: 0;
+    margin-bottom: 145px;
+    background: #eaeaea;
+
+}
+.section1 .container .table{
+    width: 1062px; height: 1060px;
+    margin: 145px 50px 193px 50px;
+    background: #888888;
 }

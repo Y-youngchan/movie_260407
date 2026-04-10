@@ -1,24 +1,73 @@
 @charset "utf-8";
 
+/* 팝콘 배너 */
 .inner_banner {
-    position:absolute;    
-    height: 365px;
+    background-color: black;
+    width: 100%;    
 }
 
-.navi-bar{
+.inner_banner .banner_in {    
+    display: flex;
+    justify-content: center;
+}
+
+/* 관람권 / 스낵음료 / 포토카드 메뉴 */
+
+.middle-bar{
+    display: flex;
+    justify-content: center;    
+}
+
+.navi-bar{    
+    padding-left: 0;
     position: sticky;
     top: 0;
-    display: flex;
+    display: flex;    
     z-index: 2;
+    border-bottom: 1px solid #eee;
 }
 
 .navi-bar li {
-    width: 403px;
+    width: 400px;
     height: 44px;
-    line-height: 50px;
-    border: 1px;
+    line-height: 45px;
+    border: 1px   solid #eee;
     text-align: center;
-    border-bottom: 0;
-    font-size: 18px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 500;
 }
+
+/* 팝콘 배너 이후 상품 진열 테이블 */
+
+.store_pro {
+    width:1207px;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+
+.store_pro h3 {
+    position: relative;
+    padding: 20px 15px;
+    font-size: 16px;
+}
+
+.ticket {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.ticket a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ticket img {    
+    width: 360px;
+
+}
+

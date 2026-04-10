@@ -9,16 +9,54 @@
 {% endblock %}
 {% block content %}
 <div class="inner_banner">
-    <img src="../static/img/popcorn_banner.jpg" alt="banner_popcorn">
+    <div class="banner_in">
+        <img src="../static/img/popcorn_banner.jpg" alt="banner_popcorn">
+    </div>    
+</div>
+<div class="middle-bar">
+    <ul class="navi-bar">
+        <li class="active">관람권</li>
+            
+        <li>스낵음료</li>
+        
+        <li>포토카드</li>
+            
+    </ul>
+    
 </div>
 
-<ul class="navi-bar">
-    <li class="active">관람권</li>
-    
-    <li>스낵음료</li>
-    
-    <li>포토카드</li>
-            
-</ul>
+<div class="store_pro">
+    <h3 class="sub_tit1">관람권</h3>
+    <div class="ticket">
+                <a class="normal">
+                    <div class="nor_img">
+                        <img src="../static/img/redticket.png" alt="일반 관람권">                                          
+                    </div>
+                    <div class="nor_cont">
+                        <h4>일반 관람권(2D)</h4>
+                        <p>일반 관람권(2D) 1매</p>
+                    </div>
+                    <div class="nor_price">
+                        <span>18,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+
+                <a class="vip">
+                    <div class="vip_img">
+                        <img src="../static/img/blackticket.png" alt="VIP 관람권">
+                    </div>      
+                    <div class="vip_cont">
+                        <h4>VIP 관람권</h4>
+                        <p>VIP 관람권 1매</p>
+                    </div> 
+                    <div class="vip_price">
+                        <span>50,000</span>
+                        <em>원</em>
+                    </div>         
+                </a>
+    </div>
+</div>
+
 
 {% endblock %}
