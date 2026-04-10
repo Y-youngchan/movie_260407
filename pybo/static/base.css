@@ -74,7 +74,7 @@ main{
 #banner_AD{
     width: 1207px;
     height: 222px;
-    margin: 150px 0;
+    margin: 120px auto;
     display: flex;
     margin: 0 auto;
     justify-content: center;
