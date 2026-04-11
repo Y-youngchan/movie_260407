@@ -120,7 +120,165 @@ main {
     height: 1924px;
     margin: 0 auto;
     padding-top: 30px;
-    background-color: darkgreen;
+}
+
+
+/* 이벤트 */
+.eventtxt{
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.event {
+    display: flex;
+    gap: 13px;
+}
+
+.eventtxt a{
+    font-size: 12px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+}
+
+.event .eg1{
+    width: 830px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.event .content1{
+    width: 226px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content1 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .content2{
+    width: 226px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content2 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.event .content3{
+    width: 353px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content3 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .eg2{
+    width: 830px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 13px;
+}
+
+.event .content4{
+    width: 588px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content4 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .content5{
+    width: 226px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content5 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .content6{
+    width: 363px;
+    height: 629px;
+}
+
+.event .content6 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* 시사회/무대인사 */
+.screentxt{
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.screentxt a{
+    font-size: 12px;
+}
+.screen {
+    display: flex;
+
+    gap: 14px;
+}
+
+.screen .scontent1{
+    width: 393px;
+    height: 230px;
+}
+.screen .scontent1 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.screen .scontent2{
+    width: 393px;
+    height: 230px;
+}
+.screen .scontent2 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.screen .scontent3{
+    width: 393px;
+    height: 230px;
+}
+.screen .scontent3 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* 아이콘배너 */
+
+#banner_AD{
+    width: 1207px;
+    height: 222px;
+    margin: 150px 0;
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -132,6 +290,7 @@ footer {
     height: 300px;
     margin: 0 auto;
     padding-top: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #eaeaea;
 }
 
