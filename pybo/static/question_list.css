@@ -1,35 +1,86 @@
-.container{
+@charset "utf-8";
 
-}
-header .container {
-    width: 1206px; height: 276px;
-    margin-top: 95px;
+
+/* 헤더 */
+.header .container {
     display: flex;
-    background: aliceblue;
+    justify-content: center;
+}
+.header .container .menu{
+    width: 1206px; height: 276px;
+    margin-top: 50px;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #f9f9f9;
+
 }
 
-header .service {
+.header .container .service {
     width: 902px; height: 67px;
-    background: blueviolet;
-    display: flex; justify-content: space-around;
-    flex-direction: row;
+    background-color: #cccc;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 가운데 */
+    margin: 35px auto 40px auto; /* 가로 중앙 + 위아래 여백 */
+    border: 1px solid #888888;
+    font-size: 20px; color: #333;
 }
-header .service ul {
-    display: flex; flex-direction: row;
+ .header .container #sub_title {
+     width: 152px;
+     height: 50px;
     text-align: center;
-    cursor: pointer;
+    font-weight: bold;
+    font-size: 30px;
+     text-align: center;
+     /*align-content: center;*/
+     margin: 50px auto 0 auto;
+
+     border-bottom: 2px solid #888888;
+     }
+
+.header .service ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+
 }
+
+/* 섹션01*/
+
 
 .section1 .container {
-    width: 100%; height: 1400px;
-    background: antiquewhite;
-    margin-top: 0;
-    margin-bottom: 145px;
-    background: #eaeaea;
+    width: 1206px; height: 1400px;
+    margin-top: 125px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section1 .container .table-hover{
+    width: 1206px; height: 100%;
+    margin: 125px auto 40px auto;
+    background: #888888;
 
 }
-.section1 .container .table{
-    width: 1062px; height: 1060px;
-    margin: 145px 50px 193px 50px;
-    background: #888888;
+
+.section1 table .table-secondary{
+
+    text-align: center;
+background-color: #6b7280;
+}
+
+.section1 .table-hover{
+    width: 1206px; height: 1120px;
+    margin-top: 86px;
+}
+.section1 .container #more_option {
+    width: 902px; height: 53px;
+    background-color: #888888;
+    margin-bottom: 95px;
 }
