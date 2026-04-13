@@ -1,10 +1,37 @@
 {% extends 'base.html' %}
+
 {% block title %}Login - 필름아티크{% endblock %}
 
 {% block styles %}
-
+<link rel="stylesheet" href="../static/login.css">
 {% endblock %}
 
 {% block content %}
-zz
+<div class="login_back">
+    <div class="container">
+        <div class="login_inner">
+            <h5 class="my-3 pb-1">로그인</h5>
+            <h6 class="pb-3">아이디와 비밀번호를 입력하신 후, 로그인을 눌러주세요.</h6>
+            <form method="post">
+                {{ form.csrf_token }}
+                {% include 'form_errors.html' %}
+
+                {{ form.userid.label }}
+                {{ form.userid(class="form-control mb-3") }}
+
+                {{ form.password.label }}
+                {{ form.password(class="form-control mb-3") }}
+
+                <a href="#">
+                    <h6 class="login_find">아이디 찾기 | 비밀번호 찾기</h6>
+                </a>
+                
+                <button type="submit" class="btn btn-primary">로그인</button>
+                <a href="{{ url_for('auth.signup') }}"
+                    class="btn btn-primary">회원가입</a>
+            </form>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

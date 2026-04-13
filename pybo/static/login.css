@@ -1,5 +1,6 @@
-.signup_back {
+.login_back {
     width: 100%;
+    height: auto;
     background-color: #eaeaea;
 }
 
@@ -10,18 +11,24 @@
     margin-top: 20px;
 }
 
-.container h5 {
+.container h5, h6 {
     display: flex;
     justify-content: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-
-.signup_inner {
+.login_inner {
     background-color: white;
-    padding: 20px 70px;
+    padding: 20px 100px;
 }
 
-.signup_back form {
+.login_find {
+    display: flex;
+    justify-content: flex-end;
+    margin: 30px 0 20px;
+    color: rgb(101, 101, 101);
+}
+
+.login_back form {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
