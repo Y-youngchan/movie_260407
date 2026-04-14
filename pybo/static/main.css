@@ -190,10 +190,8 @@ nav .topnav li:last-child::after {
 
 .poster .swiper-slide:hover{
     cursor: pointer;
-
 }
 .poster .swiper-slide:hover .txtbox{
-
     opacity: 1;
 }
 

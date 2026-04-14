@@ -28,8 +28,8 @@
             <nav>
                 <div class="topnav">
                     <ul>
-                        <li><a href="#">예 매</a></li>
-                        <li><a href="{{ url_for('movie.movie_list') }}">영 화</a></li>
+                        <li><a href="{{ url_for('film.booking') }}">예 매</a></li>
+                        <li><a href="{{ url_for('film.movie_list') }}">영 화</a></li>
                         <li><a href="{{ url_for('film.event') }}">이벤트</a></li>
                         <li><a href="{{ url_for('film.store') }}">매 점</a></li>
                         <li><a href="{{ url_for('film.store') }}">굿 즈</a></li>
@@ -55,7 +55,7 @@
                 </ul>
                 <ul>
                     <li class="topnav_reservation">
-                        <a href="#">바로 예매</a>
+                        <a href="{{ url_for('film.booking') }}">바로 예매</a>
                     </li>
                 </ul>
             </div>                
@@ -78,7 +78,7 @@
 
         <div class="postertxt">
             <p>현재 상영작</p>
-            <a href="{{ url_for('movie.movie_list') }}">더보기 ></a>
+            <a href="{{ url_for('film.movie_list') }}">더보기 ></a>
         </div>
         <!-- Swiper -->
         <div class="poster">
@@ -86,61 +86,61 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="txtbox">
-                            <a href="#">예매하기</a>
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
                             <a href="#">상세보기</a>
                         </div>
                     </div>
@@ -189,16 +189,16 @@
                 <a href="#"><img src="{{ url_for('static', filename='img/user.png') }}" alt="마이페이지">마이 페이지</a>
             </div>
             <div class="ticket">
-                <a href="#"><img src="{{ url_for('static', filename='img/ticket.png') }}" alt="예매">예 매</a>
+                <a href="{{ url_for('film.booking') }}"><img src="{{ url_for('static', filename='img/ticket.png') }}" alt="예매">예 매</a>
             </div>
             <div class="store">
-                <a href="#"><img src="{{ url_for('static', filename='img/store.png') }}" alt="매점">매 점</a>
+                <a href="{{ url_for('film.store') }}"><img src="{{ url_for('static', filename='img/store.png') }}" alt="매점">매 점</a>
             </div>
             <div class="goods">
-                <a href="#"><img src="{{ url_for('static', filename='img/goods.png') }}" alt="굿즈">굿 즈</a>
+                <a href="{{ url_for('film.store') }}"><img src="{{ url_for('static', filename='img/goods.png') }}" alt="굿즈">굿 즈</a>
             </div>
             <div class="movie">
-                <a href="#"><img src="{{ url_for('static', filename='img/movie.png') }}" alt="현재상영">현재 상영작</a>
+                <a href="{{ url_for('film.movie_list') }}"><img src="{{ url_for('static', filename='img/movie.png') }}" alt="현재상영">현재 상영작</a>
             </div>
         </div>
         

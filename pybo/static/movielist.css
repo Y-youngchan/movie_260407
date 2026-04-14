@@ -26,3 +26,32 @@
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.box {
+    position: relative;
+    overflow: hidden;
+}
+
+.txtbox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 357px;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: all 1s;
+}
+.box:hover .txtbox {
+    opacity: 1;
+}
+.box .txtbox a{
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    margin: 5px;
+}
