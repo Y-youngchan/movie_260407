@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}
+스토어목록 - 필름아티크
+{% endblock %}
+{% block styles %}
+
+<link rel="stylesheet" href="../static/store_tiket.css">
+
+{% endblock %}
+
+{% block content %}
+
+<div id="contents">
+
+    <!-- 상품 상세정보 -->
+
+    <div class="pro_detail">
+        <!-- 상품 이미지 -->
+        <div class="pro_img">
+            <div class="main_img">
+                <img src="../static/img/redticket.png" alt="일반 관람권">
+            </div>
+        </div>
+
+        <!-- 상품정보 및 구매버튼 -->
+        <div class="pro_info">
+            <table class="pro_table">
+                <colgroup>
+                    <col style="width: 30%;">
+                    <col style="width: auto;">
+                </colgroup>
+
+                <tr>
+                    <th class="title">일반 관람권(2D)</th>
+                </tr>
+
+                <tr>
+                    <td scope="row">
+                        <span class="tit_pirce">
+                            13,000
+                            <em>원</em>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td scope="row">구성품</td>
+                    <td>일반 관람권(2D) 1매</td>
+                </tr>
+
+                <tr>
+                    <td scope="row">구매제한</td>
+                    <td>1인 1일 10매</td>
+                </tr>
+
+                <tr>
+                    <td scope="row">유효기간</td>
+                    <td>온라인관람권 24 개월</td>
+                </tr>
+
+                <tr>
+                    <td scope="row">사용가능 영화관</td>
+                    <td>
+                        <select name="select" id="select">
+                            <option>1영화관</option>
+                            <option>2영화관</option>
+                            <option>3영화관</option>
+                            <option>4영화관</option>
+                            <option>5영화관</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div class="box_num">
+                <button class="mins">삭제</button>
+                <div class="basic_num">1</div>
+                <button class="plus">추가</button>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- 사용방법 / 유의사항 -->
+
+    <div class="howtouse">
+
+    </div>
+
+</div>
+
+{% endblock %}
+{% block script %}
+
+{% endblock %}
