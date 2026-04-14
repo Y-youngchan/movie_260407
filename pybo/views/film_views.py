@@ -10,6 +10,10 @@ def event():
 def store():
     return render_template('store.html')
 
+@bp.route('/store/ticket', methods=['GET'])
+def store_ticket():
+    return render_template('store_ticket.html')
+
 @bp.route('/movie/list', methods=['GET'])
 def movie_list():
     return render_template('movie_list.html')

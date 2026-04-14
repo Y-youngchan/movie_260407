@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+/* 기본 폰트 설정 */
+
+#contents {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 1207px;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+/* 상품상세정보 */
+/* 상품사진 */
+
+.pro_detail {
+    position: relative;
+    display: flex;
+    
+}
+
+
+
+.pro_detail .main_img {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.pro_detail .main_img img {
+    width: 670px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 상품정보 */
+
+.pro_info {
+    margin-left: 100px;
+}
+
+/* 상품 상세 정보 */
+
+.pro_table {    
+    height: 574px;
+    margin-bottom: 30px;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 0
+}
+
+.pro_table tr {
+    height: 80px;    
+    border-bottom: 1px solid #333;    
+}
+
+
+
+.pro_table .title {
+    width: auto;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.pro_table span {    
+    padding-left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.pro_table em {
+    font-style: normal;
+    font-size: 0.833em;
+    font-weight: normal;
+    color: gray;
+}
+
+/* 상세 정보 아래 구매수량 */
+
+.box_num {
+    width: auto;
+    height: 70px;
+    margin-top: -60px;
+    display: flex;
+    justify-content: center;    
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+.box_num button {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    vertical-align: middle;
+}

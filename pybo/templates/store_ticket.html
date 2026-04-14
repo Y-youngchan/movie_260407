@@ -4,7 +4,7 @@
 {% endblock %}
 {% block styles %}
 
-<link rel="stylesheet" href="../static/store_tiket.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='store_ticket.css') }}">
 
 {% endblock %}
 
@@ -16,68 +16,85 @@
 
     <div class="pro_detail">
         <!-- 상품 이미지 -->
-        <div class="pro_img">
-            <div class="main_img">
-                <img src="../static/img/redticket.png" alt="일반 관람권">
-            </div>
+        <div class="main_img">
+            <img src="{{ url_for('static', filename='img/redticket.png') }}" alt="일반 관람권">
         </div>
 
         <!-- 상품정보 및 구매버튼 -->
         <div class="pro_info">
             <table class="pro_table">
+
                 <colgroup>
-                    <col style="width: 30%;">
+                    <col style="width: 10px;">
                     <col style="width: auto;">
                 </colgroup>
+                <tbody>
+                    <tr>
+                        <th class="title">일반 관람권(2D)</th>
+                    </tr>
 
-                <tr>
-                    <th class="title">일반 관람권(2D)</th>
-                </tr>
+                    <tr>
+                        
+                        <td scope="row">
+                            <span class="tit_pirce">
+                                13,000
+                                <em>원</em>
+                            </span>
+                        </td>
+                        <td></td>
+                    </tr>
 
-                <tr>
-                    <td scope="row">
-                        <span class="tit_pirce">
-                            13,000
-                            <em>원</em>
-                        </span>
-                    </td>
-                </tr>
+                    <tr>
+                        <td scope="row">구성품</td>
+                        <td>일반 관람권(2D) 1매</td>
+                    </tr>
 
-                <tr>
-                    <td scope="row">구성품</td>
-                    <td>일반 관람권(2D) 1매</td>
-                </tr>
+                    <tr>
+                        <td scope="row">구매제한</td>
+                        <td>1인 1일 10매</td>
+                    </tr>
 
-                <tr>
-                    <td scope="row">구매제한</td>
-                    <td>1인 1일 10매</td>
-                </tr>
+                    <tr>
+                        <td scope="row">유효기간</td>
+                        <td>온라인관람권 24 개월</td>
+                    </tr>
 
-                <tr>
-                    <td scope="row">유효기간</td>
-                    <td>온라인관람권 24 개월</td>
-                </tr>
+                    <tr>
+                        <td scope="row">사용가능 영화관</td>
+                        <td>
+                            <select name="select" id="select">
+                                <option>1영화관</option>
+                                <option>2영화관</option>
+                                <option>3영화관</option>
+                                <option>4영화관</option>
+                                <option>5영화관</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
 
-                <tr>
-                    <td scope="row">사용가능 영화관</td>
-                    <td>
-                        <select name="select" id="select">
-                            <option>1영화관</option>
-                            <option>2영화관</option>
-                            <option>3영화관</option>
-                            <option>4영화관</option>
-                            <option>5영화관</option>
-                        </select>
-                    </td>
-                </tr>
             </table>
+        <!-- 상세 정보 아래 구매수량 -->
             <div class="box_num">
                 <button class="mins">삭제</button>
                 <div class="basic_num">1</div>
                 <button class="plus">추가</button>
             </div>
 
+        <!-- 총 상품 금액 -->
 
+            <div class="last_price">
+                총 상품금액
+                <strong class="end_price">
+                    13,000
+                    <em>원</em>
+                </strong>
+            </div>
+
+        <!-- 선물하기 및 구매하기 버튼 -->
+
+            <button class="persents">선물하기</button>
+            <button class="buy">구매하기</button>
         </div>
     </div>
 
