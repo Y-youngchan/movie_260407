@@ -9,22 +9,21 @@
 .header .container .menu{
     width: 1206px; height: 276px;
 
-    padding: 50px 0;
+    padding: 30px 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: #eaeaea;
+
     
 }
 
 .header .container .service {
     width: 902px; height: 67px;
-    background-color: #cccc;
     display: flex;
     justify-content: center;
     align-items: center; /* 세로 가운데 */
-    margin: 35px auto 40px auto; /* 가로 중앙 + 위아래 여백 */
+    margin: 35px auto 30px auto; /* 가로 중앙 + 위아래 여백 */
     border: 1px solid #888888;
     font-size: 20px; color: #333;
 }
@@ -34,7 +33,7 @@
     text-align: center;
     font-weight: bold;
     font-size: 30px;
-     text-align: center;
+
      /*align-content: center;*/
      margin: 50px auto 0 auto;
     padding-bottom: 10px;
@@ -53,32 +52,32 @@
     color: #333333;
 }
 /* 섹션01*/
+.section1 {
+    margin-bottom: 130px;
 
+}
 
 .section1 .container {
     width: 1206px; height: 1400px;
-
-    background: #ffffff;
+    padding-left: 0;
+    background-color: #eaeaea;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 145px;
 }
 
-.section1 .container .table-hover{
-    width: 1206px; height: 100%;
-    margin: 125px auto 40px auto;
+.section1 .container .table{
+    width: 1062px; height: 1120px;
+    margin: 90px auto 40px auto;
     background: #888888;
-
+    font-size: 20px;
 }
 
 .section1 table .table-secondary{
-
     text-align: center;
-
 }
-
-.section1 .table-hover{
-    width: 1206px; height: 1120px;
-    margin-top: 86px;
+.section1 .fixed-bottom{
+    font-weight: bold;
 }
 

@@ -15,234 +15,237 @@
             <img src="../static/img/popcorn_banner.jpg" alt="banner_popcorn">
         </div>
     </div>
-    
+
     <div class="middle-bar">
-        <ul class="navi-bar">
-            <li class="active">관람권</li>
-            <li>스낵음료</li>
-            <li>시네마굿즈</li>
-        </ul>
+        <nav id="nav">
+            <ul class="navi-bar">
+                <li data-target="#sub_tit1"><a href="#sub_tit1">관람권</a></li>
+                <li data-target="#sub_tit2"><a href="#sub_tit2">스낵음료</a></li>
+                <li data-target="#sub_tit3"><a href="#sub_tit3">시네마굿즈</a></li>
+            </ul>
+        </nav>
     </div>
 
-    
 
-    <div class="store_pro">
+    <div id="contents">
+        <div class="store_pro">
 
-        <!-- 관람권 -->
+            <!-- 관람권 -->
 
-        <h3 class="sub_tit1">관람권</h3>
-        <div class="ticket">
-            <a class="normal">
-                <div class="nor_img">
-                    <img src="../static/img/redticket.png" alt="일반 관람권">
-                </div>
-                <div class="nor_cont">
-                    <h4>일반 관람권(2D)</h4>
-                    <p>일반 관람권(2D) 1매</p>
-                </div>
-                <div class="nor_price">
-                    <span>18,000</span>
-                    <em>원</em>
-                </div>
-            </a>
+            <h3 id="sub_tit1">관람권</h3>
+            <div class="ticket">
+                <a class="normal">
+                    <div class="nor_img">
+                        <img src="../static/img/redticket.png" alt="일반 관람권">
+                    </div>
+                    <div class="nor_cont">
+                        <h4>일반 관람권(2D)</h4>
+                        <p>일반 관람권(2D) 1매</p>
+                    </div>
+                    <div class="nor_price">
+                        <span>18,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
 
-            <a class="vip">
-                <div class="vip_img">
-                    <img src="../static/img/blackticket.png" alt="VIP 관람권">
-                </div>
-                <div class="vip_cont">
-                    <h4>VIP 관람권</h4>
-                    <p>VIP 관람권 1매</p>
-                </div>
-                <div class="vip_price">
-                    <span>50,000</span>
-                    <em>원</em>
-                </div>
-            </a>
+                <a class="vip">
+                    <div class="vip_img">
+                        <img src="../static/img/blackticket.png" alt="VIP 관람권">
+                    </div>
+                    <div class="vip_cont">
+                        <h4>VIP 관람권</h4>
+                        <p>VIP 관람권 1매</p>
+                    </div>
+                    <div class="vip_price">
+                        <span>50,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 콤보 -->
+
+            <h3 id="sub_tit2">스낵음료</h3>
+            <div class="snack_drink">
+                <a class="bestcom">
+                    <div class="bestcom_img">
+                        <img src="../static/img/BEST COMBO 교환권.png" alt="베스트콤보">
+                    </div>
+                    <div class="bestcombo">
+                        <h4>BEST COMBO 교환권</h4>
+                        <P>반반콤보 or 싱글스낵콤보 중 택 1</P>
+                    </div>
+                    <div class="bestcom_pri">
+                        <span>14,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+                <a class="singcom">
+                    <div class="singcom_img">
+                        <img src="../static/img/SINGLE COMBO 교환권.png" alt="싱글콤보">
+                    </div>
+                    <div class="singlecombo">
+                        <h4>SINGLE COMBO 교환권</h4>
+                        <P>싱글커피/내맘대로콤보 중 택 1</P>
+                    </div>
+                    <div class="singcom_pri">
+                        <span>10,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+                <a class="snacks">
+                    <div class="snacks_img">
+                        <img src="../static/img/SNACKS 교환권.png" alt="스낵들">
+                    </div>
+                    <div class="snacks_combo">
+                        <h4>SNACKS 교환권</h4>
+                        <P>콜팝치킨/소떡소떡(뿌링클,맵스터)/콜팝치킨(뿌링클,맵스터) 중 택 1</P>
+                    </div>
+                    <div class="snacks_pri">
+                        <span>6,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 단품 -->
+
+            <h3 class="sub_tit0"></h3>
+            <div class="Single_pro">
+                <a class="popcorn_L">
+                    <div class="lar_img">
+                        <img src="../static/img/popcorn_M.png" alt="단품라지">
+                    </div>
+                    <div class="popcorn_larg">
+                        <h4>팝콘(L)</h4>
+                        <P>고소/달달한 빅사이즈 팝콘</P>
+                    </div>
+                    <div class="pop_L_pri">
+                        <span>8,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+
+                <a class="popcorn_M">
+                    <div class="mid_img">
+                        <img src="../static/img/popcorn_L.png" alt="단품미디움">
+                    </div>
+                    <div class="popcorn_mid">
+                        <h4>팝콘(M)</h4>
+                        <P>고소/달달한 기본사이즈 팝콘</P>
+                    </div>
+                    <div class="pop_M_pri">
+                        <span>7,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+
+                <a class="drink">
+                    <div class="drink_img">
+                        <img src="../static/img/drink_L.png" alt="단품음료">
+                    </div>
+                    <div class="sing_dri">
+                        <h4>셀프 탄산</h4>
+                        <P>기본사이즈 자체가 크다! 시원하고 청량감 MAX!</P>
+                    </div>
+                    <div class="snacks_pri">
+                        <span>4,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 시네마 굿즈 -->
+
+            <h3 id="sub_tit3">시네마굿즈</h3>
+            <div class="titan_merch">
+                <a class="jin_eren">
+                    <div class="eren_img">
+                        <img src="../static/img/jin_eren.jpg" alt="에렌 예거">
+                    </div>
+                    <div class="eren">
+                        <h4>진격의 거인 VIVID 아크릴 키홀더 예거</h4>
+                        <P>진격의 거인 아크릴 키홀더</P>
+                    </div>
+                    <div class="eren_pri">
+                        <span>22,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+                <a class="jin_mikasa">
+                    <div class="mikasa_img">
+                        <img src="../static/img/jin_mikasa.jpg" alt="미카사">
+                    </div>
+                    <div class="mikasa">
+                        <h4>진격의 거인 VIVID 아크릴 키홀더 미카사</h4>
+                        <P>진격의 거인 아크릴 키홀더</P>
+                    </div>
+                    <div class="mikasa_pri">
+                        <span>22,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+                <a class="jin_levi">
+                    <div class="levi_img">
+                        <img src="../static/img/jin_levi.jpg" alt="에렌 예거">
+                    </div>
+                    <div class="levi">
+                        <h4>진격의 거인 VIVID 아크릴 키홀더 예거</h4>
+                        <P>진격의 거인 아크릴 키홀더</P>
+                    </div>
+                    <div class="levi_pri">
+                        <span>22,500</span>
+                        <em>원</em>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 체인소 맨 -->
+
+            <h3 class="sub_tit0"></h3>
+            <div class="chain_merch">
+                <a class="chain_denji">
+                    <div class="denji_img">
+                        <img src="../static/img/chain_denji.jpg" alt="덴지">
+                    </div>
+                    <div class="denji">
+                        <h4>체인소 맨 레제편 아크릴스탠드 덴지</h4>
+                        <P>체인소 맨 아크릴스탠드</P>
+                    </div>
+                    <div class="denji_pri">
+                        <span>30,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+                <a class="chain_makima">
+                    <div class="makima_img">
+                        <img src="../static/img/chain_makima.jpg" alt="마키마">
+                    </div>
+                    <div class="makima">
+                        <h4>체인소 맨 레제편 아크릴스탠드 마키마</h4>
+                        <P>체인소 맨 아크릴스탠드</P>
+                    </div>
+                    <div class="makima_pri">
+                        <span>30,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+                <a class="chain_reje">
+                    <div class="reje_img">
+                        <img src="../static/img/chain_reje.jpg" alt="레제">
+                    </div>
+                    <div class="reje">
+                        <h4>체인소 맨 레제편 아크릴스탠드 레제</h4>
+                        <P>체인소 맨 아크릴스탠드</P>
+                    </div>
+                    <div class="reje_pri">
+                        <span>30,000</span>
+                        <em>원</em>
+                    </div>
+                </a>
+            </div>
+
         </div>
-
-        <!-- 콤보 -->
-
-        <h3 class="sub_tit2">스낵음료</h3>
-        <div class="snack_drink">
-            <a class="bestcom">
-                <div class="bestcom_img">
-                    <img src="../static/img/BEST COMBO 교환권.png" alt="베스트콤보">
-                </div>
-                <div class="bestcombo">
-                    <h4>BEST COMBO 교환권</h4>
-                    <P>반반콤보 or 싱글스낵콤보 중 택 1</P>
-                </div>
-                <div class="bestcom_pri">
-                    <span>14,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-            <a class="singcom">
-                <div class="singcom_img">
-                    <img src="../static/img/SINGLE COMBO 교환권.png" alt="싱글콤보">
-                </div>
-                <div class="singlecombo">
-                    <h4>SINGLE COMBO 교환권</h4>
-                    <P>싱글커피/내맘대로콤보 중 택 1</P>
-                </div>
-                <div class="singcom_pri">
-                    <span>10,000</span>
-                    <em>원</em>
-                </div>
-            </a>
-            <a class="snacks">
-                <div class="snacks_img">
-                    <img src="../static/img/SNACKS 교환권.png" alt="스낵들">
-                </div>
-                <div class="snacks_combo">
-                    <h4>SNACKS 교환권</h4>
-                    <P>콜팝치킨/소떡소떡(뿌링클,맵스터)/콜팝치킨(뿌링클,맵스터) 중 택 1</P>
-                </div>
-                <div class="snacks_pri">
-                    <span>6,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-        </div>
-
-        <!-- 단품 -->
-
-        <h3 class="sub_tit0"></h3>
-        <div class="Single_pro">
-            <a class="popcorn_L">
-                <div class="lar_img">
-                    <img src="../static/img/popcorn_M.png" alt="단품라지">
-                </div>
-                <div class="popcorn_larg">
-                    <h4>팝콘(L)</h4>
-                    <P>고소/달달한 빅사이즈 팝콘</P>
-                </div>
-                <div class="pop_L_pri">
-                    <span>8,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-
-            <a class="popcorn_M">
-                <div class="mid_img">
-                    <img src="../static/img/popcorn_L.png" alt="단품미디움">
-                </div>
-                <div class="popcorn_mid">
-                    <h4>팝콘(M)</h4>
-                    <P>고소/달달한 기본사이즈 팝콘</P>
-                </div>
-                <div class="pop_M_pri">
-                    <span>7,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-
-            <a class="drink">
-                <div class="drink_img">
-                    <img src="../static/img/drink_L.png" alt="단품음료">
-                </div>
-                <div class="sing_dri">
-                    <h4>셀프 탄산</h4>
-                    <P>기본사이즈 자체가 크다! 시원하고 청량감 MAX!</P>
-                </div>
-                <div class="snacks_pri">
-                    <span>4,000</span>
-                    <em>원</em>
-                </div>
-            </a>
-        </div>
-
-        <!-- 시네마 굿즈 -->
-
-        <h3 class="sub_tit3">시네마굿즈</h3>
-        <div class="titan_merch">
-            <a class="jin_eren">
-                <div class="eren_img">
-                    <img src="../static/img/jin_eren.jpg" alt="에렌 예거">
-                </div>
-                <div class="eren">
-                    <h4>진격의 거인 VIVID 아크릴 키홀더 예거</h4>
-                    <P>진격의 거인 아크릴 키홀더</P>
-                </div>
-                <div class="eren_pri">
-                    <span>22,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-            <a class="jin_mikasa">
-                <div class="mikasa_img">
-                    <img src="../static/img/jin_mikasa.jpg" alt="미카사">
-                </div>
-                <div class="mikasa">
-                    <h4>진격의 거인 VIVID 아크릴 키홀더 미카사</h4>
-                    <P>진격의 거인 아크릴 키홀더</P>
-                </div>
-                <div class="mikasa_pri">
-                    <span>22,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-            <a class="jin_levi">
-                <div class="levi_img">
-                    <img src="../static/img/jin_levi.jpg" alt="에렌 예거">
-                </div>
-                <div class="levi">
-                    <h4>진격의 거인 VIVID 아크릴 키홀더 예거</h4>
-                    <P>진격의 거인 아크릴 키홀더</P>
-                </div>
-                <div class="levi_pri">
-                    <span>22,500</span>
-                    <em>원</em>
-                </div>
-            </a>
-        </div>
-
-        <!-- 체인소 맨 -->
-
-        <h3 class="sub_tit0"></h3>
-        <div class="chain_merch">
-            <a class="chain_denji">
-                <div class="denji_img">
-                    <img src="../static/img/chain_denji.jpg" alt="덴지">
-                </div>
-                <div class="denji">
-                    <h4>체인소 맨 레제편 아크릴스탠드 덴지</h4>
-                    <P>체인소 맨 아크릴스탠드</P>
-                </div>
-                <div class="denji_pri">
-                    <span>30,000</span>
-                    <em>원</em>
-                </div>
-            </a>
-            <a class="chain_makima">
-                <div class="makima_img">
-                    <img src="../static/img/chain_makima.jpg" alt="마키마">
-                </div>
-                <div class="makima">
-                    <h4>체인소 맨 레제편 아크릴스탠드 마키마</h4>
-                    <P>체인소 맨 아크릴스탠드</P>
-                </div>
-                <div class="makima_pri">
-                    <span>30,000</span>
-                    <em>원</em>
-                </div>
-            </a>
-            <a class="chain_reje">
-                <div class="reje_img">
-                    <img src="../static/img/chain_reje.jpg" alt="레제">
-                </div>
-                <div class="reje">
-                    <h4>체인소 맨 레제편 아크릴스탠드 레제</h4>
-                    <P>체인소 맨 아크릴스탠드</P>
-                </div>
-                <div class="reje_pri">
-                    <span>30,000</span>
-                    <em>원</em>
-                </div>
-            </a>
-        </div>
-
     </div>
 </div>
 
@@ -250,5 +253,5 @@
 
 {% endblock %}
 {% block script %}
-<!-- <script src="../static/store.js"></script> -->
+<script src="../static/store.js"></script>
 {% endblock %}

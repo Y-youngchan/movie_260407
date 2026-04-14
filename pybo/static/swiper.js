@@ -3,8 +3,8 @@
 var swiper = new Swiper(".mainSwiper", {
         loop: true,
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
+          nextEl: ".mainSwiper .swiper-button-next",
+          prevEl: ".mainSwiper .swiper-button-prev",
         },
     });
 
@@ -15,7 +15,7 @@ var swiper = new Swiper(".posterSwiper", {
       spaceBetween: 19,
       loop: true,
       navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
+          nextEl: ".poster .swiper-button-next",
+          prevEl: ".poster .swiper-button-prev",
         },
     });

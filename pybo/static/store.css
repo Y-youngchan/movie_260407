@@ -5,6 +5,7 @@
 }
 
 /* 팝콘 배너 */
+
 .inner_banner {
     background-color: black;
     width: 100%;    
@@ -19,26 +20,49 @@
 
 .middle-bar{
     display: flex;
-    justify-content: center;    
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #fff;
 }
 
 .navi-bar{    
     padding-left: 0;
-    position: sticky;
+    /* position: sticky;
     top: 0;
+    z-index: 5; */
+    margin: 0;
     display: flex;    
-    z-index: 2;
-    border-bottom: 1px solid #eee;
+    position: static; 
 }
 
 .navi-bar li {
     width: 400px;
-    height: 44px;
-    line-height: 45px;
+    height: 60px;
+    line-height: 60px;
     border: 1px   solid #eee;
     text-align: center;
     font-size: 16px;
     font-weight: 500;
+    cursor: pointer;
+}
+
+.navi-bar li a {
+    color: #000;
+    text-decoration: none;
+}
+
+.navi-bar li a:visited {
+    color: #000;
+}
+
+.navi-bar li a:hover {
+    color: #000;
+}
+
+li::marker {
+  content: "";
 }
 
 /* 팝콘 배너 이후 상품 진열 테이블 */
