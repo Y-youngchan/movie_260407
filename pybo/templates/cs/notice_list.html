@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항
+    공지사항 - 필름아티크
 {% endblock %}
 
 {% block styles %}
@@ -33,77 +33,141 @@
     </div>
 
     <div class="section1">
-        <div class="container">
+    <div class="container">
 
-            <table class="table table">
-                <thead>
-                <tr class="table-secondary">
-                    <th>영화관</th>
-                    <th>제목</th>
-                    <th>등록일</th>
-                </tr>
+        <table class="table table">
+            <thead>
+            <tr class="table-secondary">
+                <th>영화관</th>
+                <th>제목</th>
+                <th>등록일</th>
+            </tr>
 
-                </thead>
+            </thead>
 
-                <tbody>
-                {% if notice_list.items %}
-                    {% for notice in notice_list.items %}
-                        <tr>
-                            <td>{{ notice.theater }}</td>
-
-                            <td>
-                                <a href="#">
-                                    {{ notice.title }}
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ notice.create_date.strftime('%y.%m.%d') }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
+            <tbody>
+            {% if notice_list %}
+                {% for notice in notice_list.items %}  <!--현재 페이지 해당 게시물-->
                     <tr>
-                        <td colspan="3">공지사항이 없습니다.</td>
+{#                        <td>{{ notice_list.total - (notice_list.page - 1) * notice_list.per_page - loop.index0 }}</td>#}
+                        {#                        <td>#}
+                        {#                            <a href="{{ url_for('notice.detail', notice_id=notice.id) }}">{{ notice.subject }}</a>#}
+                        {#                            {% if notice.answer_set|length > 0 %}#}
+                        {#                                <span class="text-danger small mx-1">[{{ question.answer_set | length }}]</span>#}
+                        {#                            {% endif %}#}
+                        {#                        </td>#}
+                        <td>{{ notice.theater }}</td>
+                        <a href="#">
+                            <td>{{ notice.title }}</td>
+                        </a>
+                        <td>{{ notice.user.username }}</td>
+                        <td>{{ notice.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}</td>
                     </tr>
-                {% endif %}
-                </tbody>
-            </table>
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-outline-secondary" type="button">
-                    더보기 +
-                </button>
-                </table>
-            </div>
-
-        </div>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">질문이 없습니다.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        <!--페이징처리 Start-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li>
+                  <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-outline-secondary" type="button">
+                        더보기 +
+                    </button>
+                </div>
+              </li>
+            </ul>
+        </nav>
+        <!--페이징처리 End-->
+{#        <form id="searchForm" action="{{ url_for('question._list') }}" method="get">#}
+{#            <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">#}
+{#            <input type="hidden" id="page" name="page" value="{{ page }}">#}
+{#        </form>#}
     </div>
-
-
-
+    </div>
 {% endblock %}
 
-{% block script %}
-    <script>
-        const tabMenu = document.querySelectorAll('.nav nav-underline');
-        const tabContent = document.querySelectorAll('.nav-link');
+{#{% block script %}#}
+{#<script>#}
+{#    // 페이지버튼 클릭시#}
+{#    const page_elements = document.querySelectorAll('.page-link')#}
+{#    console.log(page_elements)#}
+{#    page_elements.forEach(element => {#}
+{#        element.addEventListener('click', function () {#}
+{#            const page = this.dataset.page;#}
+{#            if (page) {#}
+{#                document.getElementById('page').value = page;#}
+{#                document.getElementById('searchForm').submit();#}
+{#            }#}
+{#        })#}
+{#    })#}
+{#    </script>#}
+{#    {% endblock %}#}
 
-        tabMenu.forEach((tm, i) => {
-            tm.addEventListener('click', () => {
-                // 모든 탭 메뉴에서 'active' 클래스 제거
-                tabMenu.forEach(item => {
-                    item.classList.remove('active');
-                });
-
-                // 클릭한 탭 메뉴에만 'active' 클래스 추가
-                tm.classList.add('active');
-
-                // 탭에 해당하는 리스트 보이고, 나머지는 숨기기
-                tabContent.forEach((tc, j) => {
-                    tc.style.display = (i === j) ? 'flex' : 'none';
-                });
-            });
-        });
-
-    </script>
-{% endblock %}
+    {#                <tbody>#}
+    {#                {% if notice_list.items %}#}
+    {#                    {% for notice in notice_list.items %}#}
+    {#                        <tr>#}
+    {#                            <td>{{ notice.theater }}</td>#}
+    {##}
+    {#                            <td>#}
+    {#                                <a href="#">#}
+    {#                                    {{ notice.title }}#}
+    {#                                </a>#}
+    {#                            </td>#}
+    {##}
+    {#                            <td>#}
+    {#                                {{ notice.create_date.strftime('%y.%m.%d') }}#}
+    {#                            </td>#}
+    {#                        </tr>#}
+    {#                    {% endfor %}#}
+    {#                {% else %}#}
+    {#                    <tr>#}
+    {#                        <td colspan="3">공지사항이 없습니다.</td>#}
+    {#                    </tr>#}
+    {#                {% endif %}#}
+    {#                </tbody>#}
+    {#            </table>#}
+    {#            <div class="d-grid gap-2 col-6 mx-auto">#}
+    {#                <button class="btn btn-outline-secondary" type="button">#}
+    {#                    더보기 +#}
+    {#                </button>#}
+    {#                </table>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </div>#}
+    {##}
+    {##}
+    {##}
+    {#{% endblock %}#}
+    {##}
+    {#{% block script %}#}
+    {#    <script>#}
+    {#        const tabMenu = document.querySelectorAll('.nav nav-underline');#}
+    {#        const tabContent = document.querySelectorAll('.nav-link');#}
+    {##}
+    {#        tabMenu.forEach((tm, i) => {#}
+    {#            tm.addEventListener('click', () => {#}
+    {#                // 모든 탭 메뉴에서 'active' 클래스 제거#}
+    {#                tabMenu.forEach(item => {#}
+    {#                    item.classList.remove('active');#}
+    {#                });#}
+    {##}
+    {#                // 클릭한 탭 메뉴에만 'active' 클래스 추가#}
+    {#                tm.classList.add('active');#}
+    {##}
+    {#                // 탭에 해당하는 리스트 보이고, 나머지는 숨기기#}
+    {#                tabContent.forEach((tc, j) => {#}
+    {#                    tc.style.display = (i === j) ? 'flex' : 'none';#}
+    {#                });#}
+    {#            });#}
+    {#        });#}
+    {##}
+    {#    </script>#}
+    {#{% endblock %}#}

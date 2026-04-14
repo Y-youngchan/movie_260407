@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    공지사항 - 필름아티크
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='question_list.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
+        <form method="post" novalidate enctype="multipart/form-data">
+
+            {{ form.csrf_token }}
+{#            <!--오류표시 Start-->#}
+{#            {% if form.errors %}#}
+{#                <div class="alert alert-danger" role="alert">#}
+{#                    {% for field, errors in form.errors.items() %}#}
+{#                        <strong>{{ form[field].label }}</strong>#}
+{#                        <ul>#}
+{#                            {% for error in errors %}#}
+{#                                <li>{{ error }}</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            {% endif %}#}
+
+            {{ form.subject.label }}  <!--<label for="">제목</label>-->
+            {{ form.subject(class="form-control") }}      <!--<input type="text" name="" id="">-->
+
+            {{ form.content.label }}  <!--<label for="">내용</label>-->
+            {{ form.content(class="form-control") }}
+            <button type="submit" class="btn btn-primary mt-3">등록하기</button>
+        </form>
+    </div>
+{% endblock %}

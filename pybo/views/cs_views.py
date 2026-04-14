@@ -6,7 +6,7 @@ from pybo.models import Notice
 
 bp = Blueprint('cs',__name__, url_prefix='/cs')
 
-@bp.route("/notice/list")
+@bp.route("/notice/list", methods=['GET'])
 def notice_list():
     # page = request.args.get('page', type=int, default=1)
 
