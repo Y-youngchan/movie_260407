@@ -5,37 +5,86 @@
 {% endblock %}
 
 {% block styles %}
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='question_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='notice_detail.css') }}">
 {% endblock %}
 
 {% block content %}
+
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <h3 id="sub_title">고객센터</h3>
+                <div class="service">
+
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">QNA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">공지사항</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">1:1문의</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div class="section2">
-        <div class="container my-3">
-            <h2 class="border-bottom py-2">{{ notice_detail.subject }}</h2>
+        <div class="container">
 
-            <!--공지사항-->
-            <table class="customer">
+            <table class="table table">
                 <thead>
-                <tr class="table-secondary">
-                    <th>영화관</th>
-                    <th>제목</th>
-                    <th>등록일</th>
-                </tr>
+                <tr>
 
+                    <th class="table-light">영화관</th>
+                    <th class="table-light">제목</th>
+                    <th class="table-light">등록일</th>
+                </tr>
                 </thead>
 
                 <tbody>
-                <tr class="table-light">
-                    <td>전체</td>
-                    <td>씨네Q 구미봉곡점 4월 휴무일 안내</td>
-                    <td>
+                <tr>
+                    <td class="table-success">전체</td>
+                    <td class="table-success">씨네Q 구미봉곡점 4월 휴무일 안내</td>
+                    <td class="table-success">
                         {{ notice.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <div class="answer1">
+                <p>안녕하세요, 씨네Q입니다.
+                    <br>
+                    먼저 씨네Q 구미봉곡점을 이용해주시는 고객님들께 항상 깊은 감사 드립니다.
+                    <br><br>
+                    씨네Q 구미봉곡점은 G7스퀘어 건물 전체 의무 휴업일에 따라
+                    <br>
+                    3월 9일(월)과 3월 23일(월) 휴관합니다.
+                    <br>
+                    그 외 모든 요일은 정상 영업 예정이오니 이용에 참고 부탁 드립니다.
+                    <br><br>
+                    ※ 의무 휴업 기준 : 구미시 제 2018-243호 대형마트 및 준대규모점포 의무휴업일 지정 및 영업시간 제한 고시
+                    <br><br>
+                    감사합니다.</p>
+            </div>
+            <div class="recent_btn">
+                최근: 씨네Q 구미봉점 4월 휴무일 안내
+            </div>
+            <div class="forward_btn">
+                이전: 씨네Q 구미봉점 3월 휴무일 안내
+            </div>
 
+            <div class="d-grid gap-2 col-1 mx-auto">
+                <button class="inventory" type="button">목록</button>
 
+            </div>
         </div>
     </div>
 {% endblock %}

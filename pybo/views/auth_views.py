@@ -34,8 +34,8 @@ def signup():
             db.session.commit()
 
             return redirect(url_for('main.index'))
-        else:
-            flash('이미 존재하는 아이디입니다.')
+    else:
+        flash('이미 존재하는 아이디입니다.')
 
     return render_template('auth/signup.html', form=form)
 
