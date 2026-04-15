@@ -16,8 +16,8 @@ bp = Blueprint('cs',__name__, url_prefix='/cs')
 def notice_list():
     page = request.args.get('page', type=int, default=1)
 
-    notice_list = Notice.query.order_by(Notice.create_date.desc()).all()
-    notice_list = notice_list.paginate(page=page, per_page=10)  # 한페이지에 보여야할 게시물
+
+    notice_list = Notice.query.paginate(page=page, per_page=10)  # 한페이지에 보여야할 게시물
 
     return render_template("cs/notice/notice_list.html", notice_list=notice_list)
 
