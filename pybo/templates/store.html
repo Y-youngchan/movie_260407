@@ -34,7 +34,7 @@
 
             <h3 id="sub_tit1">관람권</h3>
             <div class="ticket">
-                <a href="{{ url_for('film.store_ticket') }}" class="normal">
+                <a href="{{ url_for('film.store_redticket') }}" class="normal">
                     <div class="nor_img">
                         <img src="../static/img/redticket.png" alt="일반 관람권">
                     </div>
@@ -48,7 +48,7 @@
                     </div>
                 </a>
 
-                <a class="vip">
+                <a href="{{ url_for('film.store_vipticket') }}" class="vip">
                     <div class="vip_img">
                         <img src="../static/img/blackticket.png" alt="VIP 관람권">
                     </div>
@@ -67,7 +67,7 @@
 
             <h3 id="sub_tit2">스낵음료</h3>
             <div class="snack_drink">
-                <a class="bestcom">
+                <a href="{{ url_for('film.store_bestcombo') }}" class="bestcom">
                     <div class="bestcom_img">
                         <img src="../static/img/BEST COMBO 교환권.png" alt="베스트콤보">
                     </div>

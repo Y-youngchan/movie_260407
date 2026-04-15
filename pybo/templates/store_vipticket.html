@@ -4,7 +4,7 @@
 {% endblock %}
 {% block styles %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='store_ticket.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='store_vipticket.css') }}">
 
 {% endblock %}
 
@@ -17,7 +17,7 @@
     <div class="pro_detail">
         <!-- 상품 이미지 -->
         <div class="main_img">
-            <img src="{{ url_for('static', filename='img/redticket.png') }}" alt="일반 관람권">
+            <img src="{{ url_for('static', filename='img/blackticket.png') }}" alt="vip 관람권">
         </div>
 
         <!-- 상품정보 및 구매버튼 -->
@@ -29,14 +29,14 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th colspan="2" class="title">일반 관람권(2D)</th>
+                        <th colspan="2" class="title">VIP 관람권</th>
                     </tr>
 
                     <tr>
                         <td class="left"></td>
                         <td class="right" scope="row">
                             <span class="tit_pirce">
-                                18,000
+                                50,000
                                 <em>원</em>
                             </span>
                         </td>
@@ -45,12 +45,12 @@
 
                     <tr>
                         <td class="left" scope="row">구성품</td>
-                        <td class="right">일반 관람권(2D) 1매</td>
+                        <td class="right">VIP 관람권 1매</td>
                     </tr>
 
                     <tr>
                         <td class="left" scope="row">구매제한</td>
-                        <td class="right">1인 1일 10매</td>
+                        <td class="right">1인 1일 2매</td>
                     </tr>
 
                     <tr>
@@ -74,7 +74,9 @@
                 </tbody>
 
             </table>
+            
             <!-- 상세 정보 아래 구매수량 -->
+
             <div class="box_num">
                 <button class="mins">-</button>
                 <div class="basic_num">1</div>
@@ -86,7 +88,7 @@
             <div class="last_price">
                 총 상품금액
                 <strong class="end_price">
-                    18,000
+                    50,000
                     <em>원</em>
                 </strong>
             </div>
@@ -107,52 +109,50 @@
 
         <div id='tab'>
             <ul class="tab_menu">
-                <li class="active">사용방법</li>
-                <li>유의사항</li>
+                <li class="active" tabindex="0">사용방법</li>
+                <li tabindex="0">유의사항</li>
             </ul>
 
             <div class="tabcontent">
-                사용방법
-
-
-                - 스토어 상품은 회원만 구매할 수 있습니다.
-
-
-
-                -스페셜상영회, GV시사회, 기획전, 공연컨텐츠 등 특수 상영 건에는 사용이 제한될 수 있습니다.
-
-
-
-                - 유효기간은 24개월로 관람일 기준입니다.
-
-
-
-                - 구매한 영화관람권은 마이시네마 > 나의 쿠폰함에서 확인 후 롯데시네마 홈페이지, 모바일 웹/앱에서 사용 가능합니다.
-
-
-
-                - 선물한 영화관람권은 문자쿠폰(MMS)으로 발송되며 롯데시네마 홈페이지, 모바일 웹/앱에서 사용 가능합니다.
+                <h5>사용방법</h5>
+                <br><br>
+                <p>
+                    - 스토어 상품은 회원만 구매할 수 있습니다.
+                    <br><br><br>
+                    - 스페셜상영회, GV시사회, 기획전, 공연컨텐츠 등 특수 상영 건에는 사용이 제한될 수 있습니다.
+                    <br><br><br>
+                    - 유효기간은 24개월로 관람일 기준입니다.
+                    <br><br><br>
+                    - 구매한 영화관람권은 마이시네마 > 나의 쿠폰함에서 확인 후 롯데시네마 홈페이지, 모바일 웹/앱에서 사용 가능합니다.
+                    <br><br><br>
+                    - 선물한 영화관람권은 문자쿠폰(MMS)으로 발송되며 롯데시네마 홈페이지, 모바일 웹/앱에서 사용 가능합니다.
+                </p>
 
             </div>
 
             <div class="tabcontent">
-                취소/환불
+                <h5>취소/환불</h5>
+                <br>
+                <p>
+                    - 스토어 상품의 취소기한은 구매일로부터 70일 입니다.
+                    <br><br>
+                    - 구매취소는 취소기한 내 마이시네마 > 예매/구매내역에서만 가능합니다.(현장취소 불가)
+                    <br><br>
+                    - 구매하신 상품은 부분환불 및 현금환불이 불가합니다.
+                    <br><br>
+                    - 여러 상품을 한 번에 구매한 경우 일괄 취소만 가능하며, 사용한 상품이 있을 때는 환불 불가합니다.
+                    <br><br><br>
+                </p>
 
-                - 스토어 상품의 취소기한은 구매일로부터 70일 입니다.
-
-                - 구매취소는 취소기한 내 마이시네마 > 예매/구매내역에서만 가능합니다.(현장취소 불가)
-
-                - 구매하신 상품은 부분환불 및 현금환불이 불가합니다.
-
-                - 여러 상품을 한 번에 구매한 경우 일괄 취소만 가능하며, 사용한 상품이 있을 때는 환불 불가합니다.
-
-
-                기타
-
-                - 본 관람권은 기재된 유효기간까지 (관람일 기준) 사용할 수 있습니다.
-
-                - 유효기간 만료 시, 홈페이지 1:1 문의를 통해 발급일로부터 5년까지 연장할 수 있으며, 1회 연
-                장 시 단위는 3개월입니다.
+                <h5>기타</h5>
+                <br>
+                <p>
+                    - 본 관람권은 기재된 유효기간까지 (관람일 기준) 사용할 수 있습니다.
+                    <br><br>
+                    - 유효기간 만료 시, 홈페이지 1:1 문의를 통해 발급일로부터 5년까지 연장할 수 있으며, 1회 연
+                    장 시 단위는 3개월입니다.
+                </p>
+                
             </div>
         </div>
     </div>
@@ -163,5 +163,5 @@
 
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('static', filename='store_ticket.js') }}"></script>
+<script src="{{ url_for('static', filename='store_vipticket.js') }}"></script>
 {% endblock %}

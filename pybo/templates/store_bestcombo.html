@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% block title %}
+스토어목록 - 필름아티크
+{% endblock %}
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='store_bestcombo.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<div id="contents">
+
+    <!-- 상품 상세정보 -->
+
+    <div class="pro_detail">
+        <!-- 상품 이미지 -->
+        <div class="main_img">
+            <img src="{{ url_for('static', filename='img/BEST COMBO 교환권.png') }}" alt="베스트콤보">
+        </div>
+
+        <!-- 상품정보 및 구매버튼 -->
+        <div class="pro_info">
+            <table class="pro_table">
+                <colgroup>
+                    <col style="width: 35%;">
+                    <col style="width: auto;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="title">BEST COMBO 교환권</th>
+                    </tr>
+
+                    <tr>
+                        <td class="left"></td>
+                        <td class="right" scope="row">
+                            <span class="tit_pirce">
+                                14,500
+                                <em>원</em>
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td class="left" scope="row">구성품</td>
+                        <td class="right">반반콤보 or 싱글스낵콤보 중 택1</td>
+                    </tr>
+
+                    <tr>
+                        <td class="left" scope="row">구매제한</td>
+                        <td class="right">1인 1일 10매</td>
+                    </tr>
+
+                    <tr>
+                        <td class="left" scope="row">유효기간</td>
+                        <td class="right">스위트샵 상품권 24 개월</td>
+                    </tr>
+
+                    <tr>
+                        <td class="left" scope="row">사용가능 영화관</td>
+                        <td>
+                            <select name="select" id="select">
+                                <option>선택없음</option>
+                                <option>홍대점</option>
+                                <option>강남스트리트점</option>
+                                <option>수원역점</option>
+                                <option>대전성심당점</option>
+                                <option>부산갈매기점</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            
+            <!-- 상세 정보 아래 구매수량 -->
+
+            <div class="box_num">
+                <button class="mins">-</button>
+                <div class="basic_num">1</div>
+                <button class="plus">+</button>
+            </div>
+
+            <!-- 총 상품 금액 -->
+
+            <div class="last_price">
+                총 상품금액
+                <strong class="end_price">
+                    14,500
+                    <em>원</em>
+                </strong>
+            </div>
+
+            <!-- 선물하기 및 구매하기 버튼 -->
+
+            <div class="present_buy">
+                <button class="presents">선물하기</button>
+                <button class="buy">구매하기</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 사용방법 / 유의사항 -->
+
+    <div class="howtouse">
+
+        <div id='tab'>
+            <ul class="tab_menu">
+                <li class="active" tabindex="0">사용방법</li>
+                <li tabindex="0">유의사항</li>
+            </ul>
+
+            <div class="tabcontent">
+                <h5>사용방법</h5>
+                <br><br>
+                <p>
+
+                    - 구성 : 반반콤보 or 싱글스낵콤보 중, <span style="color: red;">택1</span> (롯데시네마 회원 ID당 1일 10매 구매 가능)
+                    <br><br><br><br>
+                    - 유효기간은 24개월로 사용일 기준입니다.
+                    <br><br>
+                    - 결제가 완료된 상품은 마이시네마 > 예매/구매내역에서 확인 가능합니다.
+                    <br><br>
+                    - 매점교환권은 롯데시네마 APP [바로팝콘]에서 사용 영화관 및 품목 선택 후, 결제수단에서 '교환권' 선택시 사용가능합니다.
+                    <br><br>
+                    - 영화관 스위트샵(매점) 방문 후, 바코드를 제시하는 방법으로도 사용가능합니다.
+                    <br><br>
+                    - 선물한 매점교환권은 문자쿠폰(MMS)으로 발송되며, 수신자가 롯데시네마 APP에서 비밀번호와 함께 등록하여 사용 가능합니다.
+                    <br><br>
+                    - 선물한 상품은 마이시네마 > 예매/구매내역 메뉴에서 30일 내 재발송 1회만 가능하며, 받는 사람 번호는 변경 불가합니다.
+                </p>
+                
+                <p class="impro">
+                    ※ 정해진 상품 외 기타 상품 변경은 불가하며, 영화관 메뉴운영에 따라 교환가능 상품은 변경될 수 있습니다.
+                    <br><br><br>
+                    ※ 일부 팝콘 맛변경 및 별도 음료 업그레이드 등 추가 발생 금액은 별도 결제가 필요합니다.
+                    <br><br>
+                    <span class="yellow">
+                        ※ 유의사항에서 매점교환권 사용불가 지점을 확인해주세요.                
+                    </span>                    
+                </p>
+
+            </div>
+
+            <div class="tabcontent">
+                <h5>취소/환불</h5>
+                <br>
+                <p>
+                    - 스토어 상품의 취소기한은 구매일로부터 70일 입니다.
+                    <br><br>
+                    - 구매취소는 취소기한 내 마이시네마 > 예매/구매내역에서만 가능합니다.(현장취소 불가)
+                    <br><br>
+                    - 구매하신 상품은 부분환불 및 현금환불이 불가합니다.
+                    <br><br>
+                    - 여러 상품을 한 번에 구매한 경우 일괄 취소만 가능하며, 사용한 상품이 있을 때는 환불 불가합니다.
+                    <br><br><br>
+                </p>
+
+                <h5>기타</h5>
+                <br>
+                <p>
+                    - 본 관람권은 기재된 유효기간까지 (관람일 기준) 사용할 수 있습니다.
+                    <br><br>
+                    - 유효기간 만료 시, 홈페이지 1:1 문의를 통해 발급일로부터 5년까지 연장할 수 있으며, 1회 연
+                    장 시 단위는 3개월입니다.
+                </p>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='store_bestcombo.js') }}"></script>
+{% endblock %}
