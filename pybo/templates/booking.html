@@ -9,7 +9,7 @@
 <div class="booking">
 
   <!-- 좌측 네비 -->
-  <div class="booking_menu">
+  <div class="booking_menu d-flex flex-column text-center">
     <ul>
       <li class="active"><strong>01<br>상영시간</strong></li>
       <li><strong>02<br>인원/좌석</strong></li>
@@ -22,58 +22,59 @@
   <div class="booking_content">
 
     <!-- 01 단계 -->
-    <div class="step active">
+    <div class="step">
+      <ul>
+        <li>영화관</li>
+        <li>영화</li>
+        <li>날짜/시간</li>
+      </ul>
 
-      <!-- 지역 -->
-      <div class="select_group region">
-        <h4>지역 선택</h4>
-        <ul>
-          <li><button>서울</button></li>
-          <li><button>경기</button></li>
-          <li><button>대전</button></li>
-          <li><button>부산</button></li>
-        </ul>
-      </div>
+      <!-- 1. 지역 + 영화관 -->
+      <div class="select_group theater_wrap d-flex">
+        <div class="region_list flex-grow-1">
+          <ul class="list-unstyled">
+            <li class="active">서울</li>
+            <li>경기</li>
+            <li>대전</li>
+            <li>부산</li>
+          </ul>
+        </div>
 
-      <!-- 영화관 -->
-      <div class="select_group theater">
-        <h4>영화관 선택</h4>
-        <ul>
-          <li data-region="서울"><button>강남스트리트점</button></li>
-          <li data-region="서울"><button>홍대점</button></li>
-          <li data-region="경기"><button>수원역점</button></li>
-          <li data-region="대전"><button>대전성심당점</button></li>
-          <li data-region="부산"><button>부산갈매기점</button></li>
-        </ul>
+        <div class="theater_list flex-grow-1">
+          <ul class="list-unstyled">
+            <li data-region="서울">강남스트리트점</li>
+            <li data-region="서울">홍대점</li>
+            <li data-region="경기">수원역점</li>
+            <li data-region="대전">대전성심당점</li>
+            <li data-region="부산">부산갈매기점</li>
+          </ul>
+        </div>
       </div>
 
       <!-- 영화 -->
       <div class="select_group movie">
-        <h4>영화 선택</h4>
         <ul>
           <li><button>범죄도시</button></li>
           <li><button>파묘</button></li>
         </ul>
       </div>
       <div class="datetime">
-      <!-- 날짜 -->
-      <div class="select_group date">
-        <h4>날짜 선택</h4>
-        <ul>
-          <li><button>04-15</button></li>
-          <li><button>04-16</button></li>
-        </ul>
-      </div>
+        <!-- 날짜 -->
+        <div class="select_group date">
+          <ul>
+            <li><button>04-15</button></li>
+            <li><button>04-16</button></li>
+          </ul>
+        </div>
 
-      <!-- 시간 -->
-      <div class="select_group time">
-        <h4>시간 선택</h4>
-        <ul>
-          <li><button>12:00</button></li>
-          <li><button>15:00</button></li>
-        </ul>
+        <!-- 시간 -->
+        <div class="select_group time">
+          <ul>
+            <li><button>12:00</button></li>
+            <li><button>15:00</button></li>
+          </ul>
+        </div>
       </div>
-</div>
     </div>
 
   </div>

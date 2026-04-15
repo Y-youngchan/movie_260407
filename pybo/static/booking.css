@@ -9,7 +9,7 @@
 
 /* 좌측 메뉴 */
 .booking_menu {
-  width: 170px;
+  width: 120px;
   margin: 0 0 0 auto;
 }
 .booking_menu ul{
@@ -29,7 +29,7 @@
     background-color: #fff;
 }
 .booking_menu ul li.active {
-  background-color: #111;
+  background-color: #ff0000;
   color: #fff;
   opacity: 1;
 }
@@ -46,16 +46,94 @@
     margin-top: 73.5px;
     margin-left: -30px;
     background-color: #fff;
-    padding: 30px;
-}
-.step {
-    display: none;
+    /* padding: 30px; */
 }
 
-.step.active {
+
+/* 우측 상단 메뉴 */
+.step ul{
     display: flex;
-    gap: 20px;
+    padding-left: 0;
 }
+.step > ul li{
+    border: 1px solid #ccc;
+    text-align: center;
+    padding-top: 20px;
+}
+.step > ul li:nth-of-type(1){
+    width: 431px;
+    height: 68px;
+    font-size: 17px;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #000;
+} 
+.step > ul li:nth-of-type(2){
+    width: 433px;
+    height: 68px;
+    font-size: 17px;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #000;
+} 
+.step > ul li:nth-of-type(3){
+    width: 616px;
+    height: 68px;
+    font-size: 17px;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #000;
+} 
+
+
+
+.theater_wrap {
+    display: flex;
+    border: 1px solid #ddd;
+}
+.region_list {
+    width: 215px;
+    display: flex;
+    flex-direction: column;
+    background: #f5f5f5;
+}
+
+.region_list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.region_list li {
+    padding: 15px;
+    cursor: pointer;
+}
+
+/* 선택된 지역 */
+.region_list li.active {
+    background: #fff;
+    font-weight: bold;
+}
+.theater_list {
+    width: 215px;
+    background: #fff;
+}
+
+.theater_list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.theater_list li {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+.theater_list li.selected {
+    color: red;
+    font-weight: bold;
+}
+
 .select_group {
     margin-bottom: 25px;
 }
