@@ -63,8 +63,7 @@
                             </td>
 
 {#                            <td>{{ notice.userid.username }}</td>#}
-                            <td>
-                            </td>
+                            <td>{{ notice.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}
