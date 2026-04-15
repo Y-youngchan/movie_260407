@@ -13,7 +13,7 @@
   margin: 0 0 0 auto;
 }
 .booking_menu ul{
-    height: 1072px;
+    height: 1101px;
     padding-top: 73.5px;
     text-align: center;
 }
@@ -22,8 +22,7 @@
     width: 90px;
     height: 268px;
     padding-top: 90px;
-    margin-bottom: 10px;
-    opacity: 0.4;
+    opacity: 1;
     /* transition: 0.3s; */
     border: 1px solid #000;
     background-color: #fff;
@@ -43,8 +42,8 @@
     width: 1207px;
     height: 1101px;
     margin: 0 auto;
-    margin-top: 73.5px;
-    margin-left: -30px;
+    margin-top: 70px;
+    margin-left: 2px;
     background-color: #fff;
     /* padding: 30px; */
 }
@@ -85,16 +84,11 @@
     background-color: #000;
 } 
 
-
-
+/* 영화관선택 */
 .theater_wrap {
-    display: flex;
     border: 1px solid #ddd;
 }
 .region_list {
-    width: 215px;
-    display: flex;
-    flex-direction: column;
     background: #f5f5f5;
 }
 
@@ -109,13 +103,13 @@
     cursor: pointer;
 }
 
-/* 선택된 지역 */
-.region_list li.active {
+/* 선택된 지역*/
+/*.region_list li.active {
     background: #fff;
     font-weight: bold;
 }
-.theater_list {
-    width: 215px;
+.theater_list { 
+    width: 215px; 
     background: #fff;
 }
 
@@ -171,5 +165,5 @@
 }
 .datetime {
   display: flex;
-  flex-direction: column;
-}
+  flex-direction: column; 
+} */

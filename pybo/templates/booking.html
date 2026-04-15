@@ -9,8 +9,8 @@
 <div class="booking">
 
   <!-- 좌측 네비 -->
-  <div class="booking_menu d-flex flex-column text-center">
-    <ul>
+  <div class="booking_menu">
+    <ul class="d-flex flex-column text-center">
       <li class="active"><strong>01<br>상영시간</strong></li>
       <li><strong>02<br>인원/좌석</strong></li>
       <li><strong>03<br>결제</strong></li>
@@ -31,7 +31,7 @@
 
       <!-- 1. 지역 + 영화관 -->
       <div class="select_group theater_wrap d-flex">
-        <div class="region_list flex-grow-1">
+        <div class="region_list flex-column">
           <ul class="list-unstyled">
             <li class="active">서울</li>
             <li>경기</li>
@@ -40,7 +40,7 @@
           </ul>
         </div>
 
-        <div class="theater_list flex-grow-1">
+        <div class="theater_list flex-column">
           <ul class="list-unstyled">
             <li data-region="서울">강남스트리트점</li>
             <li data-region="서울">홍대점</li>

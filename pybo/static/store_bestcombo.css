@@ -176,6 +176,21 @@
     cursor: pointer;
 }
 
+/* 구매 */
+.present_buy a {
+    flex: 1;
+    height: 50px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background: red;
+    color: #fff;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* 선물 */
 .presents {
     background: #414141;
@@ -257,7 +272,7 @@ button:disabled {
     
     background: #fff;
     border-top: 1px solid #aaa;
-    
+    margin-top: -2px;
     padding: 40px;
     font-size: 15px;
 
@@ -269,7 +284,10 @@ button:disabled {
     color: red;
 }
 
-.tabcontent .yellow {
-        
+.tabcontent .yellow {        
     background: linear-gradient(transparent 0%, #ffff80 60%);
+}
+
+.tabcontent .small {
+    font-size: 10px;
 }

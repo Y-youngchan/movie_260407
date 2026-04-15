@@ -47,7 +47,7 @@
 
                 <tbody>
                 {% if notice_list %}
-                    {% for notice in notice_list.items %}  <!--현재 페이지 해당 게시물-->
+                    {% for cs in notice_list.items %}  <!--현재 페이지 해당 게시물-->
                         <tr>
                             <td>{{ loop.index }}</td>
 {#                            <td>{{ notice_list.total - (notice_list.page - 1) * notice_list.per_page - loop.index0 }}</td>#}
