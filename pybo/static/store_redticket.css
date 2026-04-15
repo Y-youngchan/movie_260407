@@ -26,7 +26,7 @@
 .main_img {
     margin-top: 60px;
     text-align: center;
-}button
+}
 
 .main_img img {
     width: 670px;
@@ -165,13 +165,28 @@
     gap: 6px;
 }
 
-/* 버튼 공통 */
+/* 버튼 */
 .present_buy button {
     flex: 1;
     height: 50px;
     border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
+}
+
+/* 구매 */
+.present_buy a {
+    flex: 1;
+    height: 50px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    background: red;
+    color: #fff;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 선물 */
