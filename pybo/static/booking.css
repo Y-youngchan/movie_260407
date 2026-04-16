@@ -40,9 +40,9 @@
 /* 우측 예매메뉴 */
 .booking_content {
     width: 1207px;
-    height: 1101px;
+    height: 1030px;
     margin: 0 auto;
-    margin-top: 70px;
+    margin-top: 75px;
     margin-left: 2px;
     background-color: #fff;
     /* padding: 30px; */
@@ -53,6 +53,7 @@
 .step ul{
     display: flex;
     padding-left: 0;
+    margin-bottom: 0;
 }
 .step > ul li{
     border: 1px solid #ccc;
@@ -84,8 +85,14 @@
     background-color: #000;
 } 
 
+/* 상세옵션 */
+.detailtotal{
+    display: flex;
+}
+
 /* 영화관선택 */
 .theater_wrap {
+    width: 351.53px;
     border: 1px solid #ddd;
 }
 .region_list {
@@ -93,77 +100,148 @@
 }
 
 .region_list ul {
+    display: flex;
+    flex-direction: column;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .region_list li {
+    width: 165px;
     padding: 15px;
     cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* 선택된 지역*/
-/*.region_list li.active {
+.region_list li.active {
     background: #fff;
     font-weight: bold;
 }
-.theater_list { 
-    width: 215px; 
+.theater_list{ 
     background: #fff;
 }
-
 .theater_list ul {
+    height: 960px;
+    display: flex;
+    flex-direction: column;
     list-style: none;
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
-.theater_list li {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+/* .theater_list ul::-webkit-scrollbar {
+	width: 20%;
+    background-color: #ff0000;
 }
+
+.theater_list ul::-webkit-scrollbar-thumb {
+    background: rgba(220, 20, 60); 스크롤바 색상
+    border-radius: 10px; 스크롤바 둥근 테두리
+}
+
+.theater_list ul::-webkit-scrollbar-track {
+    background: rgba(220, 20, 60, .1);  스크롤바 뒷 배경 색상
+} */
+
+.theater_list li {
+    width: 175px;
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .theater_list li.selected {
     color: red;
     font-weight: bold;
 }
 
+/* 그룹 간격 */
 .select_group {
     margin-bottom: 25px;
 }
-.select_group h4{
+
+/* 영화 선택 */
+.movie ul{
+    width: 353.17px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.movie ul > li{
+    height: 50px;
+    padding: 15px;
+    cursor: pointer;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-.select_group ul {
+.movie li.selected {
+    color: red;
+    font-weight: bold;
+}
+
+/* 등급별 색상 */
+.movie_age {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  line-height: 22px;
+  margin-right: 6px;
+  font-weight: bold;
+}
+.age-19 {
+  background-color: #d32f2f; /* 빨강 */
+}
+.age-15 {
+  background-color: #f57c00; /* 주황 */
+}
+.age-12 {
+  background-color: #1976d2; /* 파랑 */
+}
+.age-all {
+  background-color: #388e3c; /* 초록 */
+}
+
+/* .select_group ul {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-}
-.select_group ul li{
+} */
+/* .select_group ul li{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.select_group button {
+} */
+/* .select_group button {
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: #fff;
     cursor: pointer;
-}
+} */
 
-.select_group button:hover {
+/* .select_group button:hover {
     background: #eee;
-}
+} */
 
-.select_group button.selected {
+/* .select_group button.selected {
     background: red;
     color: #fff;
-}
-.theater li {
+} */
+/* .theater li {
   display: none;
-}
-.datetime {
+} */
+/* .datetime {
   display: flex;
   flex-direction: column; 
-} */
+}  */

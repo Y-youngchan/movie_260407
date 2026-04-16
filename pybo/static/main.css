@@ -451,13 +451,13 @@ main {
 .store a img{
     height: 50%;
 }
-.goods{
+.noticeicon{
     width: 231px;
     height: 164px;
     border-radius: 5px;
     background-color: #eaeaea;
 }
-.goods a{
+.noticeicon a{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -467,7 +467,7 @@ main {
     color: black;
     font-family: "Franklin Gothic Medium";
 }
-.goods a img{
+.noticeicon a img{
     height: 50%;
 }
 .movie{

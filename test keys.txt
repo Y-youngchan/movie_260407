@@ -1,0 +1,3 @@
+토스페이먼트 공용 테스트 키
+클라이언트 키 (SDK): test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm
+시크릿 키 (API): test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6 
