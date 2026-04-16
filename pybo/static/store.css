@@ -136,28 +136,8 @@ li::marker {
     align-items: flex-start;
 }
 
-.normal {
-    cursor: pointer;
-}
-
-.vip {
-    cursor: pointer;
-}
-
 .snack_drink img {    
     width: 310px;
-}
-
-.bestcom {
-    cursor: pointer;
-}
-
-.singcom {
-    cursor: pointer;
-}
-
-.snacks {
-    cursor: pointer;
 }
 
 /* 단일상품 코너 */
@@ -223,18 +203,6 @@ li::marker {
     width: 300px;
 }
 
-.popcorn_L {
-    cursor: pointer;
-}
-
-.popcorn_M {
-    cursor: pointer;
-}
-
-.drink {
-    cursor: pointer;
-}
-
 /* 시네마 굿즈 */
 /* 진격의 거인 */
 
@@ -293,18 +261,6 @@ li::marker {
 
 .titan_merch img {    
     width: 300px;
-}
-
-.jin_eren {
-    cursor: pointer;
-}
-
-.jin_mikasa {
-    cursor: pointer;
-}
-
-.jin_levi {
-    cursor: pointer;
 }
 
 /* 체인소 맨 */
@@ -366,14 +322,61 @@ li::marker {
     width: 300px;
 }
 
-.chain_denji {
-    cursor: pointer;
+/* 귀멸의 칼날 */
+
+.demon_slayer {
+    width:1207px;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 30px;
 }
 
-.chain_makima {
-    cursor: pointer;
+.demon_slayer h3 {
+    margin-top: 10px;    
+    position: relative;
+    padding: 20px 15px;
+    font-size: 16px;
 }
 
-.chain_reje {
-    cursor: pointer;
+.demon_slayer a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.demon_slayer h4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+}
+
+.demon_slayer p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+}
+
+.demon_slayer span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.demon_slayer em {
+    font-style: normal;
+    font-size: 16px;
+    font-weight: normal;
+    color: gray;
+}
+
+.demon_slayer {
+    display: flex;
+    gap: 140px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.demon_slayer img {    
+    width: 300px;
 }

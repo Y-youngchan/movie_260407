@@ -34,7 +34,7 @@ navItems.forEach((li) => {
         const target = document.querySelector(targetId);
 
         // ease-out 적용된 스크롤 실행
-        smoothScrollTo(target.offsetTop - 60, 10);
+        smoothScrollTo(target.offsetTop - 70, 10);
 
         // active 처리
         navItems.forEach(item => item.classList.remove("active"));

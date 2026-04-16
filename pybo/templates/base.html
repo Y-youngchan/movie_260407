@@ -67,6 +67,34 @@
 
     <main>
 
+        <!-- 우측 사이드 바 -->
+
+        <div class="side-bar" style="padding-top: 30px;">
+            <div id="quick_menu" class="quick_menu" style="top: 60px;">
+
+                <a href="" class="quick-booking">
+                    예매하기
+                </a>
+
+                <a href="" class="quick-store">
+                    매점/굿즈
+                </a>
+
+                <a href="" class="quick-notice">
+                    공지사항
+                </a>
+
+                <a href="" class="quick-nowshow">
+                    현재상영작
+                </a>
+
+                <a href="" class="quick-top">
+                    T O P
+                </a>
+
+            </div>
+        </div>
+
         <!--기본 템플릿 안에 삽입될 내용 start-->
         {% block content %}
 
@@ -78,6 +106,9 @@
         <div id="banner_AD">
             <img src="{{ url_for('static', filename='img/banner_AD.jpg') }}" alt="영화광고">
         </div>
+
+        
+
     </main>
 
     <footer>

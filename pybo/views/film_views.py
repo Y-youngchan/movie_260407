@@ -75,6 +75,25 @@ def store_chain_denji():
 def store_chain_makima():
     return render_template('store_chain_makima.html')
 
+
+@bp.route('/store/chain_reje', methods=['GET'])
+def store_chain_reje():
+    return render_template('store_chain_reje.html')
+
+# 귀멸의 칼날
+
+@bp.route('/store/ds_holo_buttonbadge', methods=['GET'])
+def store_ds_holo_buttonbadge():
+    return render_template('store_ds_holo_buttonbadge.html')
+
+@bp.route('/store/ds_char_buttonbadge', methods=['GET'])
+def store_ds_char_buttonbadge():
+    return render_template('store_ds_char_buttonbadge.html')
+
+@bp.route('/store/ds_grap_buttonbadge', methods=['GET'])
+def store_ds_grap_buttonbadge():
+    return render_template('store_ds_grap_buttonbadge.html')
+
 # 스토어 결제
 @bp.route('/store/pay', methods=['GET'])
 def store_pay():

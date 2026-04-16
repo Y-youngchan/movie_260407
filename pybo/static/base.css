@@ -94,6 +94,27 @@ main{
     justify-content: center;
 }
 
+/* 우측 사이드 바 */
+
+.side-bar {
+    width: 120px;
+    float: right;
+    position: sticky;
+    text-align: center;
+    top: 0;
+    right: 10px;
+    background-color: greenyellow;
+}
+
+.side-bar .quick_menu a {
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.side-bar .quick_menu .quick-top {
+    text-decoration: none;
+}
 
 /* footer */
 footer{
