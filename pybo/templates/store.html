@@ -80,7 +80,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a class="singcom">
+                <a href="{{ url_for('film.store_singlecombo') }}" class="singcom">
                     <div class="singcom_img">
                         <img src="../static/img/SINGLE COMBO 교환권.png" alt="싱글콤보">
                     </div>
@@ -93,7 +93,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a class="snacks">
+                <a href="{{ url_for('film.store_snacksvoucher') }}" class="snacks">
                     <div class="snacks_img">
                         <img src="../static/img/SNACKS 교환권.png" alt="스낵들">
                     </div>
@@ -112,12 +112,12 @@
 
             <h3 class="sub_tit0"></h3>
             <div class="Single_pro">
-                <a class="popcorn_L">
+                <a href="{{ url_for('film.store_popcorn_large') }}" class="popcorn_L">
                     <div class="lar_img">
-                        <img src="../static/img/popcorn_M.png" alt="단품라지">
+                        <img src="../static/img/popcorn_L.png" alt="단품라지">
                     </div>
                     <div class="popcorn_larg">
-                        <h4>팝콘(L)</h4>
+                        <h4>팝콘(L) 교환권</h4>
                         <P>고소/달달한 빅사이즈 팝콘</P>
                     </div>
                     <div class="pop_L_pri">
@@ -126,12 +126,12 @@
                     </div>
                 </a>
 
-                <a class="popcorn_M">
+                <a href="{{ url_for('film.store_popcorn_medium') }}" class="popcorn_M">
                     <div class="mid_img">
-                        <img src="../static/img/popcorn_L.png" alt="단품미디움">
+                        <img src="../static/img/popcorn_M.png" alt="단품미디움">
                     </div>
                     <div class="popcorn_mid">
-                        <h4>팝콘(M)</h4>
+                        <h4>팝콘(M) 교환권</h4>
                         <P>고소/달달한 기본사이즈 팝콘</P>
                     </div>
                     <div class="pop_M_pri">
@@ -140,12 +140,12 @@
                     </div>
                 </a>
 
-                <a class="drink">
+                <a href="{{ url_for('film.store_selfdrink') }}" class="drink">
                     <div class="drink_img">
                         <img src="../static/img/drink_L.png" alt="단품음료">
                     </div>
                     <div class="sing_dri">
-                        <h4>셀프 탄산</h4>
+                        <h4>셀프 탄산 교환권</h4>
                         <P>기본사이즈 자체가 크다! 시원하고 청량감 MAX!</P>
                     </div>
                     <div class="snacks_pri">
@@ -159,12 +159,12 @@
 
             <h3 id="sub_tit3">시네마굿즈</h3>
             <div class="titan_merch">
-                <a class="jin_eren">
+                <a href="{{ url_for('film.store_jin_eren') }}" class="jin_eren">
                     <div class="eren_img">
                         <img src="../static/img/jin_eren.jpg" alt="에렌 예거">
                     </div>
                     <div class="eren">
-                        <h4>진격의 거인 VIVID 아크릴 키홀더 예거</h4>
+                        <h4>진격의 거인 아크릴 예거 키홀더 교환권</h4>
                         <P>진격의 거인 아크릴 키홀더</P>
                     </div>
                     <div class="eren_pri">
@@ -172,26 +172,26 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a class="jin_mikasa">
+                <a href="{{ url_for('film.store_jin_mikasa') }}" class="jin_mikasa">
                     <div class="mikasa_img">
                         <img src="../static/img/jin_mikasa.jpg" alt="미카사">
                     </div>
                     <div class="mikasa">
-                        <h4>진격의 거인 VIVID 아크릴 키홀더 미카사</h4>
-                        <P>진격의 거인 아크릴 키홀더</P>
+                        <h4>진격의 거인 아크릴 미카사 키홀더 교환권</h4>
+                        <P>진격의 거인 VIVID 아크릴 키홀더</P>
                     </div>
                     <div class="mikasa_pri">
                         <span>22,500</span>
                         <em>원</em>
                     </div>
                 </a>
-                <a class="jin_levi">
+                <a href="{{ url_for('film.store_jin_levi') }}" class="jin_levi">
                     <div class="levi_img">
-                        <img src="../static/img/jin_levi.jpg" alt="에렌 예거">
+                        <img src="../static/img/jin_levi.jpg" alt="리바이">
                     </div>
                     <div class="levi">
-                        <h4>진격의 거인 VIVID 아크릴 키홀더 예거</h4>
-                        <P>진격의 거인 아크릴 키홀더</P>
+                        <h4>진격의 거인 아크릴 리바이 키홀더 교환권</h4>
+                        <P>진격의 거인 VIVID 아크릴 키홀더</P>
                     </div>
                     <div class="levi_pri">
                         <span>22,500</span>
@@ -204,12 +204,12 @@
 
             <h3 class="sub_tit0"></h3>
             <div class="chain_merch">
-                <a class="chain_denji">
+                <a href="{{ url_for('film.store_chain_denji') }}" class="chain_denji">
                     <div class="denji_img">
                         <img src="../static/img/chain_denji.jpg" alt="덴지">
                     </div>
                     <div class="denji">
-                        <h4>체인소 맨 레제편 아크릴스탠드 덴지</h4>
+                        <h4>체인소 맨 레제편 덴지 아크릴스탠드 교환권</h4>
                         <P>체인소 맨 아크릴스탠드</P>
                     </div>
                     <div class="denji_pri">
@@ -217,12 +217,12 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a class="chain_makima">
+                <a href="{{ url_for('film.store_chain_makima') }}" class="chain_makima">
                     <div class="makima_img">
                         <img src="../static/img/chain_makima.jpg" alt="마키마">
                     </div>
                     <div class="makima">
-                        <h4>체인소 맨 레제편 아크릴스탠드 마키마</h4>
+                        <h4>체인소 맨 레제편 마키마 아크릴스탠드 교환권</h4>
                         <P>체인소 맨 아크릴스탠드</P>
                     </div>
                     <div class="makima_pri">
@@ -235,7 +235,7 @@
                         <img src="../static/img/chain_reje.jpg" alt="레제">
                     </div>
                     <div class="reje">
-                        <h4>체인소 맨 레제편 아크릴스탠드 레제</h4>
+                        <h4>체인소 맨 레제편 레제 아크릴스탠드 교환권</h4>
                         <P>체인소 맨 아크릴스탠드</P>
                     </div>
                     <div class="reje_pri">

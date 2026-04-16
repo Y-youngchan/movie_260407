@@ -25,11 +25,12 @@
 ========================= */
 .main_img {
     margin-top: 60px;
+    margin-left: 70px;
     text-align: center;
 }
 
 .main_img img {
-    width: 670px;
+    width: 480px;
 }
 
 /* =========================
@@ -37,6 +38,7 @@
 ========================= */
 .pro_info {
     width: 430px;
+    margin-left: 100px;
 }
 
 /* =========================
@@ -54,7 +56,7 @@
 }
 
 .pro_table th.title {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 400;
     padding: 10px 0;
 }
@@ -165,7 +167,7 @@
     gap: 6px;
 }
 
-/* 버튼 */
+/* 버튼 공통 */
 .present_buy button {
     flex: 1;
     height: 50px;
@@ -276,4 +278,16 @@ button:disabled {
 
     /* 높이 고정 대신 최소 높이 */
     min-height: 300px;
+}
+
+.tabcontent .impro {
+    color: red;
+}
+
+.tabcontent .yellow {        
+    background: linear-gradient(transparent 0%, #ffff80 60%);
+}
+
+.tabcontent .small {
+    font-size: 9px;
 }

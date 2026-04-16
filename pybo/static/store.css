@@ -53,6 +53,10 @@
     text-decoration: none;
 }
 
+.navi-bar li.active {
+    border-bottom: 3px solid #000;
+}
+
 .navi-bar li a:visited {
     color: #000;
 }
@@ -163,6 +167,10 @@ li::marker {
     height: auto;
     margin: 0 auto;
     padding-top: 30px;
+}
+
+.Single_pro .lar_img {
+    padding-bottom: 30px;
 }
 
 .Single_pro h3 {

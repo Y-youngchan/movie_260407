@@ -280,7 +280,7 @@ button:disabled {
     border-top: 1px solid #aaa;
     margin-top: -2px;
     padding: 40px;
-    font-size: 15px;
+    font-size: 13px;
 
     /* 높이 고정 대신 최소 높이 */
     min-height: 300px;
