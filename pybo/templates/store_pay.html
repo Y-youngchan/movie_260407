@@ -9,14 +9,61 @@
 <div class="store_pay_inner">
     <div class="store__pay_page_top"></div>
     <div class="store__pay_page">
-        <div class="menu_name"></div>
-        <div class="payment_sys"></div>
-        <div class="pay"></div>
+        <div class="menu_name">
+            <div class="menu_name_top">
+                <h2>상품정보</h2>
+            </div>
+            <div class="menu_name_main">
+                <div class="product_img">
+                    <img src="{{ url_for('static', filename=product.image) }}">
+                </div>
+                <div class="product_name">
+                    <h3>{{ product.name }}</h3>
+                </div>
+                <div class="product_detail">
+                    <h4>{{ product.detail }}</h4>
+                </div>
+                <div class="product_price">
+                    <h2>{{ product.price }}원</h2>
+                </div>
+            </div>
+        </div>
+        <div class="payment_sys">
+            <div class="payment_sys_top">
+                <h2>결제하기</h2>
+            </div>
+            <div class="payment_sys_main">
+                <div class="pay_menu">
+                    <h5>최종 결제수단</h5>
+                    <!-- <div class="pay_menu_top">
+                        <div class="Credit_Card"></div>
+                        <div class="Account_Transfer"></div>
+                        <div class="Mobile_Payment"></div>
+                    </div>
+                    <div class="pay_menu_bottom">
+                        <div class="Toss_Pay"></div>
+                        <div class="Kakao_Pay"></div>
+                        <div class="Naver_Pay"></div>
+                    </div> -->
+                </div>
+                <div class="pay_button">
+                    <a id="payment-button" href="#">결제하기</a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="store__pay_page_bottom"></div>
 </div>
 {% endblock %}
 
 {% block script %}
+<script src="https://js.tosspayments.com/v1"></script>
+
+<script>
+    const amount = {{ product.price | tojson }};
+    const orderName = {{ product.name | tojson }};
+</script>
+
+<script src="{{ url_for('static', filename='store_pay.js') }}"></script>
 
 {% endblock %}

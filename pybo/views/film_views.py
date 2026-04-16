@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, abort
+import requests
 
 bp = Blueprint('film', __name__, url_prefix='/film')
 
@@ -24,7 +25,68 @@ def store_bestcombo():
 
 @bp.route('/store/pay', methods=['GET'])
 def store_pay():
-    return render_template('store_pay.html')
+    product_id = request.args.get('product_id', type=int)
+
+    products = {
+        1: {
+            "name": "일반 관람권(2D)",
+            "price": 18000,
+            "image": "img/redticket.png",
+            "detail": "일반 관람권(2D) 1매"
+        },
+
+        2: {
+            "name": "VIP 관람권",
+            "price": 25000,
+            "image": "img/blackticket.png",
+            "detail": "VIP 관람권 1매"
+        },
+
+        3: {
+            "name": "BEST COMBO 교환권",
+            "price": 25000,
+            "image": "img/BEST COMBO 교환권.png",
+            "detail": "반반콤보 or 싱글스낵콤보 중 택1"
+        }
+    }
+
+    product = products.get(product_id)
+
+    if not product:
+        abort(404)
+
+    return render_template('store_pay.html', product=product)
+
+@bp.route('/confirm', methods=['POST'])
+def confirm():
+    data = request.json
+
+    url = "https://api.tosspayments.com/v1/payments/confirm"
+
+    headers = {
+        "Authorization": "Basic YOUR_SECRET_KEY"
+    }
+
+    body = {
+        "paymentKey": data['paymentKey'],
+        "orderId": data['orderId'],
+        "amount": data['amount']
+    }
+
+    res = requests.post(url, json=body, headers=headers)
+    return res.json()
+
+@bp.route('/store/pay/success')
+def success():
+    paymentKey = request.args.get('paymentKey')
+    orderId = request.args.get('orderId')
+    amount = request.args.get('amount')
+
+    return f"결제 성공! {orderId}"
+
+@bp.route('/store/pay/fail')
+def fail():
+    return "결제 실패"
 
 @bp.route('/movie/list', methods=['GET'])
 def movie_list():

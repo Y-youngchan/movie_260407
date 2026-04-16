@@ -12,28 +12,188 @@
 
 .store__pay_page {
     width: 1421px;
-    height: 1072px;
+    height: 872px;
     margin: 0 auto;
     display: flex;
     background-color: #fff;
 }
 
 .menu_name {
-    width: 370px;
+    width: 810px;
     height: 100%;
-    background-color: aqua;
+}
+
+.menu_name_top {
+    width: 100%;
+    height: 68px;
+    background-color: black;
+    border-right: 1px solid #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_name_top h2  {
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+}
+
+.menu_name_main {
+    width: 100%;
+    height: 804px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product_img {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.product_img img {
+    width: auto;
+    height: 400px;
+}
+
+.product_name {
+    width: 100%;
+    height: auto;
+}
+
+.product_name h3 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 20px;
+}
+
+.product_detail {
+    width: 100%;
+    height: auto;
+}
+
+.product_detail h4 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 20px;
+}
+
+.product_price {
+    width: 100%;
+    height: auto;
+}
+
+.product_price h2 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 20px;
 }
 
 .payment_sys {
-    width: 599px;
+    width: 611px;
     height: 100%;
-    background-color: gold;
 }
 
-.pay {
-    width: 511px;
-    height: 100%;
-    background-color: bisque;
+.payment_sys_top {
+    width: 100%;
+    height: 68px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment_sys_top h2  {
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+}
+
+.payment_sys_main {
+    width: 100%;
+    height: 804px;
+    background-color: #eaeaea;
+}
+
+.pay_menu {
+    width: 100%;
+    height: 704px;
+    padding: 30px 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.pay_menu_top {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.Credit_Card {
+    flex: 1;
+    height: 100px;
+    background-color: #FF243E;
+    margin-right: 10px;
+}
+
+.Account_Transfer {
+    flex: 1;
+    height: 100px;
+    background-color: #FF243E;
+    margin-right: 10px;
+}
+
+.Mobile_Payment {
+    flex: 1;
+    height: 100px;
+    background-color: #FF243E;
+}
+
+.pay_menu_bottom {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.Toss_Pay {
+    flex: 1;
+    height: 100px;
+    background-color: #FF243E;
+    margin-right: 10px;
+}
+
+.Kakao_Pay {
+    flex: 1;
+    height: 100px;
+    background-color: #FF243E;
+    margin-right: 10px;
+}
+
+.Naver_Pay {
+    flex: 1;
+    height: 100px;
+    background-color: #FF243E;
+}
+
+.pay_button {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF243E;
+}
+
+.pay_button a {
+    font-size: 30px;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .store__pay_page_bottom {
