@@ -10,34 +10,45 @@
 <div class="movie_info">
     <div class="container_top">
         <div class="inner_left">
-            <img src="" alt="">
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="">
         </div>
         <div class="inner_right">
             <div class="movie_title">
-                <h4></h4>
+                <h4>{{ movie.title }}</h4>
             </div>
             <div class="movie_detail">
                 <div class="detail_left">
                     <h5>개&nbsp;&nbsp;&nbsp;봉&nbsp;&nbsp;:</h5>
                     <h5>장&nbsp;&nbsp;&nbsp;르&nbsp;&nbsp;:</h5>
-                    <h5>시&nbsp;&nbsp;&nbsp;간&nbsp;&nbsp;:</h5>
                     <h5>평&nbsp;&nbsp;&nbsp;점&nbsp;&nbsp;:</h5>
                     <h5>출&nbsp;&nbsp;&nbsp;연&nbsp;&nbsp;:</h5>
-                    <h5>소&nbsp;&nbsp;&nbsp;개&nbsp;&nbsp;:</h5>
+                    <h5>등&nbsp;&nbsp;&nbsp;급&nbsp;&nbsp;:</h5>
                 </div>
-                <div class="detail_right"></div>
+                <div class="detail_right">
+                    <h5>{{ movie.release_date }}</h5>
+                    <h5>{{ movie.genres }}</h5>
+                    <h5>{{ movie.vote_average }}</h5>
+                    <h5>{{ movie.actors }}</h5>
+                    <h5>
+                        {% if movie.certification == "정보없음" %}
+                            ALL
+                        {% elif movie.certification == "ALL" %}
+                            ALL
+                        {% else %}
+                            {{ movie.certification }}세
+                        {% endif %}
+                    </h5>
+                </div>
             </div>
             <div class="movie_story">
                 <div class="story_title">
                     <h4>줄거리</h4>
                 </div>
-                <div class="story_content"></div>
+                <div class="story_content">
+                    {{ movie.overview }}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container_bottom">
-        <h4>스틸컷 (5)</h4>
-        <div class="still_img"></div>
     </div>
 </div>
 {% endblock %}
@@ -46,5 +57,4 @@
 <script>
   const movieId = "{{ movie_id }}";
 </script>
-<script src="{{ url_for('static', filename='movie_info/movie_info_1.js') }}"></script>
 {% endblock %}

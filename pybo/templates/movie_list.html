@@ -9,27 +9,22 @@
 <div id="movie_list">
     <h3>현재 상영작</h3>
     <div class="movie">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
+        {% for movie in movies %}
+        <div class="box">
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+
+            <h4>{{ movie.title }}</h4>
+
+            <div class="txtbox">
+                <a href="#">예매하기</a>
+                <a href="/film/movie/{{ movie.tmdb_id }}">상세보기</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='movielist.js') }}"></script>
 <script>const movieInfoUrl = "/film/movie/list/info"</script>
 {% endblock %}

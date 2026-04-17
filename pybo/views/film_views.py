@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, abort, jsonify
+from pybo.models import Movie
 import requests, base64
 
 bp = Blueprint('film', __name__, url_prefix='/film')
@@ -131,11 +132,13 @@ def store_pay():
 
 @bp.route('/movie/list', methods=['GET'])
 def movie_list():
-    return render_template('movie_list.html')
+    movies = Movie.query.all()
+    return render_template('movie_list.html', movies=movies)
 
-@bp.route('/movie/list/info/<int:movie_id>', methods=['GET'])
+@bp.route('/movie/<int:movie_id>', methods=['GET'])
 def movie_info(movie_id):
-    return render_template('movie_info/movie_info_1.html', movie_id=movie_id)
+    movie = Movie.query.filter_by(tmdb_id=movie_id).first()
+    return render_template('movie_info/movie_info_1.html', movie=movie)
 
 @bp.route('/booking', methods=['GET','POST'])
 def booking():
@@ -144,4 +147,5 @@ def booking():
 @bp.route('/person/seat', methods=['GET','POST'])
 def person_seat():
     return render_template('person_seat.html')
+
 
