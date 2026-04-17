@@ -18,6 +18,8 @@
     border-radius: 5px;
 }
 .movie .box h4{
+    width: 250px;
+    margin: 20px 0;
     font-size: 18px;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

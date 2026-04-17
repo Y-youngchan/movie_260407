@@ -4,8 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
 import config
-# from views.cs_views import notice_list, notice_detail
-from .views import film_views
+from pybo.services.tmdb_service import save_movies
 
 naming_convention = {
     'ix': 'ix_%(column_0_label)s',
@@ -27,6 +26,9 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     from . import models
+
+    with app.app_context():
+        from pybo.models import Movie
 
     #블루프린트 등록
 

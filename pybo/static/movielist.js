@@ -1,6 +1,4 @@
-const API_KEY = "85a24c607dac1e0d9139a903ee0f509b";
-
-fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR`)
+fetch(movieInfoUrl)
   .then(res => res.json())
   .then(data => {
     const boxes = document.querySelectorAll(".movie .box");
