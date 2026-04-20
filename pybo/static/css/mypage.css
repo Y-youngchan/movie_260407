@@ -1,0 +1,203 @@
+@charset "utf-8";
+
+#mypage{
+    color:#333;
+}
+
+/* 공통 */
+.inner{
+    width:1200px;
+    margin:0 auto;
+}
+
+/* 상단 배너 */
+.mypage_banner{
+    background:#333;
+    color:#fff;
+    padding:60px 0;
+}
+
+.mypage_banner h2{
+    font-size:40px;
+    margin-bottom:10px;
+    letter-spacing:2px;
+}
+
+.mypage_banner p{
+    color:#ccc;
+    font-size:16px;
+}
+
+/* 본문 */
+.mypage_wrap{
+    display:flex;
+    gap:40px;
+    padding:50px 0 80px;
+}
+
+/* 좌측 메뉴 */
+.sidebar{
+    width:220px;
+    flex-shrink:0;
+}
+
+.sidebar h3{
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+.sidebar ul{
+    margin:0;
+    padding:0;
+    border-top:2px solid #333;
+}
+
+.sidebar li{
+    list-style:none;
+    padding:18px 10px;
+    border-bottom:1px solid #eee;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.sidebar li.active{
+    font-weight:bold;
+    color:#e50914;
+}
+
+.sidebar li a{
+    display:block;
+    text-decoration:none;
+    color:#333;
+}
+
+/* 우측 콘텐츠 */
+.mypage_content{
+    flex:1;
+}
+
+.tab_panel{
+    display:none;
+}
+
+.tab_panel.show{
+    display:block;
+}
+
+.tab_panel h4{
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+/* 내역 박스 */
+.history_box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:1px solid #eee;
+    padding:25px;
+    margin-bottom:15px;
+}
+
+.history_box strong{
+    display:block;
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.history_box p{
+    font-size:14px;
+    color:#666;
+    margin-bottom:6px;
+}
+
+.right{
+    text-align:right;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 14px;
+    background:#333;
+    color:#fff;
+    font-size:13px;
+}
+
+.badge.gray{
+    background:#777;
+}
+
+.right button{
+    display:block;
+    margin-top:12px;
+    border:0;
+    background:#e50914;
+    color:#fff;
+    padding:10px 16px;
+    cursor:pointer;
+}
+
+.right button:hover{
+    opacity:0.9;
+}
+
+/* 빈 내역 */
+.empty_box{
+    border:1px solid #eee;
+    padding:40px;
+    text-align:center;
+    color:#888;
+}
+
+/* 회원정보 */
+.info_table{
+    border-top:2px solid #333;
+}
+
+.info_table div{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    border-bottom:1px solid #eee;
+}
+
+.info_table span{
+    background:#f8f8f8;
+    padding:18px;
+    font-weight:bold;
+}
+
+.info_table p{
+    margin:0;
+    padding:18px;
+}
+
+/* 반응형 */
+@media (max-width:1280px){
+    .inner{
+        width:95%;
+    }
+}
+
+@media (max-width:900px){
+    .mypage_wrap{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+    }
+
+    .history_box{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .right{
+        text-align:left;
+    }
+
+    .info_table div{
+        grid-template-columns:1fr;
+    }
+}

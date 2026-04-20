@@ -1,12 +1,34 @@
 from datetime import datetime
 
-from flask import Blueprint, jsonify, render_template, request, abort, jsonify
+from flask import Blueprint, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
 from pybo import db
-from pybo.models import Movie, Schedule, Screen, Theater
+from pybo.models import Movie, Schedule, Screen, Theater, User, Reservation, Order
+
 from sqlalchemy import func
 import requests, base64
 
 bp = Blueprint('film', __name__, url_prefix='/film')
+
+# 마이페이지
+
+@bp.route('/mypage', methods=['GET', 'POST'])
+def mypage():
+    user_id = session.get('user_id')
+
+    if not user_id:
+        return redirect(url_for('auth.login'))
+
+    user = User.query.get(user_id)
+
+    reservations = Reservation.query.filter_by(user_id=user.id).all()
+    orders = Order.query.filter_by(user_id=user.id).all()
+
+    return render_template(
+        'mypage.html',
+        user=user,
+        reservations=reservations,
+        orders=orders
+    )
 
 @bp.route('/event', methods=['GET'])
 def event():
