@@ -27,8 +27,8 @@
                     <img src="{{ url_for('static', filename='/img/filmatique_red.png') }}" alt="로고">
                 </a>
             </div>
-
-            <nav>
+            <div class="header-sticky">
+                <nav>
                 <div class="topnav">
                     <ul>
                         <li><a href="{{ url_for('film.movie_list') }}">예 매</a></li>
@@ -61,7 +61,9 @@
                         <a href="{{ url_for('film.movie_list') }}">바로 예매</a>
                     </li>
                 </ul>
-            </div>   
+            </div>
+            </div>
+               
         </div>
     </header>
 
@@ -69,27 +71,31 @@
 
         <!-- 우측 사이드 바 -->
 
-        <div class="side-bar" style="padding-top: 30px;">
+        <div class="side-bar" style="padding-top: 50px;">
             <div id="quick_menu" class="quick_menu" style="top: 60px;">
 
-                <a href="" class="quick-booking">
+                <a href="{{ url_for('film.booking', movie_id=1) }}" class="quick-booking">
+                    <img src="{{ url_for('static', filename='img/rig_booking.png') }}" alt="예매하기">
                     예매하기
                 </a>
 
-                <a href="" class="quick-store">
+                <a href="{{ url_for('store.store_main') }}" class="quick-store">
+                    <img src="{{ url_for('static', filename='img/rig_store.png') }}" alt="매점/굿즈">
                     매점/굿즈
                 </a>
 
-                <a href="" class="quick-notice">
+                <a href="{{ url_for('cs.notice_list') }}" class="quick-notice">
+                    <img src="{{ url_for('static', filename='img/rig_notice.png') }}" alt="공지사항">
                     공지사항
                 </a>
 
-                <a href="" class="quick-nowshow">
+                <a href="{{ url_for('film.movie_list') }}" class="quick-nowshow">
+                    <img src="{{ url_for('static', filename='img/rig_nowshow.png') }}" alt="현재상영작">
                     현재상영작
                 </a>
 
-                <a href="" class="quick-top">
-                    T O P
+                <a href="#" class="quick-top">
+                    TOP
                 </a>
 
             </div>

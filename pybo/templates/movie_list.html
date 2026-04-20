@@ -16,7 +16,7 @@
             <h4>{{ movie.title }}</h4>
 
             <div class="txtbox">
-                <a href="{{ url_for('film.booking', movie_id=movie.tmdb_id) }}">예매하기</a>
+                <a href="{{ url_for('film.booking', movie_id=movie.id) }}">예매하기</a>
                 <a href="/film/movie/{{ movie.tmdb_id }}">상세보기</a>
             </div>
         </div>

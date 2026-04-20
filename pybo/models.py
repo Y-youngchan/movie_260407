@@ -95,6 +95,7 @@ class Movie(db.Model):
 
     schedules = db.relationship('Schedule', back_populates='movie', cascade='all, delete-orphan')
 
+
 # 지역/지점
 class Region(db.Model):
     id = db.Column(db.Integer, primary_key=True)
