@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='review.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -37,7 +37,7 @@
     <div class="section4">
         <div class="container">
             <div class="col-6">
-                <a href="#" class="btn btn-primary btn-sm">질문 등록하기</a>
+                <a href="{{ url_for("cs.review_create") }}" class="btn btn-primary btn-sm">문의하기</a>
             </div>
             <div class="outside">
                 <table class="table">

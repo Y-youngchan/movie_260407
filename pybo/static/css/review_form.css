@@ -1,0 +1,23 @@
+.section1 {
+    margin-bottom: 130px;
+}
+
+.section5 .container {
+    width: 1207px; height: auto;
+    min-height: 1200px;
+    padding-left: 0;
+    background-color: #eaeaea;
+    align-items: center;
+    margin-bottom: 145px;
+    padding: 50px 0;
+}
+
+.outside{
+    height: 1100px;
+}
+.section5 .container .outside table{
+    width: 1062px;
+    margin: 0 auto 40px auto;
+    font-size: 20px;
+    
+}

@@ -15,7 +15,7 @@ from pybo.models import Review
 bp = Blueprint('cs',__name__, url_prefix='/cs')
 
 # notice_list
-@bp.route("/notice/list")
+@bp.route("/notice/notice_list/")
 def notice_list():
     page = request.args.get('page', type=int, default=1)
 
@@ -23,7 +23,7 @@ def notice_list():
 
     notice_list = notice_list.paginate(page=page, per_page=15)  # 한페이지에 보여야할 게시물
 
-    return render_template("cs/notice_list.html", notice_list=notice_list)
+    return render_template("cs/notice/notice_list.html",notice_list=notice_list)
 
 # notice_detail
 @bp.route("/notice/detail/<int:notice_id>")
@@ -47,10 +47,10 @@ def review_list():
     review_list = Review.query.all()
     return render_template("cs/review/review.html", review_list=review_list)
 
-@bp.route('/create/')
-def create():
+@bp.route('/review/create/')
+def review_create():
     form = ReviewForm()
-    return render_template('review/review_form.html', form=form)
+    return render_template('cs/review/review_form.html', review_create=review_create,form=form)
 
 
 

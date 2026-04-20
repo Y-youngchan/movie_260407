@@ -1,62 +1,97 @@
 {% extends 'base.html' %}
+
+{% block title %}
+    공지사항 - 필름아티크
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review_form.css') }}">
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
 
-        <form method="post" novalidate form method="post" enctype="multipart/form-data">
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <h3 id="sub_title">고객센터</h3>
+                <div class="service">
 
-            {{ form.csrf_token }}
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for("cs.faq_list") }}">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                               href="{{ url_for("cs.notice_list") }}">공지사항</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for("cs.review_list") }}">1:1문의</a>
+                        </li>
 
-            <!-- 에러 -->
-            {% for field, errors in form.errors.items() %}
-                <div class="alert alert-danger">
-                    <strong>{{ form[field].label.text }}</strong>
-                    <ul>
-                        {% for error in errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
                     </ul>
                 </div>
-            {% endfor %}
-
-            <!-- 문의 유형 라디오체크박스 -->
-            <div class="mb-3">
-                <label class="form-label">{{ form.cs_ask.label }}</label>
-                {% for subfield in form.cs_ask %}
-                    <div class="form-check">
-                        {{ subfield(class="form-check-input") }}
-                        <label class="form-check-label" for="{{ subfield.id }}">
-                            {{ subfield.label.text }}
-                        </label>
-                    </div>
-                {% endfor %}
             </div>
+        </div>
+    </div>
 
-            {#영화관 장소 cs_place#}
-            <div class="mb-3">
-                {{ form.cs_place.label(class="form-label") }}
-                {{ form.cs_place(class="form-select") }}
+    <div class="section5">
+        <div class="container">
+            <div class="outside">
+                <table class="table">
+
+                        <h5 class="my-3 border-bottom pb-2">문의작성</h5>
+
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+
+                        {{ form.csrf_token }}
+                        {% include 'form_errors.html' %}
+
+                        <!-- 문의 유형 라디오체크박스 -->
+
+
+                            <div class="mb-3">
+
+                                    <label class="form-label">{{ form.cs_ask.label }}</label>
+                                    {% for subfield in form.cs_ask %}
+                                        <div class="form-check">
+                                            {{ subfield(class="form-check-input") }}
+                                            <label class="form-check-label" for="{{ subfield.id }}">
+                                                {{ subfield.label.text }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+
+                            </div>
+
+                        {#영화관 장소 cs_place#}
+                        <div class="mb-3">
+                            {{ form.cs_place.label(class="form-label") }}
+                            {{ form.cs_place(class="form-select") }}
+                        </div>
+
+                        <!-- 제목 -->
+                        <div class="mb-3">
+                            {{ form.subject.label(class="form-label") }}
+                            {{ form.subject(class="form-control") }}
+                        </div>
+
+                        <!-- 내용 -->
+                        <div class="mb-3">
+                            {{ form.content.label(class="form-label") }}
+                            {{ form.content(class="form-control") }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">첨부하기</label>
+                            <input class="form-control" type="file" id="formFileMultiple" multiple>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">등록하기</button>
+                    </form>
+                </table>
             </div>
-
-            <!-- 제목 -->
-            <div class="mb-3">
-                {{ form.subject.label(class="form-label") }}
-                {{ form.subject(class="form-control") }}
-            </div>
-
-            <!-- 내용 -->
-            <div class="mb-3">
-                {{ form.content.label(class="form-label") }}
-                {{ form.content(class="form-control") }}
-            </div>
-{#            파일 첨부#}
-            <div class="mb-3">
-                {{ form.image.label }}
-                {{ form.image(class="form-control", multiple=True, accept="image/*") }}
-            </div>
-
-
-            <button type="submit" class="btn btn-primary mt-3">등록하기</button>
-        </form>
+        </div>
     </div>
 {% endblock %}
