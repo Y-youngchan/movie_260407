@@ -4,7 +4,7 @@
 {% endblock %}
 {% block styles %}
 
-<link rel="stylesheet" href="../static/store.css">
+<link rel="stylesheet" href="../static/css/store.css">
 
 {% endblock %}
 
@@ -34,7 +34,7 @@
 
             <h3 id="sub_tit1">관람권</h3>
             <div class="ticket">
-                <a href="{{ url_for('film.store_redticket') }}" class="normal">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="normal">
                     <div class="nor_img">
                         <img src="../static/img/redticket.png" alt="일반 관람권">
                     </div>
@@ -48,7 +48,7 @@
                     </div>
                 </a>
 
-                <a href="{{ url_for('film.store_vipticket') }}" class="vip">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="vip">
                     <div class="vip_img">
                         <img src="../static/img/blackticket.png" alt="VIP 관람권">
                     </div>
@@ -67,7 +67,7 @@
 
             <h3 id="sub_tit2">스낵음료</h3>
             <div class="snack_drink">
-                <a href="{{ url_for('film.store_bestcombo') }}" class="bestcom">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="bestcom">
                     <div class="bestcom_img">
                         <img src="../static/img/BEST COMBO 교환권.png" alt="베스트콤보">
                     </div>
@@ -80,7 +80,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a href="{{ url_for('film.store_singlecombo') }}" class="singcom">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="singcom">
                     <div class="singcom_img">
                         <img src="../static/img/SINGLE COMBO 교환권.png" alt="싱글콤보">
                     </div>
@@ -93,7 +93,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a href="{{ url_for('film.store_snacksvoucher') }}" class="snacks">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="snacks">
                     <div class="snacks_img">
                         <img src="../static/img/SNACKS 교환권.png" alt="스낵들">
                     </div>
@@ -112,7 +112,7 @@
 
             <h3 class="sub_tit0"></h3>
             <div class="Single_pro">
-                <a href="{{ url_for('film.store_popcorn_large') }}" class="popcorn_L">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="popcorn_L">
                     <div class="lar_img">
                         <img src="../static/img/popcorn_L.png" alt="단품라지">
                     </div>
@@ -126,7 +126,7 @@
                     </div>
                 </a>
 
-                <a href="{{ url_for('film.store_popcorn_medium') }}" class="popcorn_M">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="popcorn_M">
                     <div class="mid_img">
                         <img src="../static/img/popcorn_M.png" alt="단품미디움">
                     </div>
@@ -140,7 +140,7 @@
                     </div>
                 </a>
 
-                <a href="{{ url_for('film.store_selfdrink') }}" class="drink">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="drink">
                     <div class="drink_img">
                         <img src="../static/img/drink_L.png" alt="단품음료">
                     </div>
@@ -159,7 +159,7 @@
 
             <h3 id="sub_tit3">시네마굿즈</h3>
             <div class="titan_merch">
-                <a href="{{ url_for('film.store_jin_eren') }}" class="jin_eren">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="jin_eren">
                     <div class="eren_img">
                         <img src="../static/img/jin_eren.jpg" alt="에렌 예거">
                     </div>
@@ -172,7 +172,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a href="{{ url_for('film.store_jin_mikasa') }}" class="jin_mikasa">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="jin_mikasa">
                     <div class="mikasa_img">
                         <img src="../static/img/jin_mikasa.jpg" alt="미카사">
                     </div>
@@ -185,7 +185,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a href="{{ url_for('film.store_jin_levi') }}" class="jin_levi">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="jin_levi">
                     <div class="levi_img">
                         <img src="../static/img/jin_levi.jpg" alt="리바이">
                     </div>
@@ -204,7 +204,7 @@
 
             <h3 class="sub_tit0"></h3>
             <div class="chain_merch">
-                <a href="{{ url_for('film.store_chain_denji') }}" class="chain_denji">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="chain_denji">
                     <div class="denji_img">
                         <img src="../static/img/chain_denji.jpg" alt="덴지">
                     </div>
@@ -217,7 +217,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a href="{{ url_for('film.store_chain_makima') }}" class="chain_makima">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="chain_makima">
                     <div class="makima_img">
                         <img src="../static/img/chain_makima.jpg" alt="마키마">
                     </div>
@@ -230,7 +230,7 @@
                         <em>원</em>
                     </div>
                 </a>
-                <a href="{{ url_for('film.store_chain_reje') }}" class="chain_reje">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="chain_reje">
                     <div class="reje_img">
                         <img src="../static/img/chain_reje.jpg" alt="레제">
                     </div>
@@ -249,7 +249,7 @@
 
             <h3 class="sub_tit0"></h3>
             <div class="demon_slayer">
-                <a href="{{ url_for('film.store_ds_holo_buttonbadge') }}" class="ds_holo_buttonbadge">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="ds_holo_buttonbadge">
                     <div class="buttonbadge1_img">
                         <img src="../static/img/ds_holographic_buttonbadge.jpg" alt="랜덤홀로뱃지">
                     </div>
@@ -263,7 +263,7 @@
                     </div>
                 </a>
                 
-                <a href="{{ url_for('film.store_ds_char_buttonbadge') }}" class="ds_char_buttonbadge">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="ds_char_buttonbadge">
                     <div class="buttonbadge2_img">
                         <img src="../static/img/ds_character_buttonbadge.jpg" alt="랜덤캐릭뱃지">
                     </div>
@@ -277,7 +277,7 @@
                     </div>
                 </a>
 
-                <a href="{{ url_for('film.store_ds_grap_buttonbadge') }}" class="ds_grap_buttonbadge">
+                <a href="{{ url_for('store.product', product_id=product.id) }}" class="ds_grap_buttonbadge">
                     <div class="buttonbadge3_img">
                         <img src="../static/img/ds_graphic_buttonbadge.jpg" alt="랜덤그래픽뱃지">
                     </div>
@@ -300,5 +300,5 @@
 
 {% endblock %}
 {% block script %}
-<script src="../static/store.js"></script>
+<script src="../static/js/store.js"></script>
 {% endblock %}

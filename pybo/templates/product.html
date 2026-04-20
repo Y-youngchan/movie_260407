@@ -3,7 +3,7 @@
 {% block title %}물품 - 필름아티크{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='store_vipticket.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/product.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -322,5 +322,5 @@
 {% block script %}
 <script>const productprice = {{ product.Productprice }};</script>
 <script>const Productlimit = {{ product.Productlimit }};</script>
-<script src="{{ url_for('static', filename='product.js') }}"></script>
+<script src="{{ url_for('static', filename='js/product.js') }}"></script>
 {% endblock %}

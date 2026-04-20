@@ -2,7 +2,7 @@
 {% block title %}예매 - 필름아티크{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='person_seat.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/person_seat.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -128,5 +128,5 @@
   const movieId = "{{ movie_id }}";
 </script>
 
-<script src="{{ url_for('static', filename='booking.js') }}"></script>
+<script src="{{ url_for('static', filename='js/booking.js') }}"></script>
 {% endblock %}
