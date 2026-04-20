@@ -24,7 +24,7 @@
                     <h4>{{ order.product.Productdescription }}</h4>
                 </div>
                 <div class="product_price">
-                    <h2>{{ order.product.Productprice }}원</h2>
+                    <h2>{{ "{:,}".format(order.product.Productprice) }}원</h2>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <div id="agreement"></div>
                 {# 결제 버튼에 총 결제 금액 표시 #}
                 <button id="payment-button" class="btn btn-primary w-100 py-3 fw-bold mt-3 fs-5">
-                    {{ order.total_price }}원 결제하기
+                    {{ "{:,}".format(order.total_price) }}원 결제하기
                 </button>
             </div>
         </div>
@@ -55,7 +55,7 @@
 
     const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS);
 
-    const orderId = "{{ order.id }}";
+    const orderId = "{{ order.order_code }}";
     const amount = {{ order.total_price }};
 
     // 결제 UI

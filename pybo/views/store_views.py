@@ -3,6 +3,8 @@ from flask import Blueprint, render_template, request, redirect, abort, url_for,
 from pybo import db
 from pybo.models import Product, Order, User
 
+import uuid
+
 bp = Blueprint('store', __name__, url_prefix='/store')
 
 @bp.route("/main")
@@ -32,29 +34,41 @@ def create_order(product_id):
     product_id=product.id,
     product_name=product.Productname,
     quantity=quantity,
-    total_price=total_price
+    total_price=total_price,
+    order_code=f"order_{product_id}_{user.id}_{uuid.uuid4().hex[:8]}"
 )
 
     db.session.add(order)
     db.session.commit()
 
-    return redirect(url_for('store.store_pay', order_id=order.id))
+    return redirect(url_for('store.store_pay', order_id=order.order_code))
 
 @bp.route('/pay')
 def store_pay():
-    order_id = request.args.get('order_id', type=int)
+    order_id = request.args.get('order_id')
 
-    order = Order.query.get_or_404(order_id)
-
+    order = Order.query.filter_by(order_code=order_id).first_or_404()
     return render_template('store_pay.html', order=order)
 
 @bp.route('/pay/success')
 def pay_success():
-    order_id = request.args.get("order_id", type=int)
+    order_id = request.args.get("order_id")
 
-    order = Order.query.get_or_404(order_id)
+    order = Order.query.filter_by(order_code=order_id).first_or_404()
+
     order.status = "SUCCESS"
-
     db.session.commit()
 
     return "결제 완료!"
+
+@bp.route('/pay/fail')
+def pay_fail():
+    order_id = request.args.get("order_id")
+
+    order = Order.query.filter_by(order_code=order_id).first()
+
+    if order:
+        order.status = "FAIL"
+        db.session.commit()
+
+    return f"결제 실패 (order_id={order_id})"

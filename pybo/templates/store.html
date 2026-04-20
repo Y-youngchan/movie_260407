@@ -44,7 +44,7 @@
                             <p>{{ product.Productdescription }}</p>
                         </div>
                         <div class="nor_price">
-                            <span>{{ product.Productprice }}</span>
+                            <span>{{ "{:,}".format(product.Productprice) }}</span>
                             <em>원</em>
                         </div>
                     </a>
@@ -65,7 +65,7 @@
                             <p>{{ product.Productdescription }}</p>
                         </div>
                         <div class="bestcom_pri">
-                            <span>{{ product.Productprice }}</span>
+                            <span>{{ "{:,}".format(product.Productprice) }}</span>
                             <em>원</em>
                         </div>
                     </a>
@@ -86,7 +86,7 @@
                             <p>{{ product.Productdescription }}</p>
                         </div>
                         <div class="eren_pri">
-                            <span>{{ product.Productprice }}</span>
+                            <span>{{ "{:,}".format(product.Productprice) }}</span>
                             <em>원</em>
                         </div>
                     </a>

@@ -33,7 +33,7 @@ def signup():
             db.session.add(user)
             db.session.commit()
 
-            return redirect(url_for('main.index'))
+            return redirect(url_for('auth.login'))
 
     return render_template('auth/signup.html', form=form)
 
