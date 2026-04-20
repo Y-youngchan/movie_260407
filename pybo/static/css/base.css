@@ -8,7 +8,7 @@ header{
 .headermain{
     width: 1207px;
     height: 100%;
-    margin: 0 auto;
+    margin: 0 auto;    
 }
 
 header #logo{
@@ -25,13 +25,21 @@ header #logo a img{
     height: 90px;
 }
 
+.header-sticky{
+    position: sticky;
+    top: 0;
+    height: 60px;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px);
+}
+
 nav{
     margin-top: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: center;    
 }
 
-nav .topnav {
+nav .topnav {    
     z-index: 2;
 }
 
@@ -94,29 +102,48 @@ main{
     justify-content: center;
 }
 
-/* 우측 사이드 바 */
+/* ================
+    우측 사이드 바
+===================*/
 
 .side-bar {
-    width: 120px;
+    width: 70px;
     float: right;
-    position: sticky;
-    text-align: center;
+    position: sticky;    
     top: 0;
-    right: 10px;
-    background-color: greenyellow;
+    right: 20px;
+    font-size: 12px;    
 }
 
 .side-bar .quick_menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    padding: 10px 0 5px;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    background: #fff;
+    cursor: pointer;    
+}
+
+.side-bar .quick_menu img {
+    width: 44px;
     display: block;
-    padding: 5px;
-    cursor: pointer;
+    background: #fff;
 }
 
 .side-bar .quick_menu .quick-top {
+    padding: 0;    
+    color: #fff;
+    background: #000;
     text-decoration: none;
 }
 
-/* footer */
+/*==============
+    footer
+================*/
 footer{
     width: 100%;
     height: 300px;
