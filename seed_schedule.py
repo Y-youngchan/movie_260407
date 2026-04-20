@@ -18,12 +18,12 @@ THEATERS_BY_REGION = {
     "제주": ["제주점", "서귀포점"],
 }
 
-SCREENS_PER_THEATER = 2
-MOVIES_PER_SCREEN = 4
-DAYS_TO_SEED = 3
-MOVIE_DURATION_MINUTES = 120
-BREAK_MINUTES = 20
-START_HOUR = 10
+SCREENS_PER_THEATER = 9
+MOVIES_PER_SCREEN = 20
+DAYS_TO_SEED = 7  # 7일치 상영시간 생성
+MOVIE_DURATION_MINUTES = 100
+BREAK_MINUTES = 10
+START_HOUR = 8
 
 
 def get_or_create_region(name):
@@ -44,7 +44,7 @@ def get_or_create_theater(name, region):
     return theater
 
 
-def get_or_create_screen(theater, name, total_seats=120):
+def get_or_create_screen(theater, name, total_seats=60):
     screen = Screen.query.filter_by(theater_id=theater.id, name=name).first()
     if screen is None:
         screen = Screen(theater=theater, name=name, total_seats=total_seats)
@@ -68,26 +68,42 @@ def seed_regions_theaters_screens():
 
 def seed_schedules():
     movies = Movie.query.order_by(Movie.id).limit(MOVIES_PER_SCREEN).all()
-    if not movies:
-        raise RuntimeError("Movie 테이블에 데이터가 없습니다. 먼저 영화 데이터를 채워주세요.")
-
     screens = Screen.query.order_by(Screen.id).all()
-    if not screens:
-        raise RuntimeError("Screen 테이블에 데이터가 없습니다. 먼저 영역/극장/상영관 데이터를 채워주세요.")
 
     base_date = datetime.now().replace(hour=START_HOUR, minute=0, second=0, microsecond=0)
+
     schedule_count = 0
 
     for screen in screens:
         for day_offset in range(DAYS_TO_SEED):
-            current_start = base_date + timedelta(days=day_offset)
 
-            for movie in movies:
+            # 🎯 하루 시작
+            day_start = base_date + timedelta(days=day_offset)
+
+            # 🎯 하루 마감 (다음날 02:30)
+            day_end = (day_start + timedelta(days=1)).replace(hour=2, minute=30, second=0, microsecond=0)
+
+            current_start = day_start
+
+            movie_index = 0
+
+            while current_start < day_end:
+
+                movie = movies[movie_index % len(movies)]
+
                 start_time = current_start
                 end_time = start_time + timedelta(minutes=MOVIE_DURATION_MINUTES)
 
-                existing = Schedule.query.filter_by(screen_id=screen.id, start_time=start_time).first()
-                if existing is None:
+                # 🎯 끝나는 시간이 영업시간 넘으면 종료
+                if end_time > day_end:
+                    break
+
+                existing = Schedule.query.filter_by(
+                    screen_id=screen.id,
+                    start_time=start_time
+                ).first()
+
+                if not existing:
                     schedule = Schedule(
                         movie_id=movie.id,
                         screen_id=screen.id,
@@ -97,7 +113,10 @@ def seed_schedules():
                     db.session.add(schedule)
                     schedule_count += 1
 
+                # 다음 영화 시간
                 current_start = end_time + timedelta(minutes=BREAK_MINUTES)
+
+                movie_index += 1
 
     db.session.commit()
     print(f"생성된 Schedule 데이터: {schedule_count}개")
