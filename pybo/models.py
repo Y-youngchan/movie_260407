@@ -71,38 +71,7 @@ class Movie(db.Model):
 
     schedules = db.relationship('Schedule', back_populates='movie', cascade='all, delete-orphan')
 
-# 기존 모델 정의(참고용, 유지보수 편의)
-# class Theater(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100))
-#     location = db.Column(db.String(200))
-#
-# class Screen(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     theater_id = db.Column(db.Integer, db.ForeignKey('theater.id'))
-#     name = db.Column(db.String(50))   # ex) 1관
-#     total_seats = db.Column(db.Integer)
-#
-# class Schedule(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
-#     screen_id = db.Column(db.Integer, db.ForeignKey('screen.id'))
-#     start_time = db.Column(db.DateTime)
-#     end_time = db.Column(db.DateTime)
-#
-# class Seat(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     screen_id = db.Column(db.Integer, db.ForeignKey('screen.id'))
-#
-#     row = db.Column(db.String(5))   
-#     col = db.Column(db.Integer)     
-#
-# class Reservation(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.id'))
-#     seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'))
-#     created_at = db.Column(db.DateTime)
+
 
 # 지역/지점
 class Region(db.Model):
