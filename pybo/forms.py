@@ -33,15 +33,15 @@ class NoticeForm(FlaskForm):
 
 # 공지사항 review_detail(1:1문의)
 class ReviewForm(FlaskForm):
-    cs_ask = RadioField('문의 유형', choices=[
+    cs_ask = RadioField('문의유형', choices=[
         ('question', '문의'),
         ('suggestion', '건의'),
         ('praise', '칭찬'),
         ('complaint', '불만'),
-        ('etc', '기타')], validators=[DataRequired()])
+        ('etc', '기타')], validators=[DataRequired('필수 입력 항목입니다')])
 
     cs_place = SelectField(
-        '메뉴 선택',
+        '영화관',
         choices=[
             ('1', '강남스트리트점'), ('2', '가산디지털점'), ('3', '건대점'), ('4', '용산점'), ('5', '홍대점'),
             ('6', '광교점'), ('7', '부천점'), ('8', '동탄점'), ('9', '수원역점'), ('10', '송도점'),

@@ -2,7 +2,9 @@ import os
 from datetime import datetime
 from idlelib import query
 
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from werkzeug.utils import secure_filename
+
 
 
 from pybo.models import Faq
@@ -11,8 +13,8 @@ from pybo.forms import NoticeForm, AnswerForm, ReviewForm
 from pybo.models import Notice
 from pybo.models import Review
 
+bp = Blueprint('cs', __name__, url_prefix='/cs')
 
-bp = Blueprint('cs',__name__, url_prefix='/cs')
 
 # notice_list
 @bp.route("/notice/notice_list/")
@@ -23,7 +25,8 @@ def notice_list():
 
     notice_list = notice_list.paginate(page=page, per_page=15)  # 한페이지에 보여야할 게시물
 
-    return render_template("cs/notice/notice_list.html",notice_list=notice_list)
+    return render_template("cs/notice/notice_list.html", notice_list=notice_list)
+
 
 # notice_detail
 @bp.route("/notice/detail/<int:notice_id>")
@@ -31,7 +34,9 @@ def notice_detail(notice_id):
     notice_detail = Notice.query.get(notice_id)
     prev_notice = Notice.query.get(notice_id - 1)
     next_notice = Notice.query.get(notice_id + 1)
-    return render_template("cs/notice/notice_detail.html", notice=notice_detail, prev_notice=prev_notice, next_notice=next_notice)
+    return render_template("cs/notice/notice_detail.html", notice=notice_detail, prev_notice=prev_notice,
+                           next_notice=next_notice)
+
 
 @bp.route("/faq/")
 def faq_list():
@@ -41,16 +46,51 @@ def faq_list():
     print(faq_list)
     return render_template("cs/faq/faq.html", faq_list=faq_list)
 
+
 @bp.route("/review/")
 def review_list():
     page = request.args.get('page', type=int, default=1)
     review_list = Review.query.all()
     return render_template("cs/review/review.html", review_list=review_list)
 
-@bp.route('/review/create/')
+
+# 리뷰 폼 view함수
+@bp.route('/review/create/', methods=('GET', 'POST'))
 def review_create():
     form = ReviewForm()
-    return render_template('cs/review/review_form.html', review_create=review_create,form=form)
+    if request.method == 'POST' and form.validate_on_submit():
+        image_files = form.image.data,
+        image_paths = []
+        print(form.cs_ask.data)
+        # 저장 경로 : 오늘 날짜로 폴더 설정
+        today = datetime.now().strftime('%Y%m%d')
+        upload_folder = os.path.join(current_app.root_path, 'static/photo', today)
+        os.makedirs(upload_folder, exist_ok=True)
+
+        if image_files:
+            for image_file in image_files:
+                # 파일이 실제로 비어있지 않은지 확인
+                if image_file and image_file.filename != '':
+                    filename = secure_filename(image_file.filename)
+                    file_path = os.path.join(upload_folder, filename)
+                    image_file.save(file_path)
+
+                    # DB용 상대 경로 리스트에 추가
+                    image_paths.append(f'photo/{today}/{filename}')
+        joined_image_paths = ",".join(image_paths) if image_paths else None
+
+        review = Review(
+            cs_ask=form.cs_ask.data,
+            cs_place=form.cs_place.data,
+            subject=form.subject.data,
+            content=form.content.data,
+
+            image_path=joined_image_paths
+        )
 
 
+        db.session.add(review)
+        db.session.commit()
 
+        return redirect(url_for('cs.review_list', review_id=review.id))
+    return render_template('cs/review/review_form.html', form=form)

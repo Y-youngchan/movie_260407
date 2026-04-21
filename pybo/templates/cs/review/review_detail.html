@@ -35,3 +35,11 @@
         </div>
     </div>
 
+    {% if review.image_path %}
+        {% for path in review.image_path.split(',') %}
+        <div class="my-3">
+            <img src="{{ url_for('static', filename=path) }}" alt="첨부 이미지"
+            style="max-width: 100%; height: auto;" class="img-thumbnail">
+        </div>
+        {% endfor %}
+    {% endif %}

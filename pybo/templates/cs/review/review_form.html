@@ -36,11 +36,11 @@
     </div>
 
     <div class="section5">
-        <div class="container">
+        <div class="container text-center">
             <div class="outside">
                 <table class="table">
 
-                        <h5 class="my-3 border-bottom pb-2">문의작성</h5>
+                    <h5 class="my-3 border-bottom pb-4 text-start">문의작성</h5>
 
 
                     <form method="post" enctype="multipart/form-data" novalidate>
@@ -51,46 +51,74 @@
                         <!-- 문의 유형 라디오체크박스 -->
 
 
-                            <div class="mb-3">
+                        <div class="mb-3 row border-bottom pb-2">
+                            <label class="col-sm-2 col-form-label">
+                                {{ form.cs_ask.label.text }}
+                            </label>
 
-                                    <label class="form-label">{{ form.cs_ask.label }}</label>
-                                    {% for subfield in form.cs_ask %}
-                                        <div class="form-check">
-                                            {{ subfield(class="form-check-input") }}
-                                            <label class="form-check-label" for="{{ subfield.id }}">
-                                                {{ subfield.label.text }}
-                                            </label>
-                                        </div>
-                                    {% endfor %}
-
+                            <div class="col-sm-5">
+                                {% for subfield in form.cs_ask %}
+                                    <div class="form-check form-check-inline">
+                                        {{ subfield(class="form-check-input") }}
+                                        <label class="form-check-label" for="{{ subfield.id }}">
+                                            {{ subfield.label.text }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
                             </div>
-
+                        </div>
                         {#영화관 장소 cs_place#}
-                        <div class="mb-3">
-                            {{ form.cs_place.label(class="form-label") }}
-                            {{ form.cs_place(class="form-select") }}
+                        <div class="mb-4 row border-bottom pb-3">
+                            <div class="col-sm-2">
+                                {{ form.cs_place.label(class="form-label") }}
+                            </div>
+                            <div class="col-sm-10">
+                                {{ form.cs_place(class="form-select") }}
+                            </div>
                         </div>
 
                         <!-- 제목 -->
-                        <div class="mb-3">
-                            {{ form.subject.label(class="form-label") }}
-                            {{ form.subject(class="form-control") }}
+                        <div class="mb-3 row border-bottom pb-3">
+                            <div class="col-sm-2">
+                                {{ form.subject.label(class="form-label") }}
+                            </div>
+                            <div class="col-sm-10">
+                                {{ form.subject(class="form-control") }}
+                            </div>
                         </div>
 
                         <!-- 내용 -->
-                        <div class="mb-3">
-                            {{ form.content.label(class="form-label") }}
-                            {{ form.content(class="form-control") }}
+                        <div class="mb-3 row border-bottom pb-3">
+                            <div class="col-sm-2">
+                                {{ form.content.label(class="form-label") }}
+                            </div>
+                            <div class="col-sm-10">
+                                {{ form.content(class="form-control") }}
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="formFileMultiple" class="form-label">첨부하기</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
+                        <div class="mb-3 row border-bottom pb-2">
+                            <div class="col-sm-2">
+                                <label for="formFileMultiple" class="form-label">첨부<br>
+                                    파일</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                            </div>
+                        </div>
+                        <div class="btn-group-custom mt-3">
+                            <button type="submit" class="btn btn-danger btn-fixed" style="width: 100px">
+                                저장
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-fixed"
+                                    onclick="location.href='{{ url_for('cs.review_list') }}'"style="width: 100px;">
+                                취소
+                            </button>
                         </div>
 
-                        <button type="submit" class="btn btn-primary mt-3">등록하기</button>
                     </form>
                 </table>
+
             </div>
         </div>
     </div>
