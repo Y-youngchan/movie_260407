@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from alembic.autogenerate.compare import server_defaults
+
 from pybo import db
 
 # notice
@@ -198,5 +202,6 @@ class Review(db.Model):
     subject = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
     image_path = db.Column(db.Text())
-
+    created_date = db.Column(db.DateTime, nullable=False)  # ✅ 이걸로 고정
+    modify_date = db.Column(db.DateTime(), nullable=True)
 

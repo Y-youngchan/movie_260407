@@ -37,24 +37,33 @@
     <div class="section4">
         <div class="container">
             <div class="col-6">
-                <a href="{{ url_for("cs.review_create") }}" class="btn btn-primary btn-sm">문의하기</a>
+                <a href="{{ url_for("cs.review_create") }}"
+                   class="btn btn-secondary btn-sm" style="width: 100px">문의하기</a>
             </div>
             <div class="outside">
                 <table class="table">
                     <thead>
                     <tr class="table-secondary">
-                        <th>구분</th>
-                        <th>질문</th>
+                        <th>문의유형</th>
+                        <th>영화관</th>
+                        <th>제목</th>
                         <th>등록일</th>
+                        <th>처리상태</th>
+
                     </tr>
                     </thead>
 
                     <tbody>
-                    {% if privacy_list %}
-                        {% for privacy in privacy_list.items %}  <!--현재 페이지 해당 게시물-->
+                    {% if review_list %}
+                        {% for review in review_list %}  <!--현재 페이지 해당 게시물-->
                             <tr>
-                                {#                            <td>{{ notice.userid.username }}</td>#}
-                                <td>{{ privacy.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}</td>
+
+                                <td>{{ review.cs_ask }}</td>
+                                <td>{{ review.cs_place }}</td>
+                                <td><a href="{{ url_for("cs.review_detail", review_id=review.id) }}">{{ review.subject }}</a></td>
+                                <td>{{  review.created_date  }}</td>
+                                <td></td>
+
                             </tr>
                         {% endfor %}
                     {% else %}
