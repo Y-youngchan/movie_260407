@@ -74,10 +74,14 @@ class Order(db.Model):
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-    payment_key = db.Column(db.String(200))
-    status = db.Column(db.String(20))  # SUCCESS / FAIL
-    paid_at = db.Column(db.DateTime)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    payment_key = db.Column(db.String(200), unique=True)
+    order_code = db.Column(db.String(100)) # 주문 코드 (조회/로그용)
+    method = db.Column(db.String(50))
+    amount = db.Column(db.Integer)
+    status = db.Column(db.String(20)) # READY / SUCCESS / FAIL
+    requested_at = db.Column(db.DateTime, default=db.func.now())
+    approved_at = db.Column(db.DateTime)
 
     order = db.relationship('Order')
 

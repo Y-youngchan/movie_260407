@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, abort, url_for, session
 
 from pybo import db
-from pybo.models import Product, Order, User
+from pybo.models import Product, Order, User, Payment
+from datetime import datetime, timezone
 
 import uuid
 
@@ -48,27 +49,57 @@ def store_pay():
     order_id = request.args.get('order_id')
 
     order = Order.query.filter_by(order_code=order_id).first_or_404()
+    payment = Payment.query.filter_by(order_id=order.id).first()
+
+    if not payment:
+        payment = Payment(
+            order_id=order.id,
+            order_code=order.order_code,
+            amount=order.total_price,
+            status="READY"
+        )
+        db.session.add(payment)
+        db.session.commit()
+
     return render_template('store_pay.html', order=order)
 
 @bp.route('/pay/success')
 def pay_success():
-    order_id = request.args.get("order_id")
+    order_code = request.args.get("order_id")
 
-    order = Order.query.filter_by(order_code=order_id).first_or_404()
+    # 토스에서 오는 값
+    payment_key = request.args.get("paymentKey")
+    method = request.args.get("method")
 
+    order = Order.query.filter_by(order_code=order_code).first_or_404()
+    payment = Payment.query.filter_by(order_id=order.id).first()
+
+    # Payment 업데이트
+    payment.payment_key = payment_key
+    payment.method = method
+    payment.status = "SUCCESS"
+    payment.approved_at = datetime.now(timezone.utc)
+
+    # Order도 성공 처리
     order.status = "SUCCESS"
+
     db.session.commit()
 
-    return "결제 완료!"
+    return render_template('storepay_success.html', order=order)
 
 @bp.route('/pay/fail')
 def pay_fail():
-    order_id = request.args.get("order_id")
+    order_code = request.args.get("order_id")
 
-    order = Order.query.filter_by(order_code=order_id).first()
+    order = Order.query.filter_by(order_code=order_code).first()
 
     if order:
+        payment = Payment.query.filter_by(order_id=order.id).first()
+
+        if payment:
+            payment.status = "FAIL"
+
         order.status = "FAIL"
         db.session.commit()
 
-    return f"결제 실패 (order_id={order_id})"
+    return f"결제 실패 (order_id={order_code})"
