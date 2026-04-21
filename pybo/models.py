@@ -67,6 +67,7 @@ class Order(db.Model):
     total_price = db.Column(db.Integer)
     status = db.Column(db.String(20), default="READY")  # READY / SUCCESS / FAIL
     created_at = db.Column(db.DateTime, default=db.func.now())
+    order_code = db.Column(db.String(100), unique=True)
 
     product = db.relationship('Product')
     user = db.relationship('User')

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+마이시네마 - 필름아티크
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="mypage">
+
+    <section class="mypage_banner">
+        <div class="inner">
+            <h2>MY CINEMA</h2>
+            <p>{{ user.username }}님, 필름아티크에 오신 것을 환영합니다.</p>
+        </div>
+    </section>
+
+    <section class="mypage_wrap inner">
+
+        <aside class="sidebar">
+            <h3>마이시네마</h3>
+
+            <ul>
+                <li class="active" data-tab="reserve">예매/구매내역</li>
+                <li data-tab="cancel">예매/구매 취소내역</li>
+                <li data-tab="info">회원정보</li>
+                <li><a href="{{ url_for('auth.logout') }}">로그아웃</a></li>
+            </ul>
+        </aside>
+
+        <div class="mypage_content">
+
+            <!-- 예매/구매내역 -->
+            <div class="tab_panel show" id="reserve">
+                <h4>예매/구매내역</h4>
+
+                {% if reservations %}
+                    {% for item in reservations %}
+                    <div class="history_box">
+                        <div class="left">
+                            <strong>{{ item.movie_title }}</strong>
+                            <p>{{ item.theater }}</p>
+                            <p>{{ item.date }} {{ item.time }}</p>
+                            <p>좌석 {{ item.seat }}</p>
+                        </div>
+
+                        <div class="right">
+                            <span class="badge">예매완료</span>
+                            <button type="button">예매취소</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty_box">예매/구매 내역이 없습니다.</div>
+                {% endif %}
+            </div>
+
+            <!-- 예매/구매 취소내역 -->
+            <div class="tab_panel" id="cancel">
+                <h4>예매/구매 취소내역</h4>
+
+                {% if cancels %}
+                    {% for item in cancels %}
+                    <div class="history_box">
+                        <div class="left">
+                            <strong>{{ item.movie_title }}</strong>
+                            <p>{{ item.cancel_date }} 취소완료</p>
+                        </div>
+
+                        <div class="right">
+                            <span class="badge gray">취소완료</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty_box">취소 내역이 없습니다.</div>
+                {% endif %}
+            </div>
+
+            <!-- 회원정보 -->
+            <div class="tab_panel" id="info">
+                <h4>회원정보</h4>
+
+                <div class="info_table">
+                    <div><span>이름</span><p>{{ user.username }}</p></div>
+                    <div><span>이메일</span><p>{{ user.email }}</p></div>
+                    <div><span>전화번호</span><p>{{ user.phone }}</p></div>
+                    <div><span>가입일</span><p>{{ user.created_at }}</p></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/mypage.js') }}"></script>
+{% endblock %}

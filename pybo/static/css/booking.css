@@ -278,11 +278,12 @@
 
 /* 좌석선택 */
 .btnToSeats{
-    margin-top: 313px;
+    /* margin-top: 313px; */
 }
 .btnToSeats #btnSeats{
     width: 100%;
     height: 100px;
+    position: relative;
     border: none;
     display: flex;
     justify-content: center;

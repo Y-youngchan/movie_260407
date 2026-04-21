@@ -139,7 +139,7 @@
         <!------ 아이콘배너 ------>
         <div class="icons">
             <div class="user">
-                <a href="#"><img src="{{ url_for('static', filename='img/user.png') }}" alt="마이페이지">마이 페이지</a>
+                <a href="{{ url_for('film.mypage') }}"><img src="{{ url_for('static', filename='img/user.png') }}" alt="마이페이지">마이 페이지</a>
             </div>
             <div class="ticket">
                 <a href="{{ url_for('film.booking', movie_id=first_movie.id) }}"><img src="{{ url_for('static', filename='img/ticket.png') }}"

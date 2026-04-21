@@ -69,7 +69,7 @@ tabMenu.forEach((tm, i) => {
 document.getElementById("buy-btn").addEventListener("click", function () {
     const count = document.querySelector(".basic_num").textContent;
 
-    console.log("현재 수량:", count);  // 🔥 추가
+    console.log("현재 수량:", count);  // 추가
 
     const productId = this.dataset.productId;
 

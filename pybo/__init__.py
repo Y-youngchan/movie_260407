@@ -32,7 +32,7 @@ def create_app():
 
     #블루프린트 등록
 
-    from .views import main_views, auth_views, film_views, cs_views, store_views, film_views
+    from .views import main_views, auth_views, film_views, cs_views, store_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(film_views.bp)

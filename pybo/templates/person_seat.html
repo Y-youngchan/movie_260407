@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}예매 - 필름아티크{% endblock %}
+{% block title %}인원/좌석 선택 - 필름아티크{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/person_seat.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="booking">
+<div class="personseat">
 
   <!-- 좌측 네비 -->
-  <div class="booking_menu">
+  <div class="personseat_menu">
     <ul class="d-flex flex-column text-center">
       <li><strong>01<br>상영시간</strong></li>
       <li class="active"><strong>02<br>인원/좌석</strong></li>
@@ -19,114 +19,89 @@
   </div>
 
   <!-- 우측 콘텐츠 -->
-  <div class="booking_content">
+  <div class="personseat_content">
 
     <!-- 01 단계 -->
-    <div class="step">
+    <div class="personseat_title">
       <ul>
-        <li>영화관</li>
-        <li>영화</li>
-        <li>날짜/시간</li>
+        <li>인원/좌석 선택 <span>인원은 최대 8명까지 선택 가능합니다.</span></li>
       </ul>
 
-      <div class="detailtotal">
-        <!-- 1. 지역 + 영화관 -->
-        <div class="select_group theater_wrap d-flex">
-          <div class="region_list flex-column">
-            <ul class="list-unstyled">
-              <li class="active">서울</li>
-              <li>경기/인천</li>
-              <li>강원</li>
-              <li>충청/대전</li>
-              <li>전라/광주</li>
-              <li>경북/대구</li>
-              <li>경남/부산</li>
-              <li>제주</li>
-            </ul>
+      <div class="persontotal">
+        <div class="selectmovie">
+          <!-- 포스터 -->
+          <div class="poster">
+            <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }} 포스터">
           </div>
 
-          <div class="theater_list flex-column">
-            <ul class="list-unstyled">
-              <li class="selected" data-region="서울">강남스트리트점</li>
-              <li data-region="서울">가산디지털점</li>
-              <li data-region="서울">건대점</li>
-              <li data-region="서울">용산점</li>
-              <li data-region="서울">홍대점</li>
-              <li data-region="경기/인천">광교점</li>
-              <li data-region="경기/인천">부천점</li>
-              <li data-region="경기/인천">동탄점</li>
-              <li data-region="경기/인천">수원역점</li>
-              <li data-region="경기/인천">송도점</li>
-              <li data-region="경기/인천">인계점</li>
-              <li data-region="경기/인천">분당점</li>
-              <li data-region="강원">양양점</li>
-              <li data-region="강원">강릉점</li>
-              <li data-region="충청/대전">천안점</li>
-              <li data-region="충청/대전">오송점</li>
-              <li data-region="충청/대전">대전성심당점</li>
-              <li data-region="충청/대전">논산훈련소점</li>
-              <li data-region="전라/광주">광주점</li>
-              <li data-region="전라/광주">익산점</li>
-              <li data-region="전라/광주">전주점</li>
-              <li data-region="경북/대구">대구점</li>
-              <li data-region="경북/대구">포항점</li>
-              <li data-region="경북/대구">경주점</li>
-              <li data-region="경남/부산">울산점</li>
-              <li data-region="경남/부산">통영점</li>
-              <li data-region="경남/부산">김해점</li>
-              <li data-region="경남/부산">부산갈매기점</li>
-              <li data-region="제주">제주점</li>
-              <li data-region="제주">서귀포점</li>
-            </ul>
+          <!-- 정보 -->
+          <div class="info">
+
+            <!-- 등급 + 제목 -->
+            <div class="title">
+              <span class="age 
+        {% if movie.certification == '19' %}age-19
+        {% elif movie.certification == '15' %}age-15
+        {% elif movie.certification == '12' %}age-12
+        {% else %}age-all
+        {% endif %}">
+                {{ movie.certification if movie.certification != '정보없음' else 'ALL' }}
+              </span>
+
+              <strong>{{ movie.title }}</strong>
+            </div>
+
+            <!-- 날짜 + 시간 -->
+            <div class="datetime">
+              {{ schedule.start_time.strftime("%y.%m.%d (%a)") }}
+              {{ schedule.start_time.strftime("%H:%M") }} ~
+              {{ schedule.end_time.strftime("%H:%M") }}
+            </div>
+
+            <!-- 극장 정보 -->
+            <div class="location">
+              {{ theater.name }} / {{ screen.name }}
+            </div>
+
           </div>
         </div>
 
-        <!-- 영화 -->
-        <div class="select_group movie">
-          <ul>
-            <li class="movie_title selected"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-          </ul>
+
+        <!-- 02 단계 -->
+        <div class="person_num">
+          성인
+          <button class="mins">-</button>
+          <div class="basic_num">0</div>
+          <button class="plus">+</button>
         </div>
-
-        <div class="datetime">
-          <!-- 날짜 -->
-          <div class="select_group date">
-            <ul></ul>
-          </div>
-
-          <!-- 시간 -->
-          <div class="select_group time">
-            <ul></ul>
-          </div>
-          <div class="btnToSeats">
-            <a id="btnSeats" href="#">좌석선택</a>
-          </div>
+        <div class="person_num">
+          청소년
+          <button class="mins">-</button>
+          <div class="basic_num">0</div>
+          <button class="plus">+</button>
+        </div>
+        <div class="person_num">
+          경로
+          <button class="mins">-</button>
+          <div class="basic_num">0</div>
+          <button class="plus">+</button>
+        </div>
+        <div class="person_num">
+          장애인
+          <button class="mins">-</button>
+          <div class="basic_num">0</div>
+          <button class="plus">+</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-{% endblock %}
+  {% endblock %}
 
-{% block script %}
-<script>
-  const movieId = "{{ movie_id }}";
-</script>
+  {% block script %}
+  <script>
+    const movieId = "{{ movie_id }}";
+  </script>
 
-<script src="{{ url_for('static', filename='js/booking.js') }}"></script>
-{% endblock %}
+  <script src="{{ url_for('static', filename='js/person_seat.js') }}"></script>
+  {% endblock %}

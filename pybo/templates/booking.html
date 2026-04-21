@@ -47,59 +47,43 @@
 
           <div class="theater_list flex-column">
             <ul class="list-unstyled">
-              <li class="selected" data-region="서울">강남스트리트점</li>
-              <li data-region="서울">가산디지털점</li>
-              <li data-region="서울">건대점</li>
-              <li data-region="서울">용산점</li>
-              <li data-region="서울">홍대점</li>
-              <li data-region="경기/인천">광교점</li>
-              <li data-region="경기/인천">부천점</li>
-              <li data-region="경기/인천">동탄점</li>
-              <li data-region="경기/인천">수원역점</li>
-              <li data-region="경기/인천">송도점</li>
-              <li data-region="경기/인천">인계점</li>
-              <li data-region="경기/인천">분당점</li>
-              <li data-region="강원">양양점</li>
-              <li data-region="강원">강릉점</li>
-              <li data-region="충청/대전">천안점</li>
-              <li data-region="충청/대전">오송점</li>
-              <li data-region="충청/대전">대전성심당점</li>
-              <li data-region="충청/대전">논산훈련소점</li>
-              <li data-region="전라/광주">광주점</li>
-              <li data-region="전라/광주">익산점</li>
-              <li data-region="전라/광주">전주점</li>
-              <li data-region="경북/대구">대구점</li>
-              <li data-region="경북/대구">포항점</li>
-              <li data-region="경북/대구">경주점</li>
-              <li data-region="경남/부산">울산점</li>
-              <li data-region="경남/부산">통영점</li>
-              <li data-region="경남/부산">김해점</li>
-              <li data-region="경남/부산">부산갈매기점</li>
-              <li data-region="제주">제주점</li>
-              <li data-region="제주">서귀포점</li>
+              {% for theater in theaters %}
+              <li class="{% if loop.first %}selected{% endif %}" data-region="{{ theater.region.name }}"
+                data-theater-id="{{ theater.id }}">
+
+                {{ theater.name }}
+
+              </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
 
         <!-- 영화 -->
         <div class="select_group movie">
-          <ul>
-            <li class="movie_title selected"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
-            <li class="movie_title"></li>
+          <ul id="movieList">
+            {% for movie in movies %}
+            <li class="movie_title {% if movie.id == movie_id %}selected{% endif %}" data-movie-id="{{ movie.id }}">
+
+              <!-- 관람등급 -->
+              <span class="movie_age 
+              {% if movie.certification == '19' %}age-19
+              {% elif movie.certification == '15' %}age-15
+              {% elif movie.certification == '12' %}age-12
+              {% else %}age-all
+              {% endif %}">
+                {% if movie.certification == '정보없음' %}
+                ALL
+                {% else %}
+                {{ movie.certification }}
+                {% endif %}
+              </span>
+
+              <!-- 제목 -->
+              {{ movie.title }}
+
+            </li>
+            {% endfor %}
           </ul>
         </div>
 
