@@ -42,15 +42,15 @@
             <div class="outside">
                 <table class="table">
                     <thead>
-                        <tr class="table-secondary">
-                            <th>구분</th>
-                            <th>질문</th>
-                            <th>등록일</th>
-                        </tr>
+                    <tr class="table-secondary">
+                        <th>구분</th>
+                        <th>질문</th>
+                        <th>등록일</th>
+                    </tr>
                     </thead>
 
                     <tbody>
-                        {% if privacy_list %}
+                    {% if privacy_list %}
                         {% for privacy in privacy_list.items %}  <!--현재 페이지 해당 게시물-->
                             <tr>
                                 {#                            <td>{{ notice.userid.username }}</td>#}
@@ -65,9 +65,9 @@
                     </tbody>
                 </table>
             </div>
-                    </tbody>
-                </table>
-            </div>
+            </tbody>
+            </table>
         </div>
+    </div>
     </div>
 {% endblock %}
