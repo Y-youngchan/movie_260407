@@ -69,39 +69,64 @@
 
         <!-- 02 단계 -->
         <div class="person_num">
-          성인
+          <span>성인</span>
           <button class="mins">-</button>
           <div class="basic_num">0</div>
           <button class="plus">+</button>
         </div>
         <div class="person_num">
-          청소년
+          <span>청소년</span>
           <button class="mins">-</button>
           <div class="basic_num">0</div>
           <button class="plus">+</button>
         </div>
         <div class="person_num">
-          경로
+          <span>경로</span>
           <button class="mins">-</button>
           <div class="basic_num">0</div>
           <button class="plus">+</button>
         </div>
         <div class="person_num">
-          장애인
+          <span>장애인</span>
           <button class="mins">-</button>
           <div class="basic_num">0</div>
           <button class="plus">+</button>
         </div>
       </div>
+      <div class="seattotal">
+        <div class="seatbar">
+          <span>좌석 선택 후 결제하기 버튼을 클릭하세요</span>
+          <span class="screen">S C R E E N</span>
+        </div>
+
+        <div class="seatselect"></div>
+
+        <div class="seatinfo">
+          <div class="seatinfo_list">
+            <button class="selected"></button>
+            <span>선택 좌석</span>
+            <button class="unavailable"></button>
+            <span>예매 완료</span>
+            <button class="non"></button>
+            <span>선택 불가</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="price">
+        <div class="total_price">0원</div>
+        <button id="btnPayment" class="disabled">결제하기</button>
+      </div>
     </div>
   </div>
 </div>
-  {% endblock %}
+{% endblock %}
 
-  {% block script %}
-  <script>
-    const movieId = "{{ movie_id }}";
-  </script>
+{% block script %}
+<script>
+  const movieId = "{{ movie_id }}";
+</script>
 
-  <script src="{{ url_for('static', filename='js/person_seat.js') }}"></script>
-  {% endblock %}
+<script src="{{ url_for('static', filename='js/person_seat.js') }}"></script>
+{% endblock %}
