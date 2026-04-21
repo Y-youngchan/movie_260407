@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, abort, url_for,
 
 from pybo import db
 from pybo.models import Product, Order, User, Payment
+from pybo.views.auth_views import login_required
 from datetime import datetime, timezone
 
 import uuid
@@ -20,6 +21,7 @@ def product(id):
 
 # 주문 생성
 @bp.route('/order/create/<int:product_id>')
+@login_required
 def create_order(product_id):
     user = User.query.get(session.get("user_id"))
     product = Product.query.get(product_id)

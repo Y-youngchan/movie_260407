@@ -1,4 +1,10 @@
+from datetime import datetime
+
+from alembic.autogenerate.compare import server_defaults
+
 from pybo import db
+
+from datetime import datetime
 
 # notice
 class Notice(db.Model):
@@ -29,11 +35,15 @@ class User(db.Model):
     username = db.Column(db.String(150), nullable=False)
     password = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
+    birth = db.Column(db.Date, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     Terms_of_Service = db.Column(db.Boolean, nullable=False)
     Privacy_Policy = db.Column(db.Boolean, nullable=False)
     receive_emails = db.Column(db.Boolean, nullable=True, default='False')
     status = db.Column(db.String(20), nullable=False, default='normal', server_default='normal')
     is_admin = db.Column(db.Boolean, nullable=False, default=False, server_default='0')
+    admin_role = db.Column(db.String(20),default='none')
 
 
 # 공지사항 - FAQ
@@ -198,5 +208,5 @@ class Review(db.Model):
     subject = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
     image_path = db.Column(db.Text())
-
-
+    created_date = db.Column(db.DateTime, nullable=False)  # ✅ 이걸로 고정( 이거 gpt가 함)
+    modify_date = db.Column(db.DateTime(), nullable=True)

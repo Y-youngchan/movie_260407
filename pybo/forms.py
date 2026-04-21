@@ -12,13 +12,14 @@ class UserCreateForm(FlaskForm):
     username = StringField('이름', validators=[DataRequired('필수 입력 항목입니다.'), Length(min=3, max=25)])
     userid = StringField('아이디', validators=[DataRequired('필수 입력 항목입니다.'), Length(min=3, max=25)])
     password1 = PasswordField('비밀번호', validators=[DataRequired('필수 입력 항목입니다.'),
-                                                  EqualTo('password2', message='비밀번호가 일치하지 않습니다.')])
+    EqualTo('password2', message='비밀번호가 일치하지 않습니다.')])
     password2 = PasswordField('비밀번호 확인', validators=[DataRequired('필수 입력 항목입니다.')])
     email = EmailField('이메일', validators=[DataRequired('필수 입력 항목입니다.'), Email()])
+    phone = StringField('전화번호', validators=[DataRequired('필수 입력 항목입니다.'), Length(min=12, max=13)])
+    birth = StringField('생년월일', validators=[DataRequired('필수 입력 항목입니다.'), Length(10)])
     Terms_of_Service = BooleanField('회원이용약관 동의 (필수)', validators=[DataRequired('필수 사항입니다.')])
     Privacy_Policy = BooleanField('개인정보처리방침 동의 (필수)', validators=[DataRequired('필수 사항입니다.')])
     receive_emails = BooleanField('이메일 수신 동의 (선택)')
-
 
 class UserLoginForm(FlaskForm):
     userid = StringField('아이디', validators=[DataRequired('필수 입력 항목입니다.'), Length(min=3, max=25)])

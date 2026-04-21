@@ -190,18 +190,27 @@ document.querySelector(".time").addEventListener("click", (e) => {
 
 // 좌석 이동
 
-document.getElementById("btnSeats").addEventListener("click", (e) => {
+document.getElementById("btnSeats").addEventListener("click", function(e) {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!selected.schedule) {
-    alert("시간을 선택하세요");
-    return;
-  }
+    if (!selected.schedule) {
+        alert("시간을 선택하세요");
+        return;
+    }
 
-  location.href = `/film/person/seat?schedule_id=${selected.schedule}`;
+    if (!isLogin) {
+        alert("로그인이 필요한 서비스입니다.");
+
+        const nextUrl = `/film/person/seat?schedule_id=${selected.schedule}`;
+
+        window.location.href = "/auth/login?next=" + encodeURIComponent(nextUrl);
+        return;
+    }
+
+    // 로그인 상태면 이동
+    location.href = `/film/person/seat?schedule_id=${selected.schedule}`;
 });
-
 
 // 초기 실행 (선택된 영화 있을 경우)
 

@@ -10,6 +10,19 @@
 
 <body>
 
+    <!-- 플래시 메시지 -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-wrap">
+        {% for message in messages %}
+        <div class="flash-message">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
     <div class="admin-container">
 
         <!-- 사이드바 -->
@@ -17,36 +30,50 @@
             <h2 class="logo">관리자 메뉴</h2>
 
             <ul class="menu">
-                <li><a href="#">대시보드</a></li>
-                <li><a href="#">메인 배너 변경</a></li>
-                <li><a href="#">기본 배너 변경</a></li>
-                <li><a href="#">회원 관리</a></li>
+
+                <!-- 공통 -->
+                <li><a href="#dashboard">대시보드</a></li>
+
+                <!-- 슈퍼 관리자 전용 -->
+                {% if g.user.admin_role == 'super' %}
+                <li><a href="#main-banner">메인 배너 변경</a></li>
+                <li><a href="#base-banner">기본 배너 변경</a></li>
+                <li><a href="#admin-role">관리자 권한관리</a></li>
+                {% endif %}
+
+                <!-- 공통 관리자 메뉴 -->
+                {% if g.user.admin_role in ['super', 'manager'] %}
+                <li><a href="#member-section">회원 상태 변경</a></li>
 
                 <li class="menu-title">고객센터 관리</li>
-                <li><a href="#">1:1 문의 답변</a></li>
-                <li><a href="#">공지사항 수정 / 추가</a></li>
-                <li><a href="#">FAQ 수정 / 추가</a></li>
+
+                <li><a href="#cs-section">1:1 문의 답변</a></li>
+                <li><a href="#cs-section">공지사항 수정 / 추가</a></li>
+                <li><a href="#cs-section">FAQ 수정 / 추가</a></li>
+                {% endif %}
+
             </ul>
         </aside>
 
-        <!-- 메인 컨텐츠 -->
+        <!-- 메인 -->
         <main class="main-content">
 
-            <!-- 상단 제목 -->
+            <!-- 헤더 -->
             <div class="page-header">
-                <h1>관리자 대시보드</h1>
-                <p>영화 프로젝트 운영 관리 페이지</p>
+                <div class="header-left">
+                    <h1>관리자 대시보드</h1>
+                    <p>영화 프로젝트 운영 관리 페이지</p>
+                </div>
+
+                <div class="header-right">
+                    <a href="{{ url_for('auth.logout') }}" class="btn-logout">
+                        로그아웃
+                    </a>
+                </div>
             </div>
 
-            <!-- 로그아웃 버튼 -->
-            <div class="header-right">
-                <a href="{{ url_for('auth.logout') }}" class="btn-logout">
-                    로그아웃
-                </a>
-            </div>
-
-            <!-- 통계 카드 -->
-            <section class="stats-section">
+            <!-- 통계 -->
+            <section class="stats-section" id="dashboard">
                 <div class="card">
                     <h3>총 회원 수</h3>
                     <p>{{ total_users }}</p>
@@ -63,8 +90,77 @@
                 </div>
             </section>
 
+            <!-- 슈퍼 관리자 전용 영역 -->
+            {% if g.user.admin_role == 'super' %}
+
+            <section class="table-section" id="main-banner">
+                <h2>메인 배너 변경</h2>
+                <div class="card">
+                    메인 배너 관리 기능 영역
+                </div>
+            </section>
+
+            <section class="table-section" id="base-banner">
+                <h2>기본 배너 변경</h2>
+                <div class="card">
+                    기본 배너 관리 기능 영역
+                </div>
+            </section>
+
+            <section class="table-section" id="admin-role">
+                <h2>관리자 권한관리</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>권한등급</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for admin in admins %}
+                        <tr>
+                            <td>{{ admin.userid }}</td>
+                            <td>{{ admin.username }}</td>
+                            <td>{{ admin.email }}</td>
+
+                            <td>
+                                {% if admin.admin_role == 'super' %}
+                                슈퍼관리자
+                                {% else %}
+                                운영관리자
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if admin.admin_role != 'super' %}
+
+                                {% if admin.id != g.user.id %}
+                                <a href="{{ url_for('auth.remove_admin', user_id=admin.id) }}" class="btn-remove">
+                                    권한해제
+                                </a>
+                                {% else %}
+                                <span class="admin-badge">내 계정</span>
+                                {% endif %}
+
+                                {% else %}
+                                <span class="admin-badge">최고권한</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            {% endif %}
+
             <!-- 회원 검색 -->
-            <section class="search-section">
+            <section class="search-section" id="member-section">
                 <h2>회원 검색</h2>
 
                 <form method="get" action="{{ url_for('auth.admin') }}">
@@ -87,7 +183,10 @@
                             <th>가입일</th>
                             <th>회원상태</th>
                             <th>상태변경</th>
+
+                            {% if g.user.admin_role == 'super' %}
                             <th>관리자권한</th>
+                            {% endif %}
                         </tr>
                     </thead>
 
@@ -95,22 +194,12 @@
                         {% for user in users %}
                         <tr>
 
-                            <!-- 닉네임 -->
                             <td>{{ user.username }}</td>
-
-                            <!-- 이메일 -->
                             <td>{{ user.email }}</td>
-
-                            <!-- 생년월일 -->
                             <td>{{ user.birth }}</td>
+                            <td>{{ user.phone }}</td>                            
+                            <td></td>
 
-                            <!-- 휴대폰번호 -->
-                            <td>{{ user.phone }}</td>
-
-                            <!-- 가입일 -->
-                            <td>{{ user.create_date }}</td>
-
-                            <!-- 회원 상태 -->
                             <td>
                                 {% if user.status == 'normal' %}
                                 <span class="status normal">정상회원</span>
@@ -119,33 +208,34 @@
                                 {% endif %}
                             </td>
 
-                            <!-- 상태 변경 -->
                             <td>
                                 <a href="{{ url_for('auth.change_user_status', user_id=user.id) }}" class="btn-change">
                                     상태변경
                                 </a>
                             </td>
 
-                            <!-- 관리자 권한 -->
+                            {% if g.user.admin_role == 'super' %}
                             <td>
 
                                 {% if user.is_admin %}
-
                                 <span class="admin-badge">관리자</span>
 
+                                {% if user.id != g.user.id %}
                                 <a href="{{ url_for('auth.remove_admin', user_id=user.id) }}" class="btn-remove">
                                     권한해제
                                 </a>
+                                {% else %}
+                                <span class="admin-badge">내 계정</span>
+                                {% endif %}
 
                                 {% else %}
-
                                 <a href="{{ url_for('auth.grant_admin', user_id=user.id) }}" class="btn-admin">
                                     권한부여
                                 </a>
-
                                 {% endif %}
 
                             </td>
+                            {% endif %}
 
                         </tr>
                         {% endfor %}
@@ -153,30 +243,45 @@
                 </table>
             </section>
 
-            <!-- 고객센터 바로가기 -->
-            <section class="cs-section">
+            <!-- 고객센터 -->
+            {% if g.user.admin_role in ['super', 'manager'] %}
+            <section class="cs-section" id="cs-section">
                 <h2>고객센터 관리</h2>
 
                 <div class="cs-grid">
+
                     <div class="cs-card">
                         <h3>1:1 문의 답변</h3>
                         <p>답변 대기 문의를 관리합니다.</p>
                     </div>
 
-                    <div class="cs-card">
-                        <h3>공지사항 관리</h3>
-                        <p>공지 등록 / 수정 / 삭제</p>
-                    </div>
+                    <a href="{{ url_for('cs.notice_list') }}" class="cs-link">
+                        <div class="cs-card">
+                            <h3>공지사항 관리</h3>
+                            <p>공지 등록 / 수정 / 삭제</p>
+                        </div>
+                    </a>
 
                     <div class="cs-card">
                         <h3>FAQ 관리</h3>
                         <p>FAQ 등록 / 수정 / 삭제</p>
                     </div>
+
                 </div>
             </section>
+            {% endif %}
 
         </main>
     </div>
+
+    <!-- 플래시 자동 닫힘 -->
+    <script>
+        setTimeout(function () {
+            document.querySelectorAll('.flash-message').forEach(function (el) {
+                el.classList.add('hide');
+            });
+        }, 2500);
+    </script>
 
 </body>
 

@@ -98,7 +98,7 @@
             <ul></ul>
           </div>
           <div class="btnToSeats">
-            <a id="btnSeats" href="{{ url_for('film.person_seat') }}">좌석선택</a>
+            <a href="{{ url_for('film.person_seat') }}" id="btnSeats">좌석선택</a>
           </div>
         </div>
       </div>
@@ -109,6 +109,7 @@
 
 {% block script %}
 <script>
+  const isLogin = {{ 'true' if g.user else 'false' }};
   const movieId = "{{ movie_id }}";
 </script>
 

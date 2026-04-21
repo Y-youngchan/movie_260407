@@ -165,4 +165,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 초기 실행
     updateUI();
+
+    const btnPayment = document.getElementById("btnPayment");
+
+    btnPayment.addEventListener("click", () => {
+
+        const scheduleId = new URLSearchParams(location.search).get("schedule_id");
+
+        const people = {
+            adult: parseInt(numBoxes[0].textContent),
+            teen: parseInt(numBoxes[1].textContent),
+            senior: parseInt(numBoxes[2].textContent),
+            disabled: parseInt(numBoxes[3].textContent)
+        };
+
+        const totalPeople = getTotalPeople();
+
+        if (totalPeople === 0) {
+            alert("인원을 선택하세요");
+            return;
+        }
+
+        if (selectedSeats.length !== totalPeople) {
+            alert("인원수와 좌석 수가 일치해야 합니다");
+            return;
+        }
+
+        const data = {
+            schedule_id: parseInt(scheduleId),
+            seats: selectedSeats,
+            people: people,
+            total_price: calculatePrice()
+        };
+
+        fetch("/film/movie/payment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    location.href = `/film/movie/payment?schedule_id=${scheduleId}`;
+                }
+            });
+    });
 });

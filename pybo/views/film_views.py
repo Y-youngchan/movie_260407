@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from flask import Blueprint, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
+from flask import Blueprint, flash, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
 from pybo import db
+from pybo.views.auth_views import login_required
 from pybo.models import Movie, Schedule, Screen, Theater, User, Reservation, Order
 
 from sqlalchemy import func
@@ -10,7 +11,6 @@ import requests, base64
 bp = Blueprint('film', __name__, url_prefix='/film')
 
 # 마이페이지
-
 @bp.route('/mypage', methods=['GET', 'POST'])
 def mypage():
     user_id = session.get('user_id')
@@ -122,7 +122,8 @@ def get_schedules():
 
     return jsonify(result)
 
-@bp.route('/person/seat', methods=['GET'])
+@bp.route('/person/seat', methods=['GET', 'POST'])
+@login_required
 def person_seat():
     schedule_id = request.args.get('schedule_id', type=int)
 
@@ -144,4 +145,49 @@ def person_seat():
         movie=movie,
         screen=screen,
         theater=theater
+    )
+
+@bp.route('/movie/payment', methods=['GET', 'POST'])
+@login_required
+def movie_payment():
+
+    if request.method == 'POST':
+        data = request.get_json()
+
+        # 세션에 저장 (핵심)
+        session['payment_data'] = data
+
+        return jsonify({"success": True})
+
+    # GET 요청 (페이지 이동)
+    schedule_id = request.args.get('schedule_id', type=int)
+
+    schedule = Schedule.query.get_or_404(schedule_id)
+
+    movie = schedule.movie
+    screen = schedule.screen
+    theater = screen.theater
+
+    # 세션에서 데이터 꺼내기
+    payment_data = session.get('payment_data')
+
+    if not payment_data:
+        abort(400)
+
+    seats = payment_data.get('seats')
+    people = payment_data.get('people')
+    total_price = payment_data.get('total_price')
+
+    num_people = sum(people.values())
+
+    return render_template(
+        'movie_payment.html',
+        schedule=schedule,
+        movie=movie,
+        screen=screen,
+        theater=theater,
+        seats=seats,
+        people=people,
+        num_people=num_people,
+        total_price=total_price
     )

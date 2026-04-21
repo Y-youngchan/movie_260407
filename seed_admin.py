@@ -1,31 +1,61 @@
 from pybo import db
 from pybo.models import User
+from werkzeug.security import generate_password_hash
+
 
 def seed_admin():
-    # admin 계정 존재 여부 확인
-    admin = User.query.filter_by(userid='admin').first()
 
-    # 이미 있으면 종료
-    if admin:
-        print('이미 admin 계정이 존재합니다.')
-        return
+    admins = [
+        {
+            "userid": "admin",
+            "username": "슈퍼관리자",
+            "password": "1111",
+            "email": "admin@test.com",
+            "role": "super"
+        },
+        {
+            "userid": "manager",
+            "username": "운영관리자",
+            "password": "1111",
+            "email": "manager@test.com",
+            "role": "manager"
+        }
+    ]
 
-    # admin 계정 생성
-    admin = User(
-        userid='admin',
-        username='관리자',
-        password=generate_password_hash('1234'),
-        email='admin@test.com',
-        Terms_of_Service=True,
-        Privacy_Policy=True,
-        receive_emails=False,
-        status='normal',
-        is_admin=True
-    )
+    for data in admins:
 
-    db.session.add(admin)
+        user = User.query.filter_by(userid=data["userid"]).first()
+
+        # 이미 있으면 role 수정
+        if user:
+            user.is_admin = True
+            user.admin_role = data["role"]
+
+        # 없으면 새로 생성
+        else:
+            user = User(
+                userid=data["userid"],
+                username=data["username"],
+                password=generate_password_hash(data["password"]),
+                email=data["email"],
+                Terms_of_Service=True,
+                Privacy_Policy=True,
+                receive_emails=False,
+                status='normal',
+                is_admin=True,
+                admin_role=data["role"]
+            )
+
+            db.session.add(user)
+
     db.session.commit()
+    print("관리자 계정 생성/업데이트 완료")
 
-    print('관리자 계정 생성 완료!')
-    print('아이디: admin')
-    print('비밀번호: 1234')
+
+if __name__ == "__main__":
+    from pybo import create_app
+
+    app = create_app()
+
+    with app.app_context():
+        seed_admin()

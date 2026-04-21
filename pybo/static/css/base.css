@@ -109,10 +109,11 @@ main{
 .side-bar {
     width: 70px;
     float: right;
-    position: sticky;    
+    position: fixed;    
     top: 0;
     right: 20px;
     font-size: 12px;    
+    z-index: 100;
 }
 
 .side-bar .quick_menu a {
@@ -148,7 +149,7 @@ footer{
     width: 100%;
     height: 300px;
     margin: 0 auto;
-    padding-top: 50px;
+    padding-top: 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #eaeaea;
 }
@@ -161,9 +162,11 @@ footer #inner{
 footer #inner img{
     width: 190px;
     height: 50px;
+    margin-bottom: 10px;
 }
 #inner .footermenu ul{
     display: flex;
+    padding-left: 0;
 }
 #inner .footermenu ul li::after{
     content: "|";
@@ -199,6 +202,7 @@ footer #inner img{
 }
 #inner .ceo ul{
     display: flex;
+    padding-left: 0;
 }
 #inner .ceo ul li::after {
     content: "|";

@@ -1,5 +1,5 @@
  /* 전체 */
-.personseat {
+.payment {
     width: 100%;
     height: 1219px;
     margin: 0 auto;
@@ -8,17 +8,16 @@
 }
 
 /* 좌측 메뉴 */
-.personseat_menu {
+.payment_menu {
   width: 120px;
   margin: 0 0 0 auto;
 }
-.personseat_menu ul{
+.payment_menu ul{
     height: 1101px;
     padding-top: 73.5px;
     text-align: center;
 }
-
-.personseat_menu ul li{
+.payment_menu ul li{
     width: 90px;
     height: 268px;
     padding-top: 90px;
@@ -27,22 +26,26 @@
     border: 1px solid #000;
     background-color: #fff;
 }
-.personseat_menu ul li.active {
+.payment_menu ul li.active {
   background-color: #ff0000;
   color: #fff;
   opacity: 1;
 }
-.personseat_menu > ul > li:first-child{
+.payment_menu > ul > li:first-child{
     color: #fff;
     background-color: #666;
 }
-.personseat_menu ul li strong{
+.payment_menu > ul > li:nth-child(2) {
+    color: #fff;
+    background-color: #666;
+}
+.payment_menu ul li strong{
     font-size: 15px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* 우측 예매메뉴 */
-.personseat_content {
+.payment_content {
     width: 1207px;
     height: 1030px;
     margin: 0 auto;
@@ -54,12 +57,12 @@
 
 
 /* 우측 상단 메뉴바 */
-.personseat_title ul{
+.payment_title ul{
     display: flex;
     padding-left: 0;
     margin-bottom: 0;
 }
-.personseat_title > ul li{
+.payment_title > ul li{
     width: 1480px;
     height: 68px;
     border: 1px solid #ccc;
@@ -70,33 +73,23 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #000;
 }
-.personseat_title > ul li span{
-    display: block;
-    font-size: 12px;
-    color: #ccc;
-    margin-top: 3px;
-}
 
-/* 상세옵션 */
-.persontotal{
-    display: flex;
-}
 
-/* 선택한 영화 정보 */
-.selectmovie {
+/* 영화정보 */
+.payment_info {
+    width: 402.34px;
+    height: 899px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
-    margin-right: 100px;
-    margin-left: 30px;
-    margin-top: 25px;
+    border-right: 1px solid #ccc;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-.poster img{
-    width: 55px;
-    height: 82px;
-    margin-right: 10px;
-    border-radius: 5px;
+.payment_info .poster img{
+    width: 149px;
+    height: 214px;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 .age {
     display: inline-block;
@@ -124,8 +117,10 @@
     background-color: #388e3c; /* 초록 */
 }
 
+
+
 /* 인원 설정 */
-.person_num{
+/* .person_num{
     display: flex;
     width: 160px;
     height: 50px;
@@ -170,10 +165,10 @@
     text-align: center;
     line-height: 30px;
     font-size: 14px;
-}
+} */
 
 /* 좌석 선택 */
-.seatbar {
+/* .seatbar {
     width: 100%;
     height: 103px;
     background-color: #000;
@@ -199,10 +194,10 @@
     font-size: 18px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #ccc;
-}
+} */
 
 /* 좌석 */
-.seatselect{
+/* .seatselect{
     width: 100%;
     height: 632px;
     display: flex;
@@ -263,10 +258,10 @@
     border: none;
     cursor: default;
     background: #666;
-}
+} */
 
 /* 결제버튼 */
-.price {
+/* .price {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -288,4 +283,4 @@
     font-size: 16px;
     color: #fff;
     cursor: pointer;
-}
+} */

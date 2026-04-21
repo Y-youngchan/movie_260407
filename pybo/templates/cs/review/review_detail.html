@@ -6,7 +6,7 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/notice_detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -35,11 +35,62 @@
         </div>
     </div>
 
-    {% if review.image_path %}
-        {% for path in review.image_path.split(',') %}
-        <div class="my-3">
-            <img src="{{ url_for('static', filename=path) }}" alt="첨부 이미지"
-            style="max-width: 100%; height: auto;" class="img-thumbnail">
+
+
+
+    <div class="section4">
+        <div class="container">
+            <div class="outside">
+
+                <table class="table">
+                    <thead>
+                    <tr class="table-secondary">
+                        <th>문의유형</th>
+                        <th>영화관</th>
+                        <th>제목</th>
+                        <th>등록일</th>
+                        <th>내용</th>
+
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+
+                        <td>{{ review.cs_ask }}</td>
+                        <td>{{ review.cs_place }}</td>
+                        <td>{{ review.subject }}</td>
+                        <td>{{ review.created_date }}</td>
+                        <td>{{ review.content }}</td>
+
+                    </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+
+            <div class="d-grid gap-2 col-1 mx-auto">
+                <button class="inventory" type="button">
+                    <a class="nav-link active" href="{{ url_for("cs.review_list") }}">
+                        목록
+                    </a>
+                </button>
+
+            </div>
         </div>
-        {% endfor %}
-    {% endif %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const delete_btns = document.querySelectorAll('.delete');
+        delete_btns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (confirm('정말로 삭제 하시겠습니까?')) {
+                    location.href = this.dataset.uri;
+                }
+            })
+        })
+    </script>
+{% endblock %}

@@ -530,7 +530,7 @@ footer {
     width: 100%;
     height: 300px;
     margin: 0 auto;
-    padding-top: 50px;
+    padding-top: 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #eaeaea;
 }
@@ -543,10 +543,12 @@ footer #inner {
 footer #inner img {
     width: 190px;
     height: 50px;
+    margin-bottom: 10px;
 }
 
 #inner .footermenu ul {
     display: flex;
+    padding-left: 0;
 }
 
 #inner .footermenu ul li::after {
@@ -585,6 +587,7 @@ footer #inner img {
 
 #inner .ceo ul {
     display: flex;
+    padding-left: 0;
 }
 
 #inner .ceo ul li::after {

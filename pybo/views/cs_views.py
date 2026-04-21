@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from idlelib import query
+
 
 from flask import Blueprint, render_template, request, redirect, url_for, current_app
 from werkzeug.utils import secure_filename
@@ -37,6 +37,32 @@ def notice_detail(notice_id):
     return render_template("cs/notice/notice_detail.html", notice=notice_detail, prev_notice=prev_notice,
                            next_notice=next_notice)
 
+# ===============================
+# 공지사항 등록 (여기에 추가)
+# ===============================
+@bp.route('/notice/create/', methods=('GET', 'POST'))
+def notice_create():
+    form = NoticeForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+
+        notice = Notice(
+            theater=form.theater.data,
+            title=form.title.data,
+            content=form.content.data,
+            create_date=datetime.now()
+        )
+
+        db.session.add(notice)
+        db.session.commit()
+
+        return redirect(url_for('cs.notice_list'))
+
+    return render_template(
+        'cs/notice/notice_form.html',
+        form=form
+    )
+
 
 @bp.route("/faq/")
 def faq_list():
@@ -50,18 +76,20 @@ def faq_list():
 @bp.route("/review/")
 def review_list():
     page = request.args.get('page', type=int, default=1)
-    review_list = Review.query.all()
+    review_list=Review.query.order_by(Review.created_date.desc())
+
     return render_template("cs/review/review.html", review_list=review_list)
 
 
 # 리뷰 폼 view함수
 @bp.route('/review/create/', methods=('GET', 'POST'))
 def review_create():
+
     form = ReviewForm()
     if request.method == 'POST' and form.validate_on_submit():
         image_files = form.image.data,
         image_paths = []
-        print(form.cs_ask.data)
+
         # 저장 경로 : 오늘 날짜로 폴더 설정
         today = datetime.now().strftime('%Y%m%d')
         upload_folder = os.path.join(current_app.root_path, 'static/photo', today)
@@ -84,7 +112,7 @@ def review_create():
             cs_place=form.cs_place.data,
             subject=form.subject.data,
             content=form.content.data,
-
+            created_date=datetime.now(),
             image_path=joined_image_paths
         )
 
@@ -94,3 +122,14 @@ def review_create():
 
         return redirect(url_for('cs.review_list', review_id=review.id))
     return render_template('cs/review/review_form.html', form=form)
+
+@bp.route('/review/detail/<int:review_id>', methods=['GET'])
+def review_detail(review_id):
+    # form = AnswerForm()
+    review = Review.query.get(review_id)
+    return render_template("cs/review/review_detail.html", review=review)
+
+
+
+
+

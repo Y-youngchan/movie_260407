@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}결제 - 필름아티크{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/movie_payment.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="payment">
+
+    <!-- 좌측 네비 -->
+    <div class="payment_menu">
+        <ul class="d-flex flex-column text-center">
+            <li><strong>01<br>상영시간</strong></li>
+            <li><strong>02<br>인원/좌석</strong></li>
+            <li class="active"><strong>03<br>결제</strong></li>
+            <li><strong>04<br>결제완료</strong></li>
+        </ul>
+    </div>
+
+
+    <!-- 우측 콘텐츠 -->
+    <div class="payment_content">
+
+        <!-- 01 단계 -->
+        <div class="payment_title">
+            <ul>
+                <li>결제 정보</li>
+                <li>결제 수단</li>
+                <li>결제 하기</li>
+            </ul>
+        </div>
+
+        <!-- 영화정보 -->
+        <div class="payment_info">
+            <div class="poster">
+                <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }} 포스터">
+            </div>
+            <div class="payment_info_content">
+                <h5><span class="age 
+        {% if movie.certification == '19' %}age-19
+        {% elif movie.certification == '15' %}age-15
+        {% elif movie.certification == '12' %}age-12
+        {% else %}age-all
+        {% endif %}">
+                        {{ movie.certification if movie.certification != '정보없음' else 'ALL' }}
+                    </span>{{ movie.title }}</h5>
+                <p>상영시간: {{ schedule.start_time.strftime("%y.%m.%d (%a) %H:%M") }} ~ {{
+                    schedule.end_time.strftime("%H:%M") }}</p>
+                <p>상영관: {{ theater.name }} {{ screen.name }}</p>
+                <p>성인: {{ people.adult }}명&nbsp;청소년: {{ people.teen }}명&nbsp;경로: {{ people.senior }}명&nbsp;장애인: {{ people.disabled }}명</p>
+                <p>좌석: {{ seats | join(', ') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 포스터 -->
+<!-- <div class="poster">
+            <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }} 포스터">
+          </div> -->
+
+<!-- 정보 -->
+<!-- <div class="info"> -->
+
+<!-- 등급 + 제목 -->
+<!-- <div class="title">
+              <span class="age 
+        {% if movie.certification == '19' %}age-19
+        {% elif movie.certification == '15' %}age-15
+        {% elif movie.certification == '12' %}age-12
+        {% else %}age-all
+        {% endif %}">
+                {{ movie.certification if movie.certification != '정보없음' else 'ALL' }}
+              </span>
+
+              <strong>{{ movie.title }}</strong>
+            </div> -->
+
+<!-- 날짜 + 시간 -->
+<!-- <div class="datetime">
+              {{ schedule.start_time.strftime("%y.%m.%d (%a)") }}
+              {{ schedule.start_time.strftime("%H:%M") }} ~
+              {{ schedule.end_time.strftime("%H:%M") }}
+            </div> -->
+
+<!-- 극장 정보 -->
+<!-- <div class="location">
+              {{ theater.name }} / {{ screen.name }}
+            </div>
+
+          </div>
+        </div>
+
+
+        
+{% endblock %}
+
+{% block script %}
+<script>
+  const movieId = "{{ movie_id }}";
+</script>
+
+<!-- <script src="{{ url_for('static', filename='js/person_seat.js') }}"></script> -->
+{% endblock %}
