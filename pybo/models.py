@@ -63,6 +63,7 @@ class Product(db.Model):
     Producttype = db.Column(db.String(50), nullable=False) # 티켓, 스낵음료, 굿즈
     Productprice = db.Column(db.Integer, nullable=False)
     stock = db.Column(db.Integer, default=0) #재고
+    status = db.Column(db.String(20), default='normal')  # normal = 판매중, soldout = 품절
     Productdescription = db.Column(db.Text) # 구성품
     Productimage_url = db.Column(db.String(300))
     Productlimit = db.Column(db.Integer, nullable=False)

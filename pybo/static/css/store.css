@@ -7,10 +7,10 @@
 /* 배너 */
 .inner_banner {
     background-color: black;
-    width: 100%;    
+    width: 100%;
 }
 
-.inner_banner .banner_in {    
+.inner_banner .banner_in {
     display: flex;
     justify-content: center;
 }
@@ -25,10 +25,10 @@
     background: #fff;
 }
 
-.navi-bar {    
+.navi-bar {
     padding-left: 0;
     margin: 0;
-    display: flex;    
+    display: flex;
 }
 
 .navi-bar li {
@@ -64,12 +64,6 @@
     font-size: 16px;
 }
 
-.store_pro a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .store_pro h4 {
     font-size: 17px;
     text-align: center;
@@ -91,7 +85,7 @@
     color: gray;
 }
 
-/* 핵심: 3열 그리드 */
+/* 상품 3열 */
 .ticket,
 .snack_drink,
 .titan_merch {
@@ -100,8 +94,42 @@
     gap: 40px;
 }
 
+/* 상품 카드 */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    position: relative;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
 /* 이미지 */
 .store_pro img {
     width: 100%;
     max-width: 300px;
+}
+
+/* 품절 상품 흐리게 */
+.soldout-item {
+    opacity: 0.55;
+}
+
+/* 품절 배지 */
+.soldout-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #e50914;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 10;
 }

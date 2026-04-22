@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm
-from pybo.models import User, Movie
+from pybo.models import User, Product
 import functools
 
 bp=Blueprint('auth',__name__, url_prefix='/auth')
@@ -41,32 +41,37 @@ def signup():
 
     return render_template('auth/signup.html', form=form)
 
+
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = UserLoginForm()
+
     if request.method == 'POST' and form.validate_on_submit():
         error = None
         user = User.query.filter_by(userid=form.userid.data).first()
+
         if not user:
             error = '존재하지 않는 아이디입니다.'
+
         elif not check_password_hash(user.password, form.password.data):
             error = '비밀번호가 올바르지 않습니다.'
+
         if error is None:
             session.clear()
             session['user_id'] = user.id
 
-            # 관리자 계정이면 관리자 페이지 이동
-            if user.is_admin == True:
+            # 휴면회원 체크
+            if user.status == 'sleep':
+                return redirect(url_for('auth.sleep_member'))
+
+            # 관리자
+            if user.is_admin:
                 return redirect(url_for('auth.admin'))
-            
-            else:
-                _next=request.args.get('next', '')
-                if _next:
-                    return redirect(_next)
-                else:
-                    return redirect(url_for('main.index'))
-        else:
-            flash(error)
+
+            return redirect(url_for('main.index'))
+
+        flash(error)
+
     return render_template('auth/login.html', form=form)
 
 @bp.route('/logout')
@@ -81,17 +86,58 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = User.query.get(user_id)
+        g.user = db.session.get(User, user_id)
 
 # 데코레이션 함수
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(*args, **kwargs):
+
+        # 로그인 안 된 경우
         if g.user is None:
             _next = request.url if request.method == 'GET' else ''
             return redirect(url_for('auth.login', next=_next))
+
+        # 휴면회원 강제 이동
+        if g.user.status == 'sleep':
+            allow_pages = [
+                'auth.sleep_member',
+                'auth.wake_member',
+                'auth.logout'
+            ]
+
+            if request.endpoint not in allow_pages:
+                return redirect(url_for('auth.sleep_member'))
+
         return view(*args, **kwargs)
+
     return wrapped_view
+
+# =====================
+# 휴면회원 안내 페이지
+# =====================
+@bp.route('/sleep-member')
+@login_required
+def sleep_member():
+
+    if g.user.status != 'sleep':
+        return redirect(url_for('main.index'))
+
+    return render_template('auth/sleep_member.html')
+
+# =====================
+# 휴면회원 해제
+# =====================
+@bp.route('/wake-member')
+@login_required
+def wake_member():
+
+    if g.user.status == 'sleep':
+        g.user.status = 'normal'
+        db.session.commit()
+
+    flash('휴면회원이 해제되었습니다.')
+    return redirect(url_for('main.index'))
 
 
 # ===========================
@@ -162,21 +208,32 @@ def admin():
         User.email.contains(keyword)
     ).all()
 
-    admins = User.query.filter_by(is_admin=True).all()    
+    admins = User.query.filter_by(is_admin=True).all()
+
+    products = Product.query.filter(
+        Product.Productname.contains(keyword)
+    ).all()
 
     total_users = User.query.count()
     normal_users = User.query.filter_by(status='normal').count()
     sleep_users = User.query.filter_by(status='sleep').count()
 
+    soldout_products = Product.query.filter_by(status='soldout').count()
+    normal_products = Product.query.filter_by(status='normal').count()
+
     return render_template(
         'admin.html',
         users=users,
         admins=admins,
+        products=products,
+
         total_users=total_users,
         normal_users=normal_users,
-        sleep_users=sleep_users
-    )
+        sleep_users=sleep_users,
 
+        soldout_products=soldout_products,
+        normal_products=normal_products
+    )
 
 # ==================================================
 # 회원 상태 변경
@@ -272,3 +329,21 @@ def notice_admin_required(view):
         return view(*args, **kwargs)
 
     return wrapped_view
+
+# 상품 관리 함수
+@bp.route('/admin/product/<int:product_id>/status')
+@login_required
+@admin_required
+def change_product_status(product_id):
+
+    product = Product.query.get_or_404(product_id)
+
+    if product.status == 'normal':
+        product.status = 'soldout'
+    else:
+        product.status = 'normal'
+
+    db.session.commit()
+
+    flash('상품 상태가 변경되었습니다.')
+    return redirect(url_for('auth.admin'))

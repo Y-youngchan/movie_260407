@@ -4,8 +4,7 @@
 /* 헤더 */
 .header .container {
     display: flex;
-    justify-content: center;
-    padding-left: 100px;
+    justify-content: center;    
 }
 .header .container .menu{
     width: 1206px; height: 276px;
@@ -68,13 +67,14 @@
 }
 
 .outside{
-    height: 1100px;
+    height: 1150px;
 }
 .section1 .container .outside table{
     width: 1062px;
     margin: 0 auto 40px auto;
     font-size: 20px;
 }
+
 
 
 
@@ -100,16 +100,55 @@
 
 .btn-write{
     display:inline-block;
+    margin-right: 15px;
     padding:10px 18px;
-    background:#6366f1;
+    background:#5c636a;
     color:white;
     text-decoration:none;
     border-radius:8px;
-    font-size:14px;
+    font-size:12px;
     font-weight:bold;
     transition:0.2s;
 }
 
 .btn-write:hover{
     background:#4f46e5;
+}
+
+/* ===========================
+    관리자 공지사항 수정/삭제버튼 
+============================== */
+
+.admin-btn-group{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin:20px 0;
+}
+
+.btn-edit,
+.btn-delete{
+    padding:10px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    color:white;
+    font-size:14px;
+    font-weight:600;
+    transition:0.2s;
+}
+
+.btn-edit{
+    background:#5c636a;
+}
+
+.btn-edit:hover{
+    background:#3551d8;
+}
+
+.btn-delete{
+    background:#5c636a;
+}
+
+.btn-delete:hover{
+    background:#c0392b;
 }

@@ -17,7 +17,6 @@
 .pro_detail {
     display: flex;
     gap: 60px;
-    /* margin 대신 gap 사용 */
 }
 
 /* =========================
@@ -26,10 +25,48 @@
 .main_img {
     margin-top: 60px;
     text-align: center;
+    position: relative;   /* 추가 */
+    overflow: hidden;     /* 추가 */
 }
 
 .main_img img {
     width: 670px;
+    transition: 0.3s;
+}
+
+/* =========================
+   품절 이미지 효과
+========================= */
+.soldout .main_img img {
+    filter: grayscale(100%) blur(1px);
+    transform: scale(1.02);
+}
+
+/* 검정 반투명 오버레이 */
+.soldout .main_img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.005);
+}
+
+/* SOLD OUT 띠지 */
+.soldout .main_img::before {
+    content: "SOLD OUT";
+    position: absolute;
+    top: 30px;
+    left: -50px;
+    width: 260px;
+    text-align: center;
+    background: #e60012;
+    color: #fff;
+    font-size: 26px;
+    font-weight: bold;
+    padding: 12px 0;
+    transform: rotate(-35deg);
+    z-index: 5;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 /* =========================
@@ -76,7 +113,6 @@
 .tit_pirce {
     display: flex;
     justify-content: flex-start;
-    /* 🔥 핵심 수정 */
     align-items: center;
     font-size: 28px;
     font-weight: 600;
@@ -103,7 +139,6 @@
     justify-content: space-between;
     height: 50px;
     margin-top: -40px;
-
     border: 1px solid #414141;
     border-radius: 8px;
 }
@@ -166,7 +201,7 @@
 }
 
 /* 버튼 공통 */
- .present_buy button {
+.present_buy button {
     flex: 1;
     height: 50px;
     border-radius: 4px;
@@ -174,7 +209,7 @@
     cursor: pointer;
 }
 
-/* 구매 */
+/* 구매 버튼 */
 .present_buy a {
     flex: 1;
     height: 50px;
@@ -187,43 +222,57 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
+    transition: 0.2s;
 }
 
-/* 선물 */
+.present_buy a:hover {
+    background: #c40000;
+}
+
+/* 선물 버튼 */
 .presents {
     background: #414141;
     color: #fff;
     border: 1px solid #414141;
 }
 
-/* 구매 */
-.present_buy a {
+/* =========================
+   품절 버튼
+========================= */
+.soldout-btn {
     flex: 1;
     height: 50px;
     border-radius: 4px;
     font-size: 14px;
-    cursor: pointer;
-    background: red;
+    border: none;
+    background: #888;
     color: #fff;
-    border: 1px solid red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: not-allowed;
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* hover 완전 차단 */
+.soldout-btn:hover {
+    background: #888;
+}
+
+/* 품절일 때 구매영역 흐리게 */
+.soldout .present_buy {
+    opacity: 0.95;
 }
 
 /* =========================
    disabled 상태
 ========================= */
 button:disabled {
-    opacity: 0.4;
     cursor: not-allowed;
 }
 
 /* ========================
-    사용방법 / 유의사항
+   사용방법 / 유의사항
 ===========================*/
-
-/* 공통 레이아웃 */
 .howtouse {
     margin-top: 100px;
 }
@@ -273,15 +322,12 @@ button:disabled {
 }
 
 /* 탭 콘텐츠 */
-.tabcontent {    
+.tabcontent {
     width: 100%;
-    
     background: #fff;
     border-top: 1px solid #aaa;
     margin-top: -2px;
     padding: 40px;
     font-size: 13px;
-
-    /* 높이 고정 대신 최소 높이 */
     min-height: 300px;
 }

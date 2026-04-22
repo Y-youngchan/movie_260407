@@ -1,57 +1,65 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항 - 필름아티크
+공지사항 - 필름아티크
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/notice_detail.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notice_detail.css') }}">
 {% endblock %}
 
 {% block content %}
 
-    <div class="header">
-        <div class="container">
-            <div class="menu">
-                <h3 id="sub_title">고객센터</h3>
-                <div class="service">
+<div class="header">
+    <div class="container">
+        <div class="menu">
+            <h3 id="sub_title">고객센터</h3>
+            <div class="service">
 
-                    <ul class="nav nav-underline">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.faq_list") }}">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="{{ url_for("cs.notice_list") }}">공지사항</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.review_list") }}">1:1문의</a>
-                        </li>
+                <ul class="nav nav-underline">
 
-                    </ul>
-                </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cs.faq_list') }}">
+                            FAQ
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('cs.notice_list') }}">
+                            공지사항
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cs.review_list') }}">
+                            1:1문의
+                        </a>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
-    <div class="section2">
-        <div class="container">
+<div class="section2">
+    <div class="container">
 
-            <table class="table table">
-                <thead>
+        <table class="table table">
+            <thead>
                 <tr>
 
                     <th class="table-secondary">영화관</th>
                     <th class="table-secondary">제목</th>
                     <th class="table-secondary">등록일</th>
                 </tr>
-                </thead>
+            </thead>
 
-                <tbody>
+            <tbody>
                 <tr>
                     <td class="table-light">{{ notice.theater }}</td>
                     <td class="table-light">{{ notice.title }}</td>
@@ -59,75 +67,91 @@
                         {{ notice.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}
                     </td>
                 </tr>
-                </tbody>
-            </table>
-            <div class="answer1">
-                <pre><p style="white-space: pre-wrap">{{ notice.content }}</p></pre>
-            </div>
-            <nav>
-                <ul>
+            </tbody>
+        </table>
+        <div class="answer1">
+            <pre><p style="white-space: pre-wrap">{{ notice.content }}</p></pre>
+        </div>
 
-                    <!-- 이전 글 -->
-                    <div class="recent_btn">
-                        {% if prev_notice %}
+        {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+        <div class="admin-btn-group">
 
-                            <li>
-                                <a href="{{ url_for('cs.notice_detail', notice_id=prev_notice.id) }}">
-                                    이전 : {{ prev_notice.title }}
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="disabled">
-                            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">
-                                 이전
-                            </a>
+            <a href="{{ url_for('cs.notice_modify', notice_id=notice.id) }}" class="btn-edit">
+                수정
+            </a>
 
-                            </li>
-                        {% endif %}
-                    </div>
+            <a href="{{ url_for('cs.notice_delete', notice_id=notice.id) }}" class="btn-delete"
+                onclick="return confirm('삭제하시겠습니까?');">
+                삭제
+            </a>
 
-                    <div class="forward_btn">
+        </div>
+        {% endif %}
+
+        <nav>
+            <ul>
+
+                <!-- 이전 글 -->
+                <div class="recent_btn">
+                    {% if prev_notice %}
+
+                    <li>
+                        <a href="{{ url_for('cs.notice_detail', notice_id=prev_notice.id) }}">
+                            이전 : {{ prev_notice.title }}
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">
+                            이전
+                        </a>
+
+                    </li>
+                    {% endif %}
+                </div>
+
+                <div class="forward_btn">
                     <!-- 다음 글 -->
                     {% if next_notice %}
-                        <li>
-                            <a href="{{ url_for('cs.notice_detail', notice_id=next_notice.id) }}">
-                                다음 : {{ next_notice.title }}
-                            </a>
-                        </li>
+                    <li>
+                        <a href="{{ url_for('cs.notice_detail', notice_id=next_notice.id) }}">
+                            다음 : {{ next_notice.title }}
+                        </a>
+                    </li>
                     {% else %}
-                        <li class="disabled">
+                    <li class="disabled">
                         <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">
                             다음
                         </a>
-                        </li>
+                    </li>
                     {% endif %}
-                    </div>
+                </div>
 
-                </ul>
-            </nav>
+            </ul>
+        </nav>
 
 
-            <div class="d-grid gap-2 col-1 mx-auto">
-                <button class="inventory" type="button">
-                    <a class="nav-link active" href="{{ url_for("cs.notice_list") }}">
-                        목록
-                    </a>
-                </button>
+        <div class="d-grid gap-2 col-1 mx-auto">
+            <button class="inventory" type="button">
+                <a class="nav-link active" href="{{ url_for('cs.notice_list') }}">
+                    목록
+                </a>
+            </button>
 
-            </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block script %}
-    <script>
-        const delete_btns = document.querySelectorAll('.delete');
-        delete_btns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                if (confirm('정말로 삭제 하시겠습니까?')) {
-                    location.href = this.dataset.uri;
-                }
-            })
+<script>
+    const delete_btns = document.querySelectorAll('.delete');
+    delete_btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            if (confirm('정말로 삭제 하시겠습니까?')) {
+                location.href = this.dataset.uri;
+            }
         })
-    </script>
+    })
+</script>
 {% endblock %}

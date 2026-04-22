@@ -1,8 +1,8 @@
 import os
 from datetime import datetime
+from functools import wraps
 
-
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash, g
 from werkzeug.utils import secure_filename
 
 
@@ -14,6 +14,27 @@ from pybo.models import Notice
 from pybo.models import Review
 
 bp = Blueprint('cs', __name__, url_prefix='/cs')
+
+
+# ==================================================
+# 공지사항 관리자 권한 체크 (추가)
+# super / manager 만 허용
+# ==================================================
+def notice_admin_required(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+
+        if g.user is None:
+            flash('로그인이 필요합니다.')
+            return redirect(url_for('auth.login'))
+
+        if g.user.admin_role not in ['super', 'manager']:
+            flash('관리자 권한이 없습니다.')
+            return redirect(url_for('main.index'))
+
+        return view(*args, **kwargs)
+
+    return wrapped_view
 
 
 # notice_list
@@ -38,10 +59,13 @@ def notice_detail(notice_id):
                            next_notice=next_notice)
 
 # ===============================
-# 공지사항 등록 (여기에 추가)
+# 공지사항 등록
+# 관리자만 가능 (추가)
 # ===============================
 @bp.route('/notice/create/', methods=('GET', 'POST'))
+@notice_admin_required
 def notice_create():
+
     form = NoticeForm()
 
     if request.method == 'POST' and form.validate_on_submit():
@@ -56,6 +80,8 @@ def notice_create():
         db.session.add(notice)
         db.session.commit()
 
+        flash('공지사항이 등록되었습니다.')
+
         return redirect(url_for('cs.notice_list'))
 
     return render_template(
@@ -64,6 +90,57 @@ def notice_create():
     )
 
 
+# ===============================
+# 공지사항 수정
+# ===============================
+@bp.route('/notice/modify/<int:notice_id>/', methods=('GET', 'POST'))
+@notice_admin_required
+def notice_modify(notice_id):
+
+    notice = Notice.query.get_or_404(notice_id)
+    form = NoticeForm(obj=notice)
+
+    if request.method == 'POST' and form.validate_on_submit():
+
+        notice.theater = form.theater.data
+        notice.title = form.title.data
+        notice.content = form.content.data
+
+        db.session.commit()
+
+        flash('공지사항이 수정되었습니다.')
+
+        return redirect(
+            url_for(
+                'cs.notice_detail',
+                notice_id=notice.id
+            )
+        )
+
+    return render_template(
+        'cs/notice/notice_form.html',
+        form=form
+    )
+
+
+# ===============================
+# 공지사항 삭제
+# ===============================
+@bp.route('/notice/delete/<int:notice_id>/')
+@notice_admin_required
+def notice_delete(notice_id):
+
+    notice = Notice.query.get_or_404(notice_id)
+
+    db.session.delete(notice)
+    db.session.commit()
+
+    flash('공지사항이 삭제되었습니다.')
+
+    return redirect(url_for('cs.notice_list'))
+
+
+# FAQ
 @bp.route("/faq/")
 def faq_list():
     page = request.args.get('page', type=int, default=1)
@@ -73,6 +150,7 @@ def faq_list():
     return render_template("cs/faq/faq.html", faq_list=faq_list)
 
 
+# 1:1 문의 목록
 @bp.route("/review/")
 def review_list():
     page = request.args.get('page', type=int, default=1)
@@ -123,14 +201,13 @@ def review_create():
         return redirect(url_for('cs.review_list', review_id=review.id))
     return render_template('cs/review/review_form.html', form=form)
 
+
+# 리뷰 상세
 @bp.route('/review/detail/<int:review_id>', methods=['GET'])
 def review_detail(review_id):
     # form = AnswerForm()
     review = Review.query.get(review_id)
 
-    return render_template("cs/review/review_detail.html", review=review)
-
-
-
-
-
+    return render_template("cs/review/review_detail.html",
+                           review=review
+                           )

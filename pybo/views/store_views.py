@@ -23,23 +23,28 @@ def product(id):
 @bp.route('/order/create/<int:product_id>')
 @login_required
 def create_order(product_id):
-    user = User.query.get(session.get("user_id"))
-    product = Product.query.get(product_id)
 
-    quantity = int(request.args.get('quantity', 1))  # 기본 1
+    user = User.query.get(session.get("user_id"))
+    product = Product.query.get_or_404(product_id)
+
+    # 품절 상품 구매 차단
+    if product.status == 'soldout':
+        return "<script>alert('품절된 상품은 구매할 수 없습니다.'); location.href='/store/main';</script>"
+
+    quantity = int(request.args.get('quantity', 1))
 
     total_price = product.Productprice * quantity
 
     order = Order(
-    user_id=user.id,
-    user_name=user.username,
-    user_userid=user.userid,
-    product_id=product.id,
-    product_name=product.Productname,
-    quantity=quantity,
-    total_price=total_price,
-    order_code=f"order_{product_id}_{user.id}_{uuid.uuid4().hex[:8]}"
-)
+        user_id=user.id,
+        user_name=user.username,
+        user_userid=user.userid,
+        product_id=product.id,
+        product_name=product.Productname,
+        quantity=quantity,
+        total_price=total_price,
+        order_code=f"order_{product_id}_{user.id}_{uuid.uuid4().hex[:8]}"
+    )
 
     db.session.add(order)
     db.session.commit()

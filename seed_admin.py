@@ -1,6 +1,7 @@
 from pybo import db
 from pybo.models import User
 from werkzeug.security import generate_password_hash
+from datetime import date
 
 
 def seed_admin():
@@ -11,6 +12,8 @@ def seed_admin():
             "username": "슈퍼관리자",
             "password": "1111",
             "email": "admin@test.com",
+            "phone": "01099999999",
+            "birth": "2000-01-01",
             "role": "super"
         },
         {
@@ -18,6 +21,8 @@ def seed_admin():
             "username": "운영관리자",
             "password": "1111",
             "email": "manager@test.com",
+            "phone": "01099999999",
+            "birth": "2000-01-01",
             "role": "manager"
         }
     ]
@@ -38,6 +43,8 @@ def seed_admin():
                 username=data["username"],
                 password=generate_password_hash(data["password"]),
                 email=data["email"],
+                phone=data["phone"],
+                birth=date(2000, 1, 1),
                 Terms_of_Service=True,
                 Privacy_Policy=True,
                 receive_emails=False,

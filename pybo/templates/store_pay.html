@@ -56,7 +56,7 @@
     const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS);
 
     const orderId = "{{ order.order_code }}";
-    const amount = {{ order.total_price }};
+    const amount = "{{ order.total_price }}";
 
     // 결제 UI
     paymentWidget.renderPaymentMethods("#payment-method", { value: amount });

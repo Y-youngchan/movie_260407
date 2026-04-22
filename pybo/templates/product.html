@@ -11,7 +11,7 @@
 
     <!-- 상품 상세정보 -->
 
-    <div class="pro_detail">
+    <div class="pro_detail {% if product.status == 'soldout' %}soldout{% endif %}">
         <!-- 상품 이미지 -->
         <div class="main_img">
             <img src="{{ product.Productimage_url }}" alt="vip 관람권">
@@ -33,7 +33,7 @@
                         <td class="left">금액</td>
                         <td class="right" scope="row">
                             <span class="tit_pirce">
-                                {{ product.Productprice }}
+                                {{ "{:,}".format(product.Productprice) }}
                                 <em>원</em>
                             </span>
                         </td>
@@ -110,7 +110,7 @@
             <div class="last_price">
                 총 상품금액
                 <strong class="end_price">
-                    {{ product.Productprice }}
+                    {{ "{:,}".format(product.Productprice) }}
                     <em>원</em>
                 </strong>
             </div>
@@ -118,10 +118,25 @@
             <!-- 선물하기 및 구매하기 버튼 -->
 
             <div class="present_buy">
+
                 <button class="presents">선물하기</button>
-                <a id="buy-btn" data-product-id="{{ product.id }}" href="#">
+
+                {% if product.status == 'soldout' %}
+
+                    <button class="soldout-btn" disabled>
+                        품절 상품
+                    </button>
+
+                {% else %}
+
+                    <a id="buy-btn"
+                    data-product-id="{{ product.id }}"
+                    href="#">
                     구매하기
-                </a>
+                    </a>
+
+                {% endif %}
+
             </div>
 
         </div>
@@ -316,11 +331,11 @@
     </div>
 </div>
 
-</div>
-
 {% endblock %}
 {% block script %}
-<script>const productprice = {{ product.Productprice }};</script>
+<script>
+    const productprice = {{ product.Productprice }};
+</script>
 <script>const Productlimit = {{ product.Productlimit }};</script>
 <script src="{{ url_for('static', filename='js/product.js') }}"></script>
 {% endblock %}
