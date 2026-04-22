@@ -11,6 +11,7 @@ from pybo import db
 from pybo.forms import NoticeForm, ReviewForm
 from pybo.models import Notice
 from pybo.models import Review, User
+from views.auth_views import login_required
 
 bp = Blueprint('cs', __name__, url_prefix='/cs')
 
@@ -152,9 +153,11 @@ def faq_list():
 
 # 1:1 문의 목록
 @bp.route("/review/")
+@login_required
 def review_list():
     page = request.args.get('page', type=int, default=1)
     review_list=Review.query.order_by(Review.created_date.desc())
+    review_list=Review.query.filter_by(user_id=g.user.id)
     review_list = review_list.paginate(page=page, per_page=10)
 
 
@@ -163,6 +166,7 @@ def review_list():
 
 # 리뷰 폼 view함수
 @bp.route('/review/create/', methods=('GET', 'POST'))
+@login_required
 def review_create():
     form = ReviewForm()
     if request.method == 'POST' and form.validate_on_submit():
@@ -199,12 +203,13 @@ def review_create():
         db.session.add(review)
         db.session.commit()
 
-        return redirect(url_for('cs.review_list', review_id=review.id))
+        return redirect(url_for('cs.review_list'))
     return render_template('cs/review/review_form.html', form=form)
 
 
 # 리뷰 상세
 @bp.route('/review/detail/<int:review_id>', methods=['GET'])
+@login_required
 def review_detail(review_id):
     # form = AnswerForm()
     review = Review.query.get(review_id)

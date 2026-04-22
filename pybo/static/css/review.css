@@ -13,11 +13,12 @@
     padding: 50px 0;
 }
 .section4 .input{
-    margin-left: 1000px;
+    display: flex;
+    justify-content: flex-end;
     margin-bottom: 20px;
 }
 .outside{
-    height: 1100px;
+    height: auto;
 }
 .section4 .container .outside table{
     width: 1062px;
@@ -38,7 +39,6 @@
     color: #666;
     font-size: 15px;
 }
-
 .section4 .container p {
     padding: 58px  140px 45px 140px;
     font-size: 17px;
