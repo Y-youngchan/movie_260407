@@ -26,80 +26,90 @@
         <div class="payment_title">
             <ul>
                 <li>결제 정보</li>
-                <li>결제 수단</li>
-                <li>결제 하기</li>
+                <li>결제하기</li>
             </ul>
         </div>
 
         <!-- 영화정보 -->
-        <div class="payment_info">
-            <div class="poster">
-                <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }} 포스터">
-            </div>
-            <div class="payment_info_content">
-                <h5><span class="age 
+        <div class="pay_total">
+            <div class="payment_info">
+                <div class="poster">
+                    <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }} 포스터">
+                </div>
+                <div class="payment_info_content">
+                    <h5><span class="age 
         {% if movie.certification == '19' %}age-19
         {% elif movie.certification == '15' %}age-15
         {% elif movie.certification == '12' %}age-12
         {% else %}age-all
         {% endif %}">
-                        {{ movie.certification if movie.certification != '정보없음' else 'ALL' }}
-                    </span>{{ movie.title }}</h5>
-                <p>상영시간: {{ schedule.start_time.strftime("%y.%m.%d (%a) %H:%M") }} ~ {{
-                    schedule.end_time.strftime("%H:%M") }}</p>
-                <p>상영관: {{ theater.name }} {{ screen.name }}</p>
-                <p>성인: {{ people.adult }}명&nbsp;청소년: {{ people.teen }}명&nbsp;경로: {{ people.senior }}명&nbsp;장애인: {{ people.disabled }}명</p>
-                <p>좌석: {{ seats | join(', ') }}</p>
+                            {{ movie.certification if movie.certification != '정보없음' else 'ALL' }}
+                        </span>{{ movie.title }}</h5>
+                    <p>상영시간: {{ schedule.start_time.strftime("%y.%m.%d (%a) %H:%M") }} ~ {{
+                        schedule.end_time.strftime("%H:%M") }}</p>
+                    <p>상영관: {{ theater.name }} {{ screen.name }}</p>
+                    <p>성인: {{ people.adult }}명&nbsp;청소년: {{ people.teen }}명&nbsp;경로: {{ people.senior }}명&nbsp;장애인: {{
+                        people.disabled }}명</p>
+                    <p>좌석: {{ seats | join(', ') }}</p>
+                </div>
+            </div>
+
+            <div class="payment_sys">
+                <div class="card border-0 shadow-sm p-4 mt-4" style="min-height: 500px;">
+                    <h5 class="fw-bold mb-3">결제 수단 선택</h5>
+
+                    <div id="payment-method"></div>
+
+                    <div id="agreement"></div>
+                    {# 결제 버튼에 총 결제 금액 표시 #}
+                    <button id="payment-button" class="btn btn-danger w-100 py-3 fw-bold mt-3 fs-5"></button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 포스터 -->
-<!-- <div class="poster">
-            <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }} 포스터">
-          </div> -->
 
-<!-- 정보 -->
-<!-- <div class="info"> -->
-
-<!-- 등급 + 제목 -->
-<!-- <div class="title">
-              <span class="age 
-        {% if movie.certification == '19' %}age-19
-        {% elif movie.certification == '15' %}age-15
-        {% elif movie.certification == '12' %}age-12
-        {% else %}age-all
-        {% endif %}">
-                {{ movie.certification if movie.certification != '정보없음' else 'ALL' }}
-              </span>
-
-              <strong>{{ movie.title }}</strong>
-            </div> -->
-
-<!-- 날짜 + 시간 -->
-<!-- <div class="datetime">
-              {{ schedule.start_time.strftime("%y.%m.%d (%a)") }}
-              {{ schedule.start_time.strftime("%H:%M") }} ~
-              {{ schedule.end_time.strftime("%H:%M") }}
-            </div> -->
-
-<!-- 극장 정보 -->
-<!-- <div class="location">
-              {{ theater.name }} / {{ screen.name }}
-            </div>
-
-          </div>
-        </div>
-
-
-        
 {% endblock %}
 
 {% block script %}
+<script src="https://js.tosspayments.com/v1/payment-widget"></script>
 <script>
-  const movieId = "{{ movie_id }}";
-</script>
+    const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+    const customerKey = "USER_{{ session.get('user_id') }}";
 
-<!-- <script src="{{ url_for('static', filename='js/person_seat.js') }}"></script> -->
+    // ✅ 로그인 기반으로 변경
+    const paymentWidget = PaymentWidget(clientKey, customerKey);
+
+    const orderId = "{{ order.order_code }}";
+    const amount = {{ order.total_price }};
+
+    // 결제 UI 렌더링
+    paymentWidget.renderPaymentMethods("#payment-method", { value: amount });
+    paymentWidget.renderAgreement("#agreement");
+
+    const paymentButton = document.getElementById("payment-button");
+
+    // ✅ 버튼 텍스트 동적 설정
+    paymentButton.innerText = amount.toLocaleString() + "원 결제하기";
+
+    paymentButton.addEventListener("click", function () {
+
+        // ✅ 중복 클릭 방지
+        paymentButton.disabled = true;
+
+        paymentWidget.requestPayment({
+            orderId: orderId,
+
+            // ✅ 영화 예매에 맞게 수정
+            orderName: "{{ movie.title }} ({{ seats|length }}석)",
+
+            amount: amount,
+
+            // ✅ URL 수정 (영화 예매 기준)
+            successUrl: window.location.origin + "/payment/success?order_id=" + orderId,
+            failUrl: window.location.origin + "/payment/fail?order_id=" + orderId
+        });
+    });
+</script>
 {% endblock %}

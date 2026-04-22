@@ -1,0 +1,158 @@
+.store_pay_inner {
+    width: 100%;
+    height: auto;
+    background-color: #444;
+}
+
+.store__pay_page_top {
+    width: 100%;
+    height: 50px;
+    background-color: #444;
+}
+
+.store__pay_page {
+    width: 1421px;
+    height: 872px;
+    margin: 0 auto;
+    display: flex;
+    background-color: #eaeaea;
+}
+
+.pay_success {
+    width: 100%;
+    height: 100%;
+}
+
+.pay_success_top {
+    width: 100%;
+    height: 68px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pay_success_top h2  {
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+}
+
+.pay_success_main {
+    width: 100%;
+    height: 804px;
+    display: flex;
+    justify-content: center;
+}
+
+.main_inner_left {
+    width: 300px;
+    height: 100%;
+}
+
+.main_inner_center {
+    width: 821px;
+    height: 100%;
+}
+
+.main_center_1 {
+    width: 100%;
+    height: 100px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.main_center_2 {
+    width: 100%;
+    height: 380px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.center_top {
+    width: 100%;
+    height: 280px;
+    display: flex;
+    border-bottom: 2px solid #eaeaea;
+}
+
+.center_img {
+    width: 280px;
+    height: 100%;
+}
+
+.center_img img {
+    width: 100%;
+    height: auto;
+}
+
+.center_detail {
+    width: 501px;
+    height: 100%;
+}
+
+.center_detail_code {
+    width: 100%;
+    height: 50px;
+    padding-top: 10px;
+    display: flex;
+    border-bottom: 1px solid #444;
+}
+
+.center_detail_info {
+    width: 100%;
+    height: 228px;
+    display: flex;
+    padding-top: 20px;
+}
+
+.center_detail .title {
+    width: 100px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.center_detail .story {
+    width: auto;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.center_bottom {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.main_center_3 {
+    width: 100%;
+    height: 160px;
+    margin-top: 20px;
+}
+
+.main_center_3 p {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.main_center_4 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.main_inner_right {
+    width: 300px;
+    height: 100%;
+}
+
+.store__pay_page_bottom {
+    width: 100%;
+    height: 50px;
+    background-color: #444;
+}

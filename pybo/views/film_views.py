@@ -1,8 +1,9 @@
 from datetime import datetime
+import uuid
 
 from flask import Blueprint, flash, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
 from pybo import db
-from pybo.views.auth_views import login_required
+from pybo.views.auth_views import login_required, g
 from pybo.models import Movie, Schedule, Screen, Theater, User, Reservation, Order, imgs
 
 from sqlalchemy import func
@@ -193,24 +194,18 @@ def movie_payment():
 
     if request.method == 'POST':
         data = request.get_json()
-
-        # 세션에 저장 (핵심)
         session['payment_data'] = data
-
         return jsonify({"success": True})
 
-    # GET 요청 (페이지 이동)
+    
     schedule_id = request.args.get('schedule_id', type=int)
-
     schedule = Schedule.query.get_or_404(schedule_id)
 
     movie = schedule.movie
     screen = schedule.screen
     theater = screen.theater
 
-    # 세션에서 데이터 꺼내기
     payment_data = session.get('payment_data')
-
     if not payment_data:
         abort(400)
 
@@ -219,6 +214,19 @@ def movie_payment():
     total_price = payment_data.get('total_price')
 
     num_people = sum(people.values())
+
+    
+    order_code = str(uuid.uuid4())
+
+    order = Order(
+        order_code=order_code,
+        user_id=g.user.id,
+        total_price=total_price,
+        status='pending'
+    )
+
+    db.session.add(order)
+    db.session.commit()
 
     return render_template(
         'movie_payment.html',
@@ -229,5 +237,19 @@ def movie_payment():
         seats=seats,
         people=people,
         num_people=num_people,
-        total_price=total_price
+        total_price=total_price,
+        order=order
     )
+
+@bp.route('/payment/success')
+def payment_success():
+    order_id = request.args.get("order_id")
+
+    order = Order.query.filter_by(order_code=order_id).first()
+
+    # ✅ 여기서 결제 검증 + 상태 변경
+    order.status = "paid"
+
+    db.session.commit()
+
+    return render_template("payment_success.html", order=order)
