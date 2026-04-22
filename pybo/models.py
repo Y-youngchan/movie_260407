@@ -210,3 +210,4 @@ class Review(db.Model):
     image_path = db.Column(db.Text())
     created_date = db.Column(db.DateTime, nullable=False)  # ✅ 이걸로 고정( 이거 gpt가 함)
     modify_date = db.Column(db.DateTime(), nullable=True)
+    review_answer = db.Column(db.Text(), nullable=True)

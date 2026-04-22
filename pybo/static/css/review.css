@@ -34,3 +34,11 @@
     color: #666;
     font-size: 15px;
 }
+
+.section4 .container p {
+    padding: 58px  140px 45px 140px;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 37px;
+
+}

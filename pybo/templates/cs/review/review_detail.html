@@ -6,7 +6,7 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -38,9 +38,9 @@
 
 
 
-    <div class="section4">
+    <div class="section6">
         <div class="container">
-            <div class="outside">
+
 
                 <table class="table">
                     <thead>
@@ -49,7 +49,6 @@
                         <th>영화관</th>
                         <th>제목</th>
                         <th>등록일</th>
-                        <th>내용</th>
 
                     </tr>
                     </thead>
@@ -57,17 +56,33 @@
                     <tbody>
                     <tr>
 
-                        <td>{{ review.cs_ask }}</td>
-                        <td>{{ review.cs_place }}</td>
-                        <td>{{ review.subject }}</td>
-                        <td>{{ review.created_date }}</td>
-                        <td>{{ review.content }}</td>
+                        <td class="table-light">{{ review.cs_place }}</td>
+                        <td class="table-light">{{ review.cs_ask }}</td>
+                        <td class="table-light">{{ review.subject }}</td>
+                        <td class="table-light">{{ review.created_date }}</td>
 
                     </tr>
+
                     </tbody>
 
-
                 </table>
+            <div class="outside">
+                <div class="answer1">
+                    <p style="white-space: pre-wrap">{{ review.content }}</p>
+                </div>
+                <div class="mb-3 row border-bottom pb-3">
+                    <div class="col-sm-2" >
+                        <label for="exampleFormControlTextarea1" class="form-label">
+                            답변
+                        </label>
+                    </div>
+                    <div class="col-sm-10">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">
+                    </textarea>
+                    </div>
+                </div>
+
+
             </div>
 
             <div class="d-grid gap-2 col-1 mx-auto">

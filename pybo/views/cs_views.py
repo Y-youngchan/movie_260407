@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 from pybo.models import Faq
 from pybo import db
-from pybo.forms import NoticeForm, AnswerForm, ReviewForm
+from pybo.forms import NoticeForm, ReviewForm
 from pybo.models import Notice
 from pybo.models import Review
 
@@ -127,6 +127,7 @@ def review_create():
 def review_detail(review_id):
     # form = AnswerForm()
     review = Review.query.get(review_id)
+
     return render_template("cs/review/review_detail.html", review=review)
 
 
