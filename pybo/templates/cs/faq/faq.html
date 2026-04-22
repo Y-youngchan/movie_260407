@@ -44,14 +44,13 @@
             </p>
 
 
-            <select class="form-select w-25">
+            <select id="filter" class="form-select w-25">
 
-                <option selected>전체</option>
-                <option value="1">예매</option>
-                <option value="2">관람권</option>
-                <option value="3">영화관이용</option>
-                <option value="4">멤버쉽</option>
-                <option value="5">할인혜택</option>
+                <option value="전체">전체</option>
+                <option value="예매">예매</option>
+                <option value="관람권">관람권</option>
+                <option value="영화관 이용">영화관 이용</option>
+
             </select>
 
             <div class="outside">
@@ -67,10 +66,16 @@
                     <tbody>
 
                     {% for faq in faq_list %}
-                        <tr>
+                        <tr class="faq-row" onclick="toggleFAQ(this)">
                             <td class="table-light">{{ faq.kind }}</td>
                             <td class="table-light">{{ faq.question }}</td>
                             <td>{{ faq.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}</td>
+                        </tr>
+
+                        <tr class="faq-answer-row">
+                            <td colspan="3">
+                                {{ faq.answer }}
+                            </td>
                         </tr>
                     {% endfor %}
 
@@ -127,5 +132,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{{ url_for('static', filename='notice_list.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notice_list.js') }}"></script>
 {% endblock %}

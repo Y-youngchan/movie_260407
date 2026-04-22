@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from alembic.autogenerate.compare import server_defaults
+from sqlalchemy.orm import backref
 
 from pybo import db
 
@@ -51,6 +52,7 @@ class Faq(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     kind = db.Column(db.String(100), nullable=False)
     question = db.Column(db.String(200), nullable=False)
+    answer = db.Column(db.Text(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
     # user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
     # user = db.relationship('User', backref=db.backref('answer_set'))
@@ -208,6 +210,8 @@ class Review(db.Model):
     subject = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
     image_path = db.Column(db.Text())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    user= db.relationship('User', backref='review_set')
     created_date = db.Column(db.DateTime, nullable=False)  # ✅ 이걸로 고정( 이거 gpt가 함)
     modify_date = db.Column(db.DateTime(), nullable=True)
-    review_answer = db.Column(db.Text(), nullable=True)
+    answer_review = db.Column(db.Text(), nullable=True)

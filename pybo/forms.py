@@ -60,7 +60,7 @@ class ReviewForm(FlaskForm):
     image = MultipleFileField('이미지 업로드',
                               validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], message='이미지 파일만 업로드 가능합니다.')])
     submit = SubmitField('등록하기')
-    review_answer = TextAreaField('내용', validators=[DataRequired('내용은 필수 입력 항목입니다.')])
+    review_answer = TextAreaField('내용', validators=[])
 
 # 공지사항 질문에 대한 답변 저장 폼(1:1 문의 사항)
 # class AnswerForm(FlaskForm):

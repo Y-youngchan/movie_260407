@@ -42,43 +42,49 @@
         <div class="container">
 
 
-                <table class="table">
-                    <thead>
-                    <tr class="table-secondary">
-                        <th>문의유형</th>
-                        <th>영화관</th>
-                        <th>제목</th>
-                        <th>등록일</th>
+            <table class="table">
+                <thead>
+                <tr class="table-secondary">
+                    <th>문의유형</th>
+                    <th>영화관</th>
+                    <th>제목</th>
+                    <th>회원</th>
 
-                    </tr>
-                    </thead>
+                </tr>
+                </thead>
 
-                    <tbody>
-                    <tr>
+                <tbody>
+                <tr>
 
-                        <td class="table-light">{{ review.cs_place }}</td>
-                        <td class="table-light">{{ review.cs_ask }}</td>
-                        <td class="table-light">{{ review.subject }}</td>
-                        <td class="table-light">{{ review.created_date }}</td>
+                    <td class="table-light">{{ review.cs_place }}</td>
+                    <td class="table-light">{{ review.cs_ask }}</td>
+                    <td class="table-light">{{ review.subject }}</td>
+                    <td class="table-light">{{ review.user.username }}</td>
 
-                    </tr>
 
-                    </tbody>
+                </tr>
 
-                </table>
+                </tbody>
+
+            </table>
             <div class="outside">
                 <div class="answer1">
+                    {% if review.image_path %}
+                        {% for path in review.image_path.split(',') %}
+                            <div class="my-3">
+                                <img src="{{ url_for('static', filename=path) }}" alt="첨부 이미지"
+                                     style="max-width: 30%; height: auto;" class="img-thumbnail">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
                     <p style="white-space: pre-wrap">{{ review.content }}</p>
                 </div>
-                <div class="mb-3 row border-bottom pb-3">
-                    <div class="col-sm-2" >
-                        <label for="exampleFormControlTextarea1" class="form-label">
-                            답변
-                        </label>
-                    </div>
-                    <div class="col-sm-10">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">
-                    </textarea>
+
+                <div class="admin_answer">
+                    <p>(관리자 답변)</p>
+                    <div class="answer">
+
                     </div>
                 </div>
 

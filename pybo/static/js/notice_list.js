@@ -33,3 +33,30 @@ const tabMenu = document.querySelectorAll('.nav nav-underline');
         })
 
 
+const trs = document.querySelectorAll(".outside tbody > tr");
+const select = document.getElementById("filter");
+
+select.addEventListener("change", function () {
+    const value = this.value;
+
+    trs.forEach(tr => {
+        const col1 = tr.children[0].innerText.trim();
+
+        if (value === "전체" || col1 === value) {
+            tr.style.display = "";
+        }
+        else {
+            tr.style.display = "none";
+        }
+    });
+});
+
+
+function toggleFAQ(row) {
+    const answerRow = row.nextElementSibling;
+
+    if (answerRow && answerRow.classList.contains("faq-answer-row")) {
+        answerRow.style.display =
+            answerRow.style.display === "table-row" ? "none" : "table-row";
+    }
+}

@@ -2,16 +2,14 @@ import os
 from datetime import datetime
 
 
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, current_app,g
 from werkzeug.utils import secure_filename
-
-
 
 from pybo.models import Faq
 from pybo import db
 from pybo.forms import NoticeForm, ReviewForm
 from pybo.models import Notice
-from pybo.models import Review
+from pybo.models import Review, User
 
 bp = Blueprint('cs', __name__, url_prefix='/cs')
 
@@ -67,9 +65,10 @@ def notice_create():
 @bp.route("/faq/")
 def faq_list():
     page = request.args.get('page', type=int, default=1)
+    kw = request.args.get('kw', default='', type=str)
     faq_list = Faq.query.order_by(Faq.create_date.desc())
     faq_list = faq_list.paginate(page=page, per_page=10)
-    print(faq_list)
+
     return render_template("cs/faq/faq.html", faq_list=faq_list)
 
 
@@ -77,6 +76,8 @@ def faq_list():
 def review_list():
     page = request.args.get('page', type=int, default=1)
     review_list=Review.query.order_by(Review.created_date.desc())
+    review_list = review_list.paginate(page=page, per_page=10)
+
 
     return render_template("cs/review/review.html", review_list=review_list)
 
@@ -84,10 +85,9 @@ def review_list():
 # 리뷰 폼 view함수
 @bp.route('/review/create/', methods=('GET', 'POST'))
 def review_create():
-
     form = ReviewForm()
     if request.method == 'POST' and form.validate_on_submit():
-        image_files = form.image.data,
+        image_files = form.image.data
         image_paths = []
 
         # 저장 경로 : 오늘 날짜로 폴더 설정
@@ -113,9 +113,9 @@ def review_create():
             subject=form.subject.data,
             content=form.content.data,
             created_date=datetime.now(),
-            image_path=joined_image_paths
+            image_path=joined_image_paths,
+            user=g.user
         )
-
 
         db.session.add(review)
         db.session.commit()
@@ -127,6 +127,7 @@ def review_create():
 def review_detail(review_id):
     # form = AnswerForm()
     review = Review.query.get(review_id)
+
 
     return render_template("cs/review/review_detail.html", review=review)
 
