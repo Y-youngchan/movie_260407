@@ -362,3 +362,16 @@ td {
         transform:translateX(0);
     }
 }
+
+/* =========================
+   기본 배너 변경
+========================= */
+#base-banner .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#base-banner .card img {
+    padding: 20px 0;
+}

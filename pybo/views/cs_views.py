@@ -11,6 +11,7 @@ from pybo import db
 from pybo.forms import NoticeForm, ReviewForm
 from pybo.models import Notice
 from pybo.models import Review, User
+from pybo.views.auth_views import login_required
 
 bp = Blueprint('cs', __name__, url_prefix='/cs')
 
@@ -163,6 +164,7 @@ def review_list():
 
 # 리뷰 폼 view함수
 @bp.route('/review/create/', methods=('GET', 'POST'))
+@login_required
 def review_create():
     form = ReviewForm()
     if request.method == 'POST' and form.validate_on_submit():

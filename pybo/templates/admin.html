@@ -113,14 +113,29 @@
             <section class="table-section" id="main-banner">
                 <h2>메인 배너 변경</h2>
                 <div class="card">
-                    메인 배너 관리 기능 영역
+                    메인 배너 변경
                 </div>
             </section>
 
             <section class="table-section" id="base-banner">
                 <h2>기본 배너 변경</h2>
                 <div class="card">
-                    기본 배너 관리 기능 영역
+                    {% for banner in banners %}
+                    <div style="margin-bottom:30px;">
+                        <img src="{{ banner.img_url }}" 
+                            style="width:1000px; border-radius:10px; display:block; margin-bottom:10px;">
+
+                        <form method="post"
+                            action="{{ url_for('auth.update_banner', banner_id=banner.id) }}"
+                            enctype="multipart/form-data">
+
+                            <input type="file" name="banner_image" required>
+                            <button type="submit" style="padding:6px 10px;">
+                                이미지 변경
+                            </button>
+                        </form>
+                    </div>
+                    {% endfor %}
                 </div>
             </section>
 

@@ -27,7 +27,9 @@ def index():
     icon_3 = imgs.query.filter_by(img_name='메인 아이콘3').first()
     icon_4 = imgs.query.filter_by(img_name='메인 아이콘4').first()
     icon_5 = imgs.query.filter_by(img_name='메인 아이콘5').first()
-    banner = imgs.query.filter_by(img_name='메인 배너').first()
+    
+    banner = imgs.query.filter_by(img_name='메인 배너1').first()
+
 
     return render_template(
         'main.html',

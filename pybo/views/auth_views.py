@@ -5,8 +5,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm
-from pybo.models import User, Product
-import functools
+from pybo.models import User, Product, imgs
+import functools, os, uuid
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'pybo/static/img'
 
 bp=Blueprint('auth',__name__, url_prefix='/auth')
 
@@ -258,6 +261,10 @@ def admin():
         Product.Productname.contains(keyword)
     ).all()
 
+    banners = imgs.query.filter(
+        imgs.img_name.in_(['메인 배너1'])
+    ).all()
+
     total_users = User.query.count()
     normal_users = User.query.filter_by(status='normal').count()
     sleep_users = User.query.filter_by(status='sleep').count()
@@ -270,6 +277,7 @@ def admin():
         users=users,
         admins=admins,
         products=products,
+        banners=banners,
 
         total_users=total_users,
         normal_users=normal_users,
@@ -390,4 +398,32 @@ def change_product_status(product_id):
     db.session.commit()
 
     flash('상품 상태가 변경되었습니다.')
+    return redirect(url_for('auth.admin'))
+
+@bp.route('/admin/banner/update/<int:banner_id>', methods=['POST'])
+@login_required
+@admin_required
+def update_banner(banner_id):
+
+    banner = imgs.query.get_or_404(banner_id)
+    
+    if banner.img_name not in ['메인 배너1']:
+        flash('해당 배너는 수정할 수 없습니다.')
+        return redirect(url_for('auth.admin'))
+
+    file = request.files.get('banner_image')
+
+    if not file or file.filename == '':
+        flash('파일을 선택하세요.')
+        return redirect(url_for('auth.admin'))
+
+    filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(filepath)
+
+    banner.img_url = f'/static/img/{filename}'
+
+    db.session.commit()
+
+    flash('배너가 변경되었습니다.')
     return redirect(url_for('auth.admin'))

@@ -211,12 +211,12 @@ class Review(db.Model):
     subject = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
     image_path = db.Column(db.Text())
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
-    user= db.relationship('User', backref='review_set')
     created_date = db.Column(db.DateTime, nullable=False)
     modify_date = db.Column(db.DateTime(), nullable=True)
     answer_review = db.Column(db.Text(), nullable=True)
+
+    user= db.relationship('User', backref='review_set')
 
 # 기타(메인 이미지와 이벤트 안에 이미지 저장)
 class imgs(db.Model):
