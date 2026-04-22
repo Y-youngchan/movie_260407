@@ -213,10 +213,37 @@ class Review(db.Model):
     image_path = db.Column(db.Text())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
-    user= db.relationship('User', backref='review_set')
+    user= db.relationship('User', foreign_keys=[user_id], backref='review_set')
     created_date = db.Column(db.DateTime, nullable=False)
     modify_date = db.Column(db.DateTime(), nullable=True)
     answer_review = db.Column(db.Text(), nullable=True)
+
+       # 답변 작성 관리자
+    answer_admin_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id', ondelete='SET NULL'),
+        nullable=True
+    )
+
+    answer_admin = db.relationship(
+        'User',
+        foreign_keys=[answer_admin_id],
+        backref='answered_reviews'
+    )
+
+    # 답변 작성일
+    answer_create_date = db.Column(db.DateTime(), nullable=True)
+
+    # 답변 수정일
+    answer_modify_date = db.Column(db.DateTime(), nullable=True)
+
+    # 답변 상태 (대기 / 완료)
+    answer_status = db.Column(
+        db.String(20),
+        nullable=False,
+        default='waiting',
+        server_default='waiting'
+    )
 
 # 기타(메인 이미지와 이벤트 안에 이미지 저장)
 class imgs(db.Model):

@@ -311,10 +311,12 @@
 
                 <div class="cs-grid">
 
-                    <div class="cs-card">
-                        <h3>1:1 문의 답변</h3>
-                        <p>답변 대기 문의를 관리합니다.</p>
-                    </div>
+                    <a href="{{ url_for('cs.review_list') }}" class="cs-link">
+                        <div class="cs-card">
+                            <h3>1:1 문의 답변</h3>
+                            <p>답변 대기 문의를 관리합니다.</p>
+                        </div>
+                    </a>
 
                     <a href="{{ url_for('cs.notice_list') }}" class="cs-link">
                         <div class="cs-card">
@@ -323,10 +325,12 @@
                         </div>
                     </a>
 
+
                     <div class="cs-card">
                         <h3>FAQ 관리</h3>
                         <p>FAQ 등록 / 수정 / 삭제</p>
                     </div>
+
 
                 </div>
             </section>

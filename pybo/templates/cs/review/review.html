@@ -1,123 +1,196 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항 - 필름아티크
+공지사항 - 필름아티크
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
 {% endblock %}
 
 {% block content %}
 
-    <div class="header">
-        <div class="container">
-            <div class="menu">
-                <h3 id="sub_title">고객센터</h3>
-                <div class="service">
+<div class="header">
+    <div class="container">
+        <div class="menu">
+            <h3 id="sub_title">고객센터</h3>
 
-                    <ul class="nav nav-underline">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.faq_list") }}">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="{{ url_for("cs.notice_list") }}">공지사항</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.review_list") }}">1:1문의</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="service">
+                <ul class="nav nav-underline">
+
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="{{ url_for('cs.faq_list') }}">
+                            FAQ
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="{{ url_for('cs.notice_list') }}">
+                            공지사항
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="{{ url_for('cs.review_list') }}">
+                            1:1문의
+                        </a>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="section4">
-        <div class="container">
-            <div class="input">
-                <a href="{{ url_for("cs.review_create") }}"
-                   class="btn btn-secondary btn-sm" style="width: 100px">문의하기</a>
-            </div>
-            <div class="outside">
-                <table class="table">
-                    <thead>
+
+<div class="section4">
+    <div class="container">
+
+        <!-- 문의하기 버튼 -->
+        <div class="input">
+            <a href="{{ url_for('cs.review_create') }}"
+               class="btn btn-secondary btn-sm"
+               style="width:100px;">
+                문의하기
+            </a>
+        </div>
+
+        <!-- 목록 -->
+        <div class="outside">
+            <table class="table">
+
+                <thead>
                     <tr class="table-secondary">
                         <th>문의유형</th>
                         <th>영화관</th>
                         <th>제목</th>
                         <th>등록일</th>
                         <th>처리상태</th>
-
                     </tr>
-                    </thead>
+                </thead>
 
-                    <tbody>
-                    {% if review_list %}
-                        {% for review in review_list.items %}  <!--현재 페이지 해당 게시물-->
-                            <tr>
+                <tbody>
 
-                                <td>{{ review.cs_ask }}</td>
-                                <td>{{ review.cs_place }}</td>
-                                <td>
-                                    <a href="{{ url_for("cs.review_detail", review_id=review.id) }}">{{ review.subject }}</a>
-                                </td>
-                                <td>{{ review.created_date }}</td>
-                                <td></td>
+                {% if review_list %}
 
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="3">공지사항이 없습니다.</td>
-                        </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
-            </div>
-            <nav aria-label="...">
-                <ul class="pagination justify-content-center">
-                    <!--이전버튼-->
-                    {% if review_list.has_prev %}
-                        <li class="page-item">
-                            <a href="?page={{ review_list.prev_num }}" class="page-link">이전</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">이전</a>
-                        </li>
-                    {% endif %}
-                    <!--페이지 번호-->
-                    {% for page_num in review_list.iter_pages() %}
-                        {% if page_num %}
-                            {% if page_num != review_list.page %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
-                                </li>
+                    {% for review in review_list.items %}
+
+                    <tr>
+                        <td>{{ review.cs_ask }}</td>
+
+                        <td>{{ review.cs_place }}</td>
+
+                        <td>
+                            <a href="{{ url_for('cs.review_detail', review_id=review.id) }}">
+                                {{ review.subject }}
+                            </a>
+                        </td>
+
+                        <td>{{ review.created_date }}</td>
+
+                        <td>
+                            {% if review.answer %}
+                                답변완료
                             {% else %}
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="javascript:void(0)">{{ page_num }}</a>
-                                </li>
+                                답변대기
                             {% endif %}
-                        {% else %}
-                            <li class="disabled">
-                                <a class="page-link" href="javascript:void(0)">...</a>
-                            </li>
-                        {% endif %}
+                        </td>
+                    </tr>
+
                     {% endfor %}
-                    <!--다음페이지-->
-                    {% if review_list.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ review_list.next_num }}">다음</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="5">등록된 문의가 없습니다.</td>
+                    </tr>
+
+                {% endif %}
+
+                </tbody>
+            </table>
         </div>
+
+
+        <!-- 페이징 -->
+        <nav aria-label="pagination">
+            <ul class="pagination justify-content-center">
+
+                {% if review_list.has_prev %}
+                <li class="page-item">
+                    <a href="?page={{ review_list.prev_num }}"
+                       class="page-link">
+                        이전
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link"
+                       href="javascript:void(0)">
+                        이전
+                    </a>
+                </li>
+                {% endif %}
+
+
+                {% for page_num in review_list.iter_pages() %}
+
+                    {% if page_num %}
+
+                        {% if page_num != review_list.page %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ page_num }}">
+                                {{ page_num }}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item active">
+                            <a class="page-link"
+                               href="javascript:void(0)">
+                                {{ page_num }}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                    {% else %}
+
+                    <li class="page-item disabled">
+                        <a class="page-link"
+                           href="javascript:void(0)">
+                            ...
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if review_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ review_list.next_num }}">
+                        다음
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link"
+                       href="javascript:void(0)">
+                        다음
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+
     </div>
+</div>
+
 {% endblock %}
