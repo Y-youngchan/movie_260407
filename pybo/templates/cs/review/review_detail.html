@@ -1,117 +1,158 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항 - 필름아티크
+공지사항 - 필름아티크
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
 {% endblock %}
 
 {% block content %}
 
-    <div class="header">
-        <div class="container">
-            <div class="menu">
-                <h3 id="sub_title">고객센터</h3>
-                <div class="service">
+<div class="header">
+    <div class="container">
+        <div class="menu">
+            <h3 id="sub_title">고객센터</h3>
 
-                    <ul class="nav nav-underline">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.faq_list") }}">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="{{ url_for("cs.notice_list") }}">공지사항</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.review_list") }}">1:1문의</a>
-                        </li>
+            <div class="service">
+                <ul class="nav nav-underline">
 
-                    </ul>
-                </div>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('cs.notice_list') }}">공지사항</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('cs.review_list') }}">1:1문의</a>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
 
+<div class="section6">
+    <div class="container">
 
-
-    <div class="section6">
-        <div class="container">
-
-
-            <table class="table">
-                <thead>
+        <table class="table">
+            <thead>
                 <tr class="table-secondary">
                     <th>문의유형</th>
                     <th>영화관</th>
                     <th>제목</th>
                     <th>회원</th>
 
+                    <!-- 여기 상태칸 추가 -->
+                    <th>답변상태</th>
                 </tr>
-                </thead>
+            </thead>
 
-                <tbody>
+            <tbody>
                 <tr>
-
                     <td class="table-light">{{ review.cs_place }}</td>
                     <td class="table-light">{{ review.cs_ask }}</td>
                     <td class="table-light">{{ review.subject }}</td>
                     <td class="table-light">{{ review.user.username }}</td>
 
+                    <!-- 여기 상태표시 추가 -->
+                    <td class="table-light">
+                        {% if review.answer_review %}
+                        답변완료
+                        {% else %}
+                        답변대기
+                        {% endif %}
+                    </td>
 
                 </tr>
+            </tbody>
+        </table>
 
-                </tbody>
 
-            </table>
-            <div class="outside">
-                <div class="answer1">
-                    {% if review.image_path %}
-                        {% for path in review.image_path.split(',') %}
-                            <div class="my-3">
-                                <img src="{{ url_for('static', filename=path) }}" alt="첨부 이미지"
-                                     style="max-width: 30%; height: auto;" class="img-thumbnail">
-                            </div>
-                        {% endfor %}
+        <div class="outside">
+
+            <div class="answer1">
+
+                {% if review.image_path %}
+                {% for path in review.image_path.split(',') %}
+                <div class="my-3">
+                    <img src="{{ url_for('static', filename=path) }}" alt="첨부 이미지" style="max-width: 30%; height: auto;"
+                        class="img-thumbnail">
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <p style="white-space: pre-wrap">{{ review.content }}</p>
+
+            </div>
+
+
+            <div class="admin_answer">
+                <p>(관리자 답변)</p>
+
+                <div class="answer">
+
+                    {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+
+                    <form method="post" action="{{ url_for('cs.review_answer', review_id=review.id) }}">
+
+                        <textarea name="answer_review" rows="6" style="width:100%;"
+                            placeholder="답변을 입력하세요.">{% if review.answer_review %}{{ review.answer_review }}{% endif %}</textarea>
+
+                        <button type="submit" class="btn btn-primary mt-2">
+                            답변 저장
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
+                    {% if review.answer_review %}
+                    <p style="white-space: pre-wrap; margin:0; padding:0; text-align:left; margin-left:-100px;">
+                        {{ review.answer_review }}
+                    </p>
+                    {% else %}
+                    <p>아직 등록된 답변이 없습니다.</p>
                     {% endif %}
 
-                    <p style="white-space: pre-wrap">{{ review.content }}</p>
+                    {% endif %}
+
                 </div>
-
-                <div class="admin_answer">
-                    <p>(관리자 답변)</p>
-                    <div class="answer">
-
-                    </div>
-                </div>
-
-
             </div>
 
-            <div class="d-grid gap-2 col-1 mx-auto">
-                <button class="inventory" type="button">
-                    <a class="nav-link active" href="{{ url_for("cs.review_list") }}">
-                        목록
-                    </a>
-                </button>
-
-            </div>
         </div>
+
+
+        <div class="d-grid gap-2 col-1 mx-auto">
+            <button class="inventory" type="button">
+                <a class="nav-link active" href="{{ url_for('cs.review_list') }}">
+                    목록
+                </a>
+            </button>
+        </div>
+
     </div>
+</div>
+
 {% endblock %}
 
+
 {% block script %}
-    <script>
-        const delete_btns = document.querySelectorAll('.delete');
-        delete_btns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                if (confirm('정말로 삭제 하시겠습니까?')) {
-                    location.href = this.dataset.uri;
-                }
-            })
-        })
-    </script>
+<script>
+    const delete_btns = document.querySelectorAll('.delete');
+
+    delete_btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            if (confirm('정말로 삭제 하시겠습니까?')) {
+                location.href = this.dataset.uri;
+            }
+        });
+    });
+</script>
 {% endblock %}
