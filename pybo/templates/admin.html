@@ -122,11 +122,10 @@
                 <div class="card">
                     {% for banner in banners %}
                     <div style="margin-bottom:30px;">
-                        <img src="{{ banner.img_url }}" 
+                        <img src="{{ banner.img_url }}"
                             style="width:1000px; border-radius:10px; display:block; margin-bottom:10px;">
 
-                        <form method="post"
-                            action="{{ url_for('auth.update_banner', banner_id=banner.id) }}"
+                        <form method="post" action="{{ url_for('auth.update_banner', banner_id=banner.id) }}"
                             enctype="multipart/form-data">
 
                             <input type="file" name="banner_image" required>
@@ -340,11 +339,13 @@
                         </div>
                     </a>
 
+                    <a href="{{ url_for('cs.faq_list')}}" class="cs-link">
+                        <div class="cs-card">
+                            <h3>FAQ 관리</h3>
+                            <p>FAQ 등록 / 수정 / 삭제</p>
+                        </div>
+                    </a>
 
-                    <div class="cs-card">
-                        <h3>FAQ 관리</h3>
-                        <p>FAQ 등록 / 수정 / 삭제</p>
-                    </div>
 
 
                 </div>

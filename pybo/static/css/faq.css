@@ -4,10 +4,10 @@
 }
 
 .section3 .container {
-    width: 1207px; height: auto;
-    min-height: 1250px;
+    width: 1207px;
+    height: auto;    
     padding-left: 0;
-    nt-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #eaeaea;
     display: flex;
     flex-direction: column;
@@ -27,8 +27,80 @@
     margin-left: 0;
 }
 
-.section3 .form-select {
-    margin-top: 54px;
+.section3 .form-select {    
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+/* ===============================
+   관리자 버튼   
+=============================== */
+
+/* 버튼 영역 */
+.admin-btn-box{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* 공통 버튼 */
+.admin-btn-box .btn,
+.btn-edit,
+.btn-delete{
+    border-radius: 6px;    
+    font-weight: 500;
+    padding: 6px 14px;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+
+/* 등록 버튼 */
+.admin-btn-box .btn-primary{
+    margin-right: 15px;
+    font-size: 15px;
+    background: #111111;
+    color: white;
+}
+
+.admin-btn-box .btn-primary:hover{
+    background: #000000;
+    transform: translateY(-1px);
+}
+
+
+/* 수정 버튼 */
+.btn-edit{
+    font-size: 13px;
+    background: #2d3748;
+    color: #ffffff;
+}
+
+.btn-edit:hover{
+    background: #1a202c;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+
+/* 삭제 버튼 */
+.btn-delete{
+    font-size: 13px;
+    background: #b91c1c;
+    color: #ffffff;
+}
+
+.btn-delete:hover{
+    background: #991b1b;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* 버튼 눌림 효과 */
+.btn-edit:active,
+.btn-delete:active,
+.admin-btn-box .btn-primary:active{
+    transform: scale(0.97);
 }
 
 .section3 .container .outside{

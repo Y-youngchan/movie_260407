@@ -1,41 +1,70 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항 - 필름아티크
+공지사항
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
+<style>
+    .btn-cancel{
+        background-color: #b91c1c;
+        border-color: #b91c1c;
+        color: white;
+    }
+
+    .btn-cancel:hover{
+        background-color: #991b1b;
+        border-color: #991b1b;
+        color: white;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 
-    <div class="container">
-        <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
-        <form method="post" novalidate enctype="multipart/form-data">
+<div class="container" style="max-width:800px;">
 
-            {{ form.csrf_token }}
-{#            <!--오류표시 Start-->#}
-{#            {% if form.errors %}#}
-{#                <div class="alert alert-danger" role="alert">#}
-{#                    {% for field, errors in form.errors.items() %}#}
-{#                        <strong>{{ form[field].label }}</strong>#}
-{#                        <ul>#}
-{#                            {% for error in errors %}#}
-{#                                <li>{{ error }}</li>#}
-{#                            {% endfor %}#}
-{#                        </ul>#}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#            {% endif %}#}
+    <h3 class="my-4">
+        {% if form.title.data %}
+            공지사항 수정하기
+        {% else %}
+            공지사항 등록하기
+        {% endif %}
+    </h3>
 
-            {{ form.subject.label }}  <!--<label for="">제목</label>-->
-            {{ form.subject(class="form-control") }}      <!--<input type="text" name="" id="">-->
+    <form method="post" novalidate>
 
-            {{ form.content.label }}  <!--<label for="">내용</label>-->
-            {{ form.content(class="form-control") }}
-            <button type="submit" class="btn btn-primary mt-3">등록하기</button>
-        </form>
-    </div>
+        {{ form.csrf_token }}
+
+        <!-- 영화관 -->
+        <div class="mb-3">
+            {{ form.theater.label }}
+            {{ form.theater(class="form-select") }}
+        </div>
+
+        <!-- 제목 -->
+        <div class="mb-3">
+            {{ form.title.label }}
+            {{ form.title(class="form-control") }}
+        </div>
+
+        <!-- 내용 -->
+        <div class="mb-3">
+            {{ form.content.label }}
+            {{ form.content(class="form-control", rows="20") }}
+        </div>
+
+        <button type="submit" class="btn btn-dark">
+            저장하기
+        </button>
+
+        <a href="{{ url_for('cs.notice_list') }}"
+           class="btn btn-cancel">
+            취소
+        </a>
+
+    </form>
+
+</div>
+
 {% endblock %}

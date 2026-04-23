@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from functools import wraps
 
-from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash, g
+from flask import Blueprint, render_template, request, redirect, url_for, current_app, flash, g, abort
 
 from werkzeug.utils import secure_filename
 
@@ -52,11 +52,25 @@ def notice_list():
 # notice_detail
 @bp.route("/notice/detail/<int:notice_id>")
 def notice_detail(notice_id):
-    notice_detail = Notice.query.get(notice_id)
-    prev_notice = Notice.query.get(notice_id - 1)
-    next_notice = Notice.query.get(notice_id + 1)
-    return render_template("cs/notice/notice_detail.html", notice=notice_detail, prev_notice=prev_notice,
-                           next_notice=next_notice)
+
+    notice = Notice.query.get_or_404(notice_id)
+
+    # 이전 글 (현재 글보다 id 작은 것 중 가장 큰 값)
+    prev_notice = Notice.query.filter(
+        Notice.id < notice_id
+    ).order_by(Notice.id.desc()).first()
+
+    # 다음 글 (현재 글보다 id 큰 것 중 가장 작은 값)
+    next_notice = Notice.query.filter(
+        Notice.id > notice_id
+    ).order_by(Notice.id.asc()).first()
+
+    return render_template(
+        "cs/notice/notice_detail.html",
+        notice=notice,
+        prev_notice=prev_notice,
+        next_notice=next_notice
+    )
 
 # ===============================
 # 공지사항 등록
@@ -149,6 +163,60 @@ def faq_list():
     faq_list = faq_list.paginate(page=page, per_page=10)
 
     return render_template("cs/faq/faq.html", faq_list=faq_list)
+
+# FAQ 등록하기
+@bp.route('/faq/create/', methods=('GET', 'POST'))
+@notice_admin_required
+def faq_create():
+
+    if request.method == 'POST':
+        faq = Faq(
+            kind=request.form['kind'],
+            question=request.form['question'],
+            answer=request.form['answer'],
+            create_date=datetime.now()
+        )
+
+        db.session.add(faq)
+        db.session.commit()
+
+        flash('FAQ가 등록되었습니다.')
+        return redirect(url_for('cs.faq_list'))
+
+    return render_template('cs/faq/faq_form.html', faq=None)
+
+# FAQ 수정하기
+@bp.route('/faq/edit/<int:faq_id>/', methods=('GET', 'POST'))
+@notice_admin_required
+def faq_edit(faq_id):
+
+    faq = Faq.query.get_or_404(faq_id)
+
+    if request.method == 'POST':
+        faq.kind = request.form['kind']
+        faq.question = request.form['question']
+        faq.answer = request.form['answer']
+
+        db.session.commit()
+
+        flash('FAQ가 수정되었습니다.')
+        return redirect(url_for('cs.faq_list'))
+
+    return render_template('cs/faq/faq_form.html', faq=faq)
+
+# FAQ 삭제하기
+@bp.route('/faq/delete/<int:faq_id>/')
+@notice_admin_required
+def faq_delete(faq_id):
+
+    faq = Faq.query.get_or_404(faq_id)
+
+    db.session.delete(faq)
+    db.session.commit()
+
+    flash('FAQ가 삭제되었습니다.')
+
+    return redirect(url_for('cs.faq_list'))
 
 
 # 1:1 문의 목록
