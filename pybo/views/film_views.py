@@ -22,6 +22,8 @@ def mypage():
 
     user = User.query.get(user_id)
 
+    from collections import defaultdict
+
     # 현재 예매 내역
     active = Reservation.query.filter_by(
         user_id=user.id,
@@ -47,39 +49,30 @@ def mypage():
             "seats": ", ".join(seats)
         })
 
-    # 취소 내역
-    canceled = Reservation.query.filter_by(
+    # 취소 내역 (통합)
+    cancels = []
+
+    # 예매 취소
+    canceled_reservations = Reservation.query.filter_by(
         user_id=user.id,
         status='CANCEL'
     ).all()
 
     cancel_group = defaultdict(list)
 
-    for r in canceled:
+    for r in canceled_reservations:
         cancel_group[r.schedule_id].append(r)
-
-    cancel_list = []
 
     for schedule_id, items in cancel_group.items():
         schedule = items[0].schedule
 
-        cancel_list.append({
+        cancels.append({
+            "type": "reservation",
             "movie_title": schedule.movie.title,
             "cancel_date": items[0].created_at.strftime("%Y-%m-%d %H:%M")
         })
-    payment = Payment.query.join(Order).filter(Order.user_id == user.id).all()
-    
-    # 기타 데이터
-    orders = Order.query.filter_by(user_id=user.id).all()
 
-    payment = Payment.query\
-        .join(Order)\
-        .filter(
-            Order.user_id == user.id,
-            Payment.status == "SUCCESS"
-        )\
-        .all()
-    
+    # 결제 취소
     cancel_payments = Payment.query\
         .join(Order)\
         .filter(
@@ -87,8 +80,6 @@ def mypage():
             Payment.status == "CANCELLED"
         )\
         .all()
-    
-    cancels = []
 
     for p in cancel_payments:
         cancels.append({
@@ -97,14 +88,24 @@ def mypage():
             "cancel_date": p.approved_at.strftime("%Y-%m-%d %H:%M") if p.approved_at else "-"
         })
 
+    # 결제 완료 내역
+    payment = Payment.query\
+        .join(Order)\
+        .filter(
+            Order.user_id == user.id,
+            Payment.status == "SUCCESS"
+        )\
+        .all()
+
+    orders = Order.query.filter_by(user_id=user.id).all()
+
     return render_template(
         'mypage.html',
         user=user,
         reservations=reservation_list,
-        cancels=cancel_list,
+        cancels=cancels,   
         payment=payment,
-        orders=orders,
-        cancels=cancels
+        orders=orders
     )
     
 @bp.route('/event')
