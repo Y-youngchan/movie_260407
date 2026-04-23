@@ -195,6 +195,7 @@ class Reservation(db.Model):
     seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'), nullable=False)
 
     created_at = db.Column(db.DateTime, nullable=False)
+    status = db.Column(db.String(20), default='RESERVED')
 
     __table_args__ = (
         db.UniqueConstraint('schedule_id', 'seat_id', name='uq_schedule_seat'),

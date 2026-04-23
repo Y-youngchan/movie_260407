@@ -1,18 +1,19 @@
 from datetime import datetime
 import uuid, random, json
 
-from flask import Blueprint, flash, json, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
+from flask import Blueprint, flash, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
 from pybo import db
 from pybo.views.auth_views import login_required, g
 from pybo.models import Movie, Payment, Schedule, Screen, Theater, User, Reservation, Order, imgs, Seat
 
 from sqlalchemy import func
 import requests, base64
+from collections import defaultdict
 
 bp = Blueprint('film', __name__, url_prefix='/film')
 
 # 마이페이지
-@bp.route('/mypage', methods=['GET', 'POST'])
+@bp.route('/mypage', methods=['GET'])
 def mypage():
     user_id = session.get('user_id')
 
@@ -21,17 +22,61 @@ def mypage():
 
     user = User.query.get(user_id)
 
-    reservations = Reservation.query.filter_by(user_id=user.id).all()
+    # 현재 예매 내역
+    active = Reservation.query.filter_by(
+        user_id=user.id,
+        status='RESERVED'
+    ).all()
+
+    grouped = defaultdict(list)
+
+    for r in active:
+        grouped[r.schedule_id].append(r)
+
+    reservation_list = []
+
+    for schedule_id, items in grouped.items():
+        schedule = items[0].schedule
+        seats = [f"{i.seat.row}{i.seat.col}" for i in items]
+
+        reservation_list.append({
+            "schedule_id": schedule_id,
+            "movie": schedule.movie.title,
+            "theater": schedule.screen.theater.name,
+            "datetime": schedule.start_time,
+            "seats": ", ".join(seats)
+        })
+
+    # 취소 내역
+    canceled = Reservation.query.filter_by(
+        user_id=user.id,
+        status='CANCEL'
+    ).all()
+
+    cancel_group = defaultdict(list)
+
+    for r in canceled:
+        cancel_group[r.schedule_id].append(r)
+
+    cancel_list = []
+
+    for schedule_id, items in cancel_group.items():
+        schedule = items[0].schedule
+
+        cancel_list.append({
+            "movie_title": schedule.movie.title,
+            "cancel_date": items[0].created_at.strftime("%Y-%m-%d %H:%M")
+        })
+
+    # 기타 데이터
     orders = Order.query.filter_by(user_id=user.id).all()
-    payment = Payment.query\
-        .join(Order)\
-        .filter(Order.user_id == user.id)\
-        .all()
+    payment = Payment.query.join(Order).filter(Order.user_id == user.id).all()
 
     return render_template(
         'mypage.html',
         user=user,
-        reservations=reservations,
+        reservations=reservation_list,
+        cancels=cancel_list,
         payment=payment,
         orders=orders
     )
@@ -156,7 +201,7 @@ def get_schedules():
     result = []
 
     for s in schedules:
-        reserved = len(s.reservations)
+        reserved = len([r for r in s.reservations if r.status == 'RESERVED'])
         total = s.screen.total_seats
 
         result.append({
@@ -197,7 +242,10 @@ def person_seat():
 def reserved_seats():
     schedule_id = request.args.get('schedule_id', type=int)
 
-    reservations = Reservation.query.filter_by(schedule_id=schedule_id).all()
+    reservations = Reservation.query.filter_by(
+        schedule_id=schedule_id,
+        status='RESERVED'
+        ).all()
 
     result = []
 
@@ -207,6 +255,7 @@ def reserved_seats():
         result.append(seat_code)
 
     return jsonify(result)
+
 
 @bp.route('/movie/payment', methods=['GET', 'POST'])
 @login_required
@@ -347,3 +396,24 @@ def payment_success():
         people=people,
         booking_code=booking_code
     )
+
+@bp.route('/reservation/cancel/<int:schedule_id>', methods=['POST'])
+def cancel_reservation(schedule_id):
+    user_id = session.get('user_id')
+
+    if not user_id:
+        return redirect(url_for('auth.login'))
+
+    reservations = Reservation.query.filter_by(
+        user_id=user_id,
+        schedule_id=schedule_id,
+        status='RESERVED'   # ⭐ 이것도 추가
+    ).all()
+
+    for r in reservations:
+        r.status = 'CANCEL'
+
+    db.session.commit()
+    flash('예매가 취소되었습니다.')
+
+    return redirect(url_for('film.mypage'))

@@ -38,43 +38,47 @@
                 <h4>예매/구매내역</h4>
 
                 {% if reservations %}
-                    {% for item in reservations %}
-                    <div class="history_box">
-                        <div class="left">
-                            <strong>{{ item.movie_title }}</strong>
-                            <p>{{ item.theater }}</p>
-                            <p>{{ item.date }} {{ item.time }}</p>
-                            <p>좌석 {{ item.seat }}</p>
-                        </div>
-
-                        <div class="right">
-                            <span class="badge">예매완료</span>
-                            <button type="button">예매취소</button>
-                        </div>
+                {% for item in reservations %}
+                <div class="history_box">
+                    <div class="left">
+                        <strong>{{ item.movie }}</strong>
+                        <p>{{ item.theater }}</p>
+                        <p>{{ item.datetime.strftime("%Y-%m-%d %H:%M") }}</p>
+                        <p>좌석 {{ item.seats }}</p>
                     </div>
-                    {% endfor %}
+
+                    <div class="right">
+                        <span class="badge">예매완료</span>
+                        <form action="{{ url_for('film.cancel_reservation', schedule_id=item.schedule_id) }}"
+                            method="post" onsubmit="return confirm('정말 예매를 취소하시겠습니까?');">
+
+                            <button type="submit">예매취소</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <div class="empty_box">예매 내역이 없습니다.</div>
+                <div class="empty_box">예매 내역이 없습니다.</div>
                 {% endif %}
 
                 {% if payment %}
-                    {% for item in payment %}
-                    <div class="history_box">
-                        <div class="left">
-                            <strong>{{ item.order.product_name }}</strong>
-                            <p>주문번호: {{ item.order_code }}</p>
-                            <p>수량: {{ item.order.quantity }}</p>
-                            <p>결제금액: {{ item.amount }}원</p>
-                        </div>
-
-                        <div class="right">
-                            <span class="badge">결제완료</span>
-                            <button type="button">결제취소</button>
-                        </div>
+                {% for item in payment %}
+                <div class="history_box">
+                    <div class="left">
+                        <strong>{{ item.order.product_name }}</strong>
+                        <p>주문번호: {{ item.order_code }}</p>
+                        <p>수량: {{ item.order.quantity }}</p>
+                        <p>결제금액: {{ item.amount }}원</p>
                     </div>
-                    {% endfor %}
+
+                    <div class="right">
+                        <span class="badge">결제완료</span>
+                        <button type="button">결제취소</button>
+                    </div>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <div class="empty_box">상품 구매 내역이 없습니다.</div>
+                <div class="empty_box">상품 구매 내역이 없습니다.</div>
                 {% endif %}
             </div>
 
@@ -83,20 +87,20 @@
                 <h4>예매/구매 취소내역</h4>
 
                 {% if cancels %}
-                    {% for item in cancels %}
-                    <div class="history_box">
-                        <div class="left">
-                            <strong>{{ item.movie_title }}</strong>
-                            <p>{{ item.cancel_date }} 취소완료</p>
-                        </div>
-
-                        <div class="right">
-                            <span class="badge gray">취소완료</span>
-                        </div>
+                {% for item in cancels %}
+                <div class="history_box">
+                    <div class="left">
+                        <strong>{{ item.movie_title }}</strong>
+                        <p>{{ item.cancel_date }} 취소완료</p>
                     </div>
-                    {% endfor %}
+
+                    <div class="right">
+                        <span class="badge gray">취소완료</span>
+                    </div>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <div class="empty_box">취소 내역이 없습니다.</div>
+                <div class="empty_box">취소 내역이 없습니다.</div>
                 {% endif %}
             </div>
 
@@ -105,11 +109,21 @@
                 <h4>회원정보</h4>
 
                 <div class="info_table">
-                    <div><span>이름</span><p>{{ user.username }}</p></div>
-                    <div><span>이메일</span><p>{{ user.email }}</p></div>
-                    <div><span>생년월일</span><p>{{ user.birth }}</p></div>
-                    <div><span>전화번호</span><p>{{ user.phone }}</p></div>
-                    <div><span>가입일</span><p>{{ user.created_at }}</p></div>
+                    <div><span>이름</span>
+                        <p>{{ user.username }}</p>
+                    </div>
+                    <div><span>이메일</span>
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div><span>생년월일</span>
+                        <p>{{ user.birth }}</p>
+                    </div>
+                    <div><span>전화번호</span>
+                        <p>{{ user.phone }}</p>
+                    </div>
+                    <div><span>가입일</span>
+                        <p>{{ user.created_at }}</p>
+                    </div>
 
                 </div>
             </div>
