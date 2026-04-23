@@ -123,6 +123,24 @@ document.addEventListener("DOMContentLoaded", function () {
         seatArea.appendChild(rowDiv);
     });
 
+    const scheduleId = new URLSearchParams(location.search).get("schedule_id");
+
+    fetch(`/film/api/reserved_seats?schedule_id=${scheduleId}`)
+        .then(res => res.json())
+        .then(reservedSeats => {
+
+            reservedSeats.forEach(seatCode => {
+                const seatEl = document.querySelector(`[data-seat="${seatCode}"]`);
+
+                if (seatEl) {
+                    seatEl.classList.add("disabled");
+                    seatEl.style.background = "#ccc";
+                    seatEl.style.cursor = "not-allowed";
+                }
+            });
+
+        });
+
     // 좌석 선택 
     seatArea.addEventListener("click", (e) => {
 

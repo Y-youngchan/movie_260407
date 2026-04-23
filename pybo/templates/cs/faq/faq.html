@@ -1,136 +1,253 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항 - 필름아티크
+공지사항 - 필름아티크
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
 {% endblock %}
 
 {% block content %}
 
-    <div class="header">
-        <div class="container">
-            <div class="menu">
-                <h3 id="sub_title">고객센터</h3>
-                <div class="service">
+<div class="header">
+    <div class="container">
+        <div class="menu">
+            <h3 id="sub_title">고객센터</h3>
 
-                    <ul class="nav nav-underline">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.faq_list") }}">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="{{ url_for("cs.notice_list") }}">공지사항</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.review_list") }}">1:1문의</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="service">
+                <ul class="nav nav-underline">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cs.notice_list') }}">공지사항</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('cs.review_list') }}">1:1문의</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="section3">
-        <div class="container">
 
-            <p>
-                <img src="{{ url_for('static', filename='img/info_icon.png') }}" alt="info_icon">
-                자주 찾는 질문 전체가 기본으로 표시됩니다. 원하는 구분의 목록만 보려면 아래 메뉴에서 선택해주세요.
-            </p>
+<div class="section3">
+    <div class="container">
 
+        <p>
+            <img src="{{ url_for('static', filename='img/info_icon.png') }}" alt="info_icon">
+            자주 찾는 질문 전체가 기본으로 표시됩니다. 원하는 구분의 목록만 보려면 아래 메뉴에서 선택해주세요.
+        </p>
+
+
+        <!-- 필터 + 관리자 등록 버튼 -->
+        <div class="d-flex justify-content-between align-items-center w-100 px-5">
 
             <select id="filter" class="form-select w-25">
-
                 <option value="전체">전체</option>
                 <option value="예매">예매</option>
                 <option value="관람권">관람권</option>
                 <option value="영화관 이용">영화관 이용</option>
-
+                <option value="기타">기타</option>
             </select>
 
-            <div class="outside">
-                <table class="table">
-                    <thead>
-                    <tr class="table-secondary">
-                        <th>구분</th>
-                        <th>질문</th>
-                        <th>등록일</th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-
-                    {% for faq in faq_list %}
-                        <tr class="faq-row" onclick="toggleFAQ(this)">
-                            <td class="table-light">{{ faq.kind }}</td>
-                            <td class="table-light">{{ faq.question }}</td>
-                            <td>{{ faq.create_date.strftime('%Y년 %m월 %d일 %p %I:%M') }}</td>
-                        </tr>
-
-                        <tr class="faq-answer-row">
-                            <td colspan="3">
-                                {{ faq.answer }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-
-                    </tbody>
-                </table>
+            {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+            <div class="admin-btn-box">
+                <a href="{{ url_for('cs.faq_create') }}" class="btn btn-primary">
+                    FAQ 등록
+                </a>
             </div>
-
-            <nav aria-label="...">
-                <ul class="pagination justify-content-center">
-                    <!--이전버튼-->
-                    {% if faq_list.has_prev %}
-                        <li class="page-item">
-                            <a href="?page={{ faq_list.prev_num }}" class="page-link">이전</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">이전</a>
-                        </li>
-                    {% endif %}
-                    <!--페이지 번호-->
-                    {% for page_num in faq_list.iter_pages() %}
-                        {% if page_num %}
-                            {% if page_num != faq_list.page %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
-                                </li>
-                            {% else %}
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="javascript:void(0)">{{ page_num }}</a>
-                                </li>
-                            {% endif %}
-                        {% else %}
-                            <li class="disabled">
-                                <a class="page-link" href="javascript:void(0)">...</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                    <!--다음페이지-->
-                    {% if faq_list.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ faq_list.next_num }}">다음</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+            {% endif %}
 
         </div>
+
+
+
+        <div class="outside">
+            <table class="table">
+
+                <thead>
+                    <tr class="table-secondary">
+                        <th>구분</th>
+                        <th>자주묻는질문</th>
+                        <th>등록일</th>
+
+                        {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+                        <th>관리</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+
+
+
+                <tbody>
+
+                    {% for faq in faq_list %}
+
+                    <!-- 질문 행 -->
+                    <tr class="faq-row" onclick="toggleFAQ(this)">
+                        <td class="table-light category">{{ faq.kind }}</td>
+
+                        <td class="table-light">
+                            {{ faq.question }}
+                        </td>
+
+                        <td>
+                            {{ faq.create_date.strftime('%Y년 %m월 %d일') }}
+                        </td>
+
+                        {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+                        <td onclick="event.stopPropagation();">
+
+                            <a href="{{ url_for('cs.faq_edit', faq_id=faq.id) }}" class="btn btn-edit btn-sm">
+                                수정
+                            </a>
+
+                            <a href="{{ url_for('cs.faq_delete', faq_id=faq.id) }}" class="btn btn-delete btn-sm"
+                                onclick="return confirm('삭제하시겠습니까?')">
+                                삭제
+                            </a>
+
+                        </td>
+                        {% endif %}
+                    </tr>
+
+
+                    <!-- 답변 행 (아코디언) -->
+                    <tr class="faq-answer-row">
+                        {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+                        <td colspan="4">
+                            {{ faq.answer }}
+                        </td>
+                        {% else %}
+                        <td colspan="3">
+                            {{ faq.answer }}
+                        </td>
+                        {% endif %}
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+        <!-- 페이지네이션 -->
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+
+                {% if faq_list.has_prev %}
+                <li class="page-item">
+                    <a href="?page={{ faq_list.prev_num }}" class="page-link">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="javascript:void(0)">이전</a>
+                </li>
+                {% endif %}
+
+
+                {% for page_num in faq_list.iter_pages() %}
+
+                {% if page_num %}
+
+                {% if page_num != faq_list.page %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_num }}">
+                        {{ page_num }}
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item active">
+                    <a class="page-link" href="javascript:void(0)">
+                        {{ page_num }}
+                    </a>
+                </li>
+                {% endif %}
+
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="javascript:void(0)">
+                        ...
+                    </a>
+                </li>
+                {% endif %}
+
+                {% endfor %}
+
+
+                {% if faq_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ faq_list.next_num }}">
+                        다음
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="javascript:void(0)">
+                        다음
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+
     </div>
+</div>
 
 {% endblock %}
 
+
+
 {% block script %}
-    <script src="{{ url_for('static', filename='js/notice_list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notice_list.js') }}"></script>
+
+<script>
+
+    // FAQ 아코디언
+    function toggleFAQ(row) {
+
+        let answerRow = row.nextElementSibling;
+
+        if (answerRow.style.display === "table-row") {
+            answerRow.style.display = "none";
+        } else {
+            answerRow.style.display = "table-row";
+        }
+    }
+
+
+
+    // 카테고리 필터
+    document.getElementById("filter").addEventListener("change", function () {
+
+        let selected = this.value;
+        let rows = document.querySelectorAll(".faq-row");
+
+        rows.forEach(function (row) {
+
+            let category = row.querySelector(".category").innerText.trim();
+            let answerRow = row.nextElementSibling;
+
+            if (selected === "전체" || category === selected) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+                answerRow.style.display = "none";
+            }
+
+        });
+
+    });
+
+</script>
 {% endblock %}

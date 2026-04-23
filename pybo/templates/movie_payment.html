@@ -75,10 +75,17 @@
 {% block script %}
 <script src="https://js.tosspayments.com/v1/payment-widget"></script>
 <script>
+    const userId = "{{ session.get('user_id') }}";
+    const orderCode = "{{ order.order_code }}";
+    const totalAmount = {{ order.total_price }};
+    const movieTitle = "{{ movie.title }}";
+    const seatCount = {{ seats|length }};
+</script>
+<script>
     const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
     const customerKey = "USER_{{ session.get('user_id') }}";
 
-    // ✅ 로그인 기반으로 변경
+    // 로그인 기반으로 변경
     const paymentWidget = PaymentWidget(clientKey, customerKey);
 
     const orderId = "{{ order.order_code }}";
@@ -90,26 +97,51 @@
 
     const paymentButton = document.getElementById("payment-button");
 
-    // ✅ 버튼 텍스트 동적 설정
+    // 버튼 텍스트 동적 설정
     paymentButton.innerText = amount.toLocaleString() + "원 결제하기";
 
-    paymentButton.addEventListener("click", function () {
+    paymentButton.addEventListener("click", async function () {
 
-        // ✅ 중복 클릭 방지
-        paymentButton.disabled = true;
+    // 중복 클릭 방지
+    paymentButton.disabled = true;
 
+    try {
+        // 서버에 예매 데이터 먼저 저장
+        const res = await fetch("/film/movie/payment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                schedule_id: {{ schedule.id }},
+                seats: {{ seats | tojson }},
+                people: {{ people | tojson }},
+                total_price: {{ total_price }}
+            })
+        });
+
+        const result = await res.json();
+
+        if (!result.success) {
+            alert("예매 데이터 저장 실패");
+            paymentButton.disabled = false;
+            return;
+        }
+
+        // 저장 성공 후 결제 요청
         paymentWidget.requestPayment({
             orderId: orderId,
-
-            // ✅ 영화 예매에 맞게 수정
             orderName: "{{ movie.title }} ({{ seats|length }}석)",
-
             amount: amount,
-
-            // ✅ URL 수정 (영화 예매 기준)
-            successUrl: window.location.origin + "/payment/success?order_id=" + orderId,
-            failUrl: window.location.origin + "/payment/fail?order_id=" + orderId
+            successUrl: window.location.origin + "/film/payment/success?order_id=" + orderId,
+            failUrl: window.location.origin + "/film/payment/fail?order_id=" + orderId
         });
-    });
+
+    } catch (err) {
+        console.error(err);
+        alert("서버 오류 발생");
+        paymentButton.disabled = false;
+    }
+});
 </script>
 {% endblock %}

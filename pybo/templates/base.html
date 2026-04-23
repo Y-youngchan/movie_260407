@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Film Atique{% endblock %}</title>
 
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
@@ -29,41 +30,40 @@
             </div>
             <div class="header-sticky">
                 <nav>
-                <div class="topnav">
+                    <div class="topnav">
+                        <ul>
+                            <li><a href="{{ url_for('film.movie_list') }}">예 매</a></li>
+                            <li><a href="{{ url_for('film.movie_list') }}">영 화</a></li>
+                            <li><a href="{{ url_for('film.event') }}">이벤트</a></li>
+                            <li><a href="{{ url_for('store.store_main') }}">매 점</a></li>
+                            <li><a href="{{ url_for('store.store_main') }}">굿 즈</a></li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div class="topnav_right d-flex justify-content-end">
+                    <ul class="navbar-nav">
+                        {% if g.user %}
+                        <!-- <ul class="navbar-nav"> -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">
+                                {{ g.user.username }}님 (로그아웃)
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">로그인</a>
+                        </li>
+                        {% endif %}
+                    </ul>
                     <ul>
-                        <li><a href="{{ url_for('film.movie_list') }}">예 매</a></li>
-                        <li><a href="{{ url_for('film.movie_list') }}">영 화</a></li>
-                        <li><a href="{{ url_for('film.event') }}">이벤트</a></li>
-                        <li><a href="{{ url_for('store.store_main') }}">매 점</a></li>
-                        <li><a href="{{ url_for('store.store_main') }}">굿 즈</a></li>
+                        <li class="topnav_reservation">
+                            <a href="#">바로 예매</a>
+                        </li>
                     </ul>
                 </div>
-            </nav>
-            
-            <div class="topnav_right d-flex justify-content-end">
-                <ul class="navbar-nav">
-                    {% if g.user %}
-                        <!-- <ul class="navbar-nav"> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('auth.logout') }}">
-                                    {{ g.user.username }}님 (로그아웃)
-                                </a>
-                            </li>
-                    {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                href="{{ url_for('auth.login') }}">로그인</a>
-                            </li>
-                    {% endif %}
-                </ul>
-                <ul>
-                    <li class="topnav_reservation">
-                        <a href="#">바로 예매</a>
-                    </li>
-                </ul>
             </div>
-            </div>
-               
+
         </div>
     </header>
 
@@ -106,6 +106,41 @@
             </div>
         </div>
 
+
+
+        <!-- =========================
+         flash 메시지 시작
+    ========================== -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="container mt-4" style="max-width:1100px;">
+
+            {% for message in messages %}
+            <div class="alert alert-dismissible fade show shadow-sm" role="alert" style="
+                         background:#1a1a1a;
+                         color:#ffffff;                         
+                         border-radius:10px;
+                         padding:15px 18px;
+                         font-size:15px;
+                         ">
+
+                {{ message }}
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert">
+                </button>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+        {% endwith %}
+        <!-- =========================
+         flash 메시지 끝
+    ========================== -->
+
+
+
         <!--기본 템플릿 안에 삽입될 내용 start-->
         {% block content %}
 
@@ -117,8 +152,6 @@
         <div id="banner_AD">
             <img src="{{ url_for('static', filename='img/banner_AD.jpg') }}" alt="영화광고">
         </div>
-
-        
 
     </main>
 
@@ -156,16 +189,38 @@
                     <li>호스팅 제공자 필름아티크이노베이션</li>
                 </ul>
             </div>
-            
+
             <p>Copyright © Filmatique All Right Reserved.</p>
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous">
+    </script>
 
-{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-{% endblock %}
+            const alerts = document.querySelectorAll('.alert');
+
+            alerts.forEach(function (alertBox) {
+
+                setTimeout(function () {
+
+                    let bsAlert = bootstrap.Alert.getOrCreateInstance(alertBox);
+                    bsAlert.close();
+
+                }, 1000);
+
+            });
+
+        });
+    </script>
+
+    {% block script %}
+
+    {% endblock %}
 </body>
 
 </html>

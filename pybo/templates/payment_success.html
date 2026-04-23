@@ -1,79 +1,73 @@
 {% extends 'base.html' %}
-{% block title %}결제 - 필름아티크{% endblock %}
+{% block title %}결제완료 - 필름아티크{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/payment_success.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="store_pay_inner">
-    <div class="store__pay_page_top"></div>
-    <div class="store__pay_page">
-        <div class="pay_success">
-            <div class="pay_success_top">
-                <h2>결제완료</h2>
-            </div>
-            <div class="pay_success_main">
-                <div class="main_inner_left"></div>
-                <div class="main_inner_center">
-                    <div class="main_center_1">
-                        <h4>{{ order.user.username }} 회원님, 결제가 완료되었습니다. 감사합니다!</h4>
-                    </div>
-                    <div class="main_center_2">
-                        <div class="center_top">
-                            <div class="center_img">
-                                <img src="{{ order.product.Productimage_url }}">
-                            </div>
-                            <div class="center_detail">
-                                <div class="center_detail_code">
-                                    <div class="title">
-                                        <p>구매번호</p>
-                                    </div>
-                                    <div class="story">
-                                        <p>{{ order.order_code.split('_')[-1] }}</p>
-                                    </div>
-                                </div>
-                                <div class="center_detail_info">
-                                    <div class="title">
-                                        <p>상품명</p>
-                                        <p>구성품</p>
-                                        <p>수량</p>
-                                    </div>
-                                    <div class="story">
-                                        <p>{{ order.product.Productname }}</p>
-                                        <p>{{ order.product.Productdescription }}</p>
-                                        <p>{{ order.quantity }}개</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="center_bottom">
-                            <p>주문금액 {{ "{:,}".format(order.product.Productprice) }}원 * 수량 {{ order.quantity }}개 = 총 결제 금액: {{ "{:,}".format(order.total_price) }}원</p>
-                        </div>
-                    </div>
-                    <div class="main_center_3">
-                        <p style="color: red;">구매하신 상품(티켓 포함)은 상세 안내에 따라 이용 또는 사용 가능합니다.</p>
-                        <p style="color: red;">상품 및 티켓의 이용 조건은 구매 내역 또는 상세 페이지를 참고해 주세요.</p>
-                        <p style="color: red;">유효기간 및 사용 조건을 반드시 확인해 주세요.</p>
-                        <p>일부 상품 및 티켓은 사용 조건에 따라 이용이 제한될 수 있습니다.</p>
-                        <p>환불 및 변경은 각 상품의 정책에 따라 다르게 적용될 수 있습니다.</p>
-                        <p>이용 전 반드시 사용 가능 여부 및 조건을 확인해 주세요.</p>
-                    </div>
-                    <div class="main_center_4">
-                        <a href="{{ url_for('film.mypage') }}" class="btn btn-outline-dark me-3">결제내역</a>
-                        <a href="{{ url_for('store.store_main') }}" class="btn btn-dark me-3">스토어 바로가기</a>
-                        <a href="{{ url_for('main.index') }}" class="btn btn-danger">홈으로 바로가기</a>
-                    </div>
-                    
-                </div>
-                <div class="main_inner_right"></div>
-            </div>
-        </div>
+<div class="wrap">
+
+    <!-- 좌측 사이드 -->
+    <div class="sidebar">
+        <ul>
+            <li><strong>01<br>상영시간</strong></li>
+            <li><strong>02<br>인원/좌석</strong></li>
+            <li><strong>03<br>결제</strong></li>
+            <li class="active"><strong>04<br>결제완료</strong></li>
+        </ul>
     </div>
-    <div class="store__pay_page_bottom"></div>
+
+    <!-- 메인 -->
+    <div class="main">
+
+        <div class="title">결제완료</div>
+
+        <div class="complete_msg">
+            <p><strong>{{ g.user.username }}님, 결제가 성공적으로 완료되었습니다.</strong></p>
+        </div>
+
+        <!-- 티켓 -->
+        <div class="ticket">
+
+            <div class="ticket_top">
+                <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}">
+
+                <div class="info">
+                    <p class="booking">예매번호 <strong>{{ booking_code }}</strong></p>
+                    <p><span>상영일시</span> {{ schedule.start_time }} ~ {{ schedule.end_time }}</p>
+                    <p><span>상영관</span> {{ theater.name }} {{ screen.name }}</p>
+                    <p><span>관람인원</span> {{ people.adult }}명</p>
+                    <p><span>좌석</span> {{ seats | join(', ') }}</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="ticket_bottom">
+                <div>주문금액 <strong>{{ total_price }}원</strong></div>
+                <div>할인금액 <strong>0원</strong></div>
+                <div class="total">총 결제 금액 <strong>{{ total_price }}원</strong></div>
+            </div>
+
+        </div>
+
+        <!-- 안내 -->
+        <div class="notice">
+            <ul>
+                <li>온라인 예매 취소는 상영 20분 전까지 가능합니다.</li>
+                <li>상영 시작 이후 취소/환불 불가합니다.</li>
+                <li>예매 내역은 마이페이지에서 확인 가능합니다.</li>
+            </ul>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="buttons">
+            <a href="{{ url_for('film.mypage') }}" class="btn btn-outline-dark me-3">결제내역</a>
+            <a href="{{ url_for('store.store_main') }}" class="btn btn-dark me-3">스토어 바로가기</a>
+            <a href="{{ url_for('main.index') }}" class="btn btn-danger">홈으로 바로가기</a>
+        </div>
+
+    </div>
 </div>
-
-{% endblock %}
-
-{% block script %}
 {% endblock %}

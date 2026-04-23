@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, g, Flask
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, g, Flask, current_app, send_from_directory
+from sqlalchemy import asc
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from pybo import db
@@ -8,8 +9,6 @@ from pybo.forms import UserCreateForm, UserLoginForm
 from pybo.models import User, Product, imgs
 import functools, os, uuid
 from werkzeug.utils import secure_filename
-
-UPLOAD_FOLDER = 'pybo/static/img'
 
 bp=Blueprint('auth',__name__, url_prefix='/auth')
 
@@ -265,6 +264,12 @@ def admin():
         imgs.img_name.in_(['메인 배너1'])
     ).all()
 
+    main_images = imgs.query.filter(
+        imgs.img_name.like('메인 슬라이더%')
+    ).order_by(imgs.id).all()
+
+    selected_ids = session.get('main_slider', [])
+
     total_users = User.query.count()
     normal_users = User.query.filter_by(status='normal').count()
     sleep_users = User.query.filter_by(status='sleep').count()
@@ -278,6 +283,8 @@ def admin():
         admins=admins,
         products=products,
         banners=banners,
+        main_images=main_images,
+        selected_ids=selected_ids,
 
         total_users=total_users,
         normal_users=normal_users,
@@ -400,6 +407,35 @@ def change_product_status(product_id):
     flash('상품 상태가 변경되었습니다.')
     return redirect(url_for('auth.admin'))
 
+# 메인 배너 수정
+@bp.route('/select_main_slider', methods=['POST'])
+def select_main_slider():
+
+    order_data = request.form.get('selected_order')
+
+    if not order_data:
+        flash("선택된 이미지가 없습니다.", "error")
+        return redirect(url_for('auth.admin'))
+
+    selected_ids = order_data.split(',')
+
+    if len(selected_ids) != 3:
+        flash("이미지는 3개를 선택해야 합니다.", "error")
+        return redirect(url_for('auth.admin'))
+
+    imgs.query.update({imgs.is_main: False})
+
+    for img_id in selected_ids:
+        img = imgs.query.get(int(img_id))
+        if img:
+            img.is_main = True
+
+    db.session.commit()
+
+    flash("메인 배너가 변경되었습니다.", "success")
+    return redirect(url_for('auth.admin'))
+
+# 기본 배너 수정
 @bp.route('/admin/banner/update/<int:banner_id>', methods=['POST'])
 @login_required
 @admin_required
@@ -417,6 +453,7 @@ def update_banner(banner_id):
         flash('파일을 선택하세요.')
         return redirect(url_for('auth.admin'))
 
+    UPLOAD_FOLDER = os.path.join(current_app.root_path, 'static', 'img')
     filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     file.save(filepath)

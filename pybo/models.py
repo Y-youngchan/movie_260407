@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from alembic.autogenerate.compare import server_defaults
-from sqlalchemy.orm import backref
+from sqlalchemy.orm import backref, relationship
 
 from pybo import db
 
@@ -13,10 +13,8 @@ class Notice(db.Model):
     theater = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
-    create_date = db.Column(db.DateTime(), nullable=False)
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-    # user = db.relationship('User', backref=db.backref('answer_set'))
-    # modify_date = db.Column(db.DateTime(), nullable=True)
+    created_date = db.Column(db.DateTime, nullable=False)
+
 
 # Answer-답변 창
 class Answer(db.Model):
@@ -83,6 +81,10 @@ class Order(db.Model):
     status = db.Column(db.String(20), default="READY")  # READY / SUCCESS / FAIL
     created_at = db.Column(db.DateTime, default=db.func.now())
     order_code = db.Column(db.String(100), unique=True)
+
+    seats_json = db.Column(db.Text)
+    people_json = db.Column(db.Text)
+    schedule_id = db.Column(db.Integer)
 
     product = db.relationship('Product')
     user = db.relationship('User')
@@ -187,21 +189,23 @@ class Seat(db.Model):
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
-    screening_id = db.Column(db.Integer)
-    seat_id = db.Column(db.Integer)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.id'), nullable=False)
     seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'), nullable=False)
+
     created_at = db.Column(db.DateTime, nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint('schedule_id', 'seat_id', name='uq_schedule_seat'),
+    )
 
     schedule = db.relationship('Schedule', back_populates='reservations')
     seat = db.relationship('Seat', back_populates='reservations')
     user = db.relationship('User', backref=db.backref('reservations', cascade='all, delete-orphan'))
 
     def __repr__(self):
-        return f'<Reservation {self.user_id} {self.schedule_id}>'
+        return f'<Reservation user={self.user_id}, schedule={self.schedule_id}, seat={self.seat_id}>'
 
 # 1대1 문의 - review __공자사항
 class Review(db.Model):
@@ -215,7 +219,7 @@ class Review(db.Model):
     created_date = db.Column(db.DateTime, nullable=False)
     modify_date = db.Column(db.DateTime(), nullable=True)
     answer_review = db.Column(db.Text(), nullable=True)
-    user= db.relationship('User', backref='review_set')
+    user = relationship("User", foreign_keys=[user_id])
 
        # 답변 작성 관리자
     answer_admin_id = db.Column(
@@ -252,3 +256,4 @@ class imgs(db.Model):
     img_url = db.Column(db.String(300), nullable=False)
     img_type = db.Column(db.String(20), nullable=False) 
     event_img = db.Column(db.String(300), nullable=True)
+    is_main = db.Column(db.Boolean, default=False)

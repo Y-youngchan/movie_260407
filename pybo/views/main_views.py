@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 from pybo.models import Movie, imgs
 
 bp = Blueprint('main', __name__, url_prefix='/')
@@ -7,6 +7,20 @@ bp = Blueprint('main', __name__, url_prefix='/')
 def index():
     movies = Movie.query.limit(10).all()  # 슬라이드 개수
     first_movie = movies[0] if movies else None
+
+    selected_ids = session.get('main_slider')
+
+    if selected_ids:
+        selected_ids = [int(x) for x in selected_ids]
+        images = imgs.query.filter(imgs.id.in_(selected_ids)).all()
+
+        main_images = sorted(
+            images,
+            key=lambda x: selected_ids.index(x.id)
+        )
+    else:
+        main_images = imgs.query.filter_by(is_main=True).all()
+
     images = imgs.query.filter_by(img_type='main').all()
     logo_1 = imgs.query.filter_by(img_name='메인 로고1').first()
     logo_2 = imgs.query.filter_by(img_name='메인 로고2').first()
@@ -35,6 +49,7 @@ def index():
         'main.html',
         movies=movies, 
         first_movie=first_movie, 
+        main_images=main_images,
         images=images,
         logo_1=logo_1,
         logo_2=logo_2,

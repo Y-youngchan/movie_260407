@@ -28,7 +28,7 @@ def insert_test_data(n=12):
                 
 감사합니다.''',
 
-                        create_date=datetime.now()
+                        created_date=datetime(year, i+1, 1)
                     )
                     db.session.add(q)
 

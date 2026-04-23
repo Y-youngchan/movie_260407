@@ -227,6 +227,10 @@
     border: none;
     cursor: pointer;
 }
+.seat.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
 .seat.selected {
     background: red;
     color: white;

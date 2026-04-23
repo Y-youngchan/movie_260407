@@ -64,9 +64,11 @@
         <div class="trailer">
             <div class="swiper mainSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="{{ main_1.img_url }}" alt="메인"></div>
-                    <div class="swiper-slide"><img src="{{ main_2.img_url }}" alt="메인"></div>
-                    <div class="swiper-slide"><img src="{{ main_3.img_url }}" alt="메인"></div>
+                    {% for img in main_images %}
+                        <div class="swiper-slide">
+                            <img src="{{ img.img_url }}" alt="메인">
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
