@@ -13,6 +13,7 @@ with app.app_context():
         imgs(img_name='메인 슬라이더2', img_url='/static/img/concrete.jpeg', img_type='main'),
         imgs(img_name='메인 슬라이더3', img_url='/static/img/The_Battleship_Island.jpg', img_type='main'),
         imgs(img_name='메인 슬라이더4', img_url='/static/img/main_movie_slide_2.png', img_type='main'),
+        imgs(img_name='메인 슬라이더5', img_url='/static/img/main_movie_slide_3.jpg', img_type='main'),
         imgs(img_name='메인 이벤트1', img_url='/static/img/event1.jpg', img_type='main'),
         imgs(img_name='메인 이벤트2', img_url='/static/img/event2.jpg', img_type='main'),
         imgs(img_name='메인 이벤트3', img_url='/static/img/event3.jpg', img_type='main'),

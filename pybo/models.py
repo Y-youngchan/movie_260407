@@ -258,3 +258,4 @@ class imgs(db.Model):
     img_url = db.Column(db.String(300), nullable=False)
     img_type = db.Column(db.String(20), nullable=False) 
     event_img = db.Column(db.String(300), nullable=True)
+    is_main = db.Column(db.Boolean, default=False)

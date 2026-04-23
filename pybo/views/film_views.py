@@ -4,7 +4,7 @@ import uuid, random, json
 from flask import Blueprint, flash, json, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
 from pybo import db
 from pybo.views.auth_views import login_required, g
-from pybo.models import Movie, Schedule, Screen, Theater, User, Reservation, Order, imgs, Seat
+from pybo.models import Movie, Payment, Schedule, Screen, Theater, User, Reservation, Order, imgs, Seat
 
 from sqlalchemy import func
 import requests, base64
@@ -23,11 +23,16 @@ def mypage():
 
     reservations = Reservation.query.filter_by(user_id=user.id).all()
     orders = Order.query.filter_by(user_id=user.id).all()
+    payment = Payment.query\
+        .join(Order)\
+        .filter(Order.user_id == user.id)\
+        .all()
 
     return render_template(
         'mypage.html',
         user=user,
         reservations=reservations,
+        payment=payment,
         orders=orders
     )
 

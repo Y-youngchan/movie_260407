@@ -54,7 +54,27 @@
                     </div>
                     {% endfor %}
                 {% else %}
-                    <div class="empty_box">예매/구매 내역이 없습니다.</div>
+                    <div class="empty_box">예매 내역이 없습니다.</div>
+                {% endif %}
+
+                {% if payment %}
+                    {% for item in payment %}
+                    <div class="history_box">
+                        <div class="left">
+                            <strong>{{ item.order.product_name }}</strong>
+                            <p>주문번호: {{ item.order_code }}</p>
+                            <p>수량: {{ item.order.quantity }}</p>
+                            <p>결제금액: {{ item.amount }}원</p>
+                        </div>
+
+                        <div class="right">
+                            <span class="badge">결제완료</span>
+                            <button type="button">결제취소</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty_box">상품 구매 내역이 없습니다.</div>
                 {% endif %}
             </div>
 
