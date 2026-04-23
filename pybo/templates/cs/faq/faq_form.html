@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}
+FAQ 작성
+{% endblock %}
+
+{% block content %}
+
+<style>
+.btn-cancel{
+    background-color: #b91c1c;
+    color: white;
+    border: none;
+}
+
+.btn-cancel:hover{
+    background-color: #991b1b;
+    color: white;
+}
+</style>
+
+<div class="container mt-5" style="max-width:700px;">
+
+    <h2 class="mb-4">
+        {% if faq %}
+            FAQ 수정
+        {% else %}
+            FAQ 등록
+        {% endif %}
+    </h2>
+
+    <form method="post">
+
+        <div class="mb-3">
+            <label class="form-label">구분</label>
+
+            <select name="kind" class="form-select">
+                <option value="예매"
+                {% if faq and faq.kind == '예매' %}selected{% endif %}>
+                예매
+                </option>
+
+                <option value="관람권"
+                {% if faq and faq.kind == '관람권' %}selected{% endif %}>
+                관람권
+                </option>
+
+                <option value="영화관 이용"
+                {% if faq and faq.kind == '영화관 이용' %}selected{% endif %}>
+                영화관 이용
+                </option>
+
+                <option value="기타"
+                {% if faq and faq.kind == '기타' %}selected{% endif %}>
+                기타
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">자주묻는질문</label>
+            <input type="text"
+                   name="question"
+                   class="form-control"
+                   value="{{ faq.question if faq else '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">자주하는답변</label>
+            <textarea name="answer"
+                      rows="8"
+                      class="form-control">{{ faq.answer if faq else '' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-dark">
+            저장하기
+        </button>
+
+        <a href="{{ url_for('cs.faq_list') }}"
+           class="btn btn-cancel">
+            취소
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

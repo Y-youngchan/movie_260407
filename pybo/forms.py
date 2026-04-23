@@ -25,11 +25,20 @@ class UserLoginForm(FlaskForm):
     userid = StringField('아이디', validators=[DataRequired('필수 입력 항목입니다.'), Length(min=3, max=25)])
     password = PasswordField('비밀번호', validators=[DataRequired('필수 입력 항목입니다.')])
 
-
 # 공지사항 리스트 폼 notice_list
 class NoticeForm(FlaskForm):
-    theater = StringField('영화관', validators=[DataRequired('전체')])
-    subject = StringField('제목', validators=[DataRequired('제목은 필수 입력 항목입니다.')])
+    theater = SelectField(
+        '영화관',
+        choices=[
+            ('강남스트리트점', '강남스트리트점'), ('가산디지털점', '가산디지털점'), ('건대점', '건대점'), ('용산점', '용산점'), ('홍대점', '홍대점'),
+            ('광교점', '광교점'), ('부천점', '부천점'), ('동탄점', '동탄점'), ('수원역점', '수원역점'), ('송도점', '송도점'),
+            ('인계점', '인계점'), ('분당점', '분당점'), ('양양점', '양양점'), ('강릉점', '강릉점'), ('천안점', '천안점'),
+            ('오송점', '오송점'), ('대전성심당점', '대전성심당점'), ('논산훈련소점', '논산훈련소점'), ('광주점', '광주점'), ('익산점', '익산점'),
+            ('전주점', '전주점'), ('대구점', '대구점'), ('포항점', '포항점'), ('경주점', '경주점'), ('울산점', '울산점'),
+            ('통영점', '통영점'), ('김해점', '김해점'), ('부산갈매기점', '부산갈매기점'), ('제주점', '제주점'), ('서귀포점', '서귀포점')
+        ],
+        validators=[DataRequired()])
+    title = StringField('제목', validators=[DataRequired('제목은 필수 입력 항목입니다.')])
     content = TextAreaField('내용', validators=[DataRequired('내용은 필수 입력 항목입니다.')])
 
 # 공지사항 review_detail(1:1문의)

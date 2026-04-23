@@ -1,10 +1,10 @@
 from datetime import datetime
-import uuid
+import uuid, random, json
 
-from flask import Blueprint, flash, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
+from flask import Blueprint, flash, json, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
 from pybo import db
 from pybo.views.auth_views import login_required, g
-from pybo.models import Movie, Schedule, Screen, Theater, User, Reservation, Order, imgs
+from pybo.models import Movie, Payment, Schedule, Screen, Theater, User, Reservation, Order, imgs, Seat
 
 from sqlalchemy import func
 import requests, base64
@@ -23,11 +23,16 @@ def mypage():
 
     reservations = Reservation.query.filter_by(user_id=user.id).all()
     orders = Order.query.filter_by(user_id=user.id).all()
+    payment = Payment.query\
+        .join(Order)\
+        .filter(Order.user_id == user.id)\
+        .all()
 
     return render_template(
         'mypage.html',
         user=user,
         reservations=reservations,
+        payment=payment,
         orders=orders
     )
 
@@ -188,16 +193,32 @@ def person_seat():
         theater=theater
     )
 
+@bp.route('/api/reserved_seats')
+def reserved_seats():
+    schedule_id = request.args.get('schedule_id', type=int)
+
+    reservations = Reservation.query.filter_by(schedule_id=schedule_id).all()
+
+    result = []
+
+    for r in reservations:
+        seat = r.seat
+        seat_code = f"{seat.row}{seat.col}"
+        result.append(seat_code)
+
+    return jsonify(result)
+
 @bp.route('/movie/payment', methods=['GET', 'POST'])
 @login_required
 def movie_payment():
 
     if request.method == 'POST':
         data = request.get_json()
-        session['payment_data'] = data
+
+        session['booking_data'] = data 
+
         return jsonify({"success": True})
 
-    
     schedule_id = request.args.get('schedule_id', type=int)
     schedule = Schedule.query.get_or_404(schedule_id)
 
@@ -205,9 +226,10 @@ def movie_payment():
     screen = schedule.screen
     theater = screen.theater
 
-    payment_data = session.get('payment_data')
+    
+    payment_data = session.get('booking_data')
     if not payment_data:
-        abort(400)
+        return redirect(url_for('film.person_seat', schedule_id=schedule.id))
 
     seats = payment_data.get('seats')
     people = payment_data.get('people')
@@ -215,14 +237,18 @@ def movie_payment():
 
     num_people = sum(people.values())
 
-    
     order_code = str(uuid.uuid4())
 
     order = Order(
-        order_code=order_code,
-        user_id=g.user.id,
-        total_price=total_price,
-        status='pending'
+    order_code=order_code,
+    user_id=g.user.id,
+    total_price=total_price,
+    status='READY',
+
+    
+    seats_json=json.dumps(seats),
+    people_json=json.dumps(people),
+    schedule_id=schedule.id
     )
 
     db.session.add(order)
@@ -238,18 +264,86 @@ def movie_payment():
         people=people,
         num_people=num_people,
         total_price=total_price,
-        order=order
+        order=order, 
     )
 
 @bp.route('/payment/success')
+@login_required
 def payment_success():
+
     order_id = request.args.get("order_id")
+
+    if not order_id:
+        return redirect(url_for('main.index'))
 
     order = Order.query.filter_by(order_code=order_id).first()
 
-    # ✅ 여기서 결제 검증 + 상태 변경
-    order.status = "paid"
+    if not order:
+        return redirect(url_for('main.index'))
+
+    seats = json.loads(order.seats_json)
+    people = json.loads(order.people_json)
+    schedule = Schedule.query.get(order.schedule_id)
+
+
+    if order.status == "SUCCESS":
+        return render_template(
+            'payment_success.html',
+            movie=schedule.movie,
+            schedule=schedule,
+            theater=schedule.screen.theater,
+            screen=schedule.screen,
+            seats=seats,
+            total_price=order.total_price,
+            people=people,
+            booking_code=order.order_code
+        )
+
+    user_id = session.get('user_id')
+
+    booking_code = order.order_code 
+    order.status = "SUCCESS"
+
+    reserved_seats = []
+
+    for seat_code in seats:
+        row = seat_code[0]
+        col = int(seat_code[1:])
+
+        seat = Seat.query.filter_by(
+            screen_id=schedule.screen_id,
+            row=row,
+            col=col
+        ).first()
+
+        existing = Reservation.query.filter_by(
+            schedule_id=schedule.id,
+            seat_id=seat.id
+        ).first()
+
+        if existing:
+            continue  
+
+        reservation = Reservation(
+            user_id=user_id,
+            schedule_id=schedule.id,
+            seat_id=seat.id,
+            created_at=datetime.now()
+        )
+
+        db.session.add(reservation)
+        reserved_seats.append(seat_code)
 
     db.session.commit()
 
-    return render_template("payment_success.html", order=order)
+    return render_template(
+        'payment_success.html',
+        movie=schedule.movie,
+        schedule=schedule,
+        theater=schedule.screen.theater,
+        screen=schedule.screen,
+        seats=seats,
+        total_price=order.total_price,
+        people=people,
+        booking_code=booking_code
+    )

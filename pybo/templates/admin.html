@@ -112,8 +112,35 @@
 
             <section class="table-section" id="main-banner">
                 <h2>메인 배너 변경</h2>
+
                 <div class="card">
-                    메인 배너 변경
+                    <form method="post" action="{{ url_for('auth.select_main_slider') }}">
+                        <input type="hidden" name="selected_order" id="selected_order">
+
+                        <div>
+                            {% for img in main_images %}
+                            <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd;">
+                                
+                                <div>
+                                    <img src="{{ img.img_url }}" style="width:300px; display:block; margin:0 auto 8px;">
+                                </div>
+
+                                <label>
+                                    <input type="checkbox" class="img-check" value="{{ img.id }}">
+                                    이 이미지 선택
+                                </label>
+
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div style="margin-top:20px;">
+                            <button type="submit" style="padding:10px 20px;">
+                                적용
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
             </section>
 
@@ -122,11 +149,10 @@
                 <div class="card">
                     {% for banner in banners %}
                     <div style="margin-bottom:30px;">
-                        <img src="{{ banner.img_url }}" 
+                        <img src="{{ banner.img_url }}"
                             style="width:1000px; border-radius:10px; display:block; margin-bottom:10px;">
 
-                        <form method="post"
-                            action="{{ url_for('auth.update_banner', banner_id=banner.id) }}"
+                        <form method="post" action="{{ url_for('auth.update_banner', banner_id=banner.id) }}"
                             enctype="multipart/form-data">
 
                             <input type="file" name="banner_image" required>
@@ -340,11 +366,13 @@
                         </div>
                     </a>
 
+                    <a href="{{ url_for('cs.faq_list')}}" class="cs-link">
+                        <div class="cs-card">
+                            <h3>FAQ 관리</h3>
+                            <p>FAQ 등록 / 수정 / 삭제</p>
+                        </div>
+                    </a>
 
-                    <div class="cs-card">
-                        <h3>FAQ 관리</h3>
-                        <p>FAQ 등록 / 수정 / 삭제</p>
-                    </div>
 
 
                 </div>
@@ -361,6 +389,29 @@
                 el.classList.add('hide');
             });
         }, 2500);
+    </script>
+
+    <script>
+    let selectedOrder = [];
+
+    document.querySelectorAll(".img-check").forEach(cb => {
+        cb.addEventListener("change", function () {
+            const id = this.value;
+
+            if (this.checked) {
+                if (selectedOrder.length >= 3) {
+                    alert("이미지는 최대 3개만 선택 가능");
+                    this.checked = false;
+                    return;
+                }
+                selectedOrder.push(id);
+            } else {
+                selectedOrder = selectedOrder.filter(v => v !== id);
+            }
+
+            document.getElementById("selected_order").value = selectedOrder.join(",");
+        });
+    });
     </script>
 
 </body>

@@ -53,6 +53,7 @@
                 <option value="예매">예매</option>
                 <option value="관람권">관람권</option>
                 <option value="영화관 이용">영화관 이용</option>
+                <option value="기타">기타</option>
             </select>
 
             {% if g.user and g.user.admin_role in ['super', 'manager'] %}
@@ -73,7 +74,7 @@
                 <thead>
                     <tr class="table-secondary">
                         <th>구분</th>
-                        <th>질문</th>
+                        <th>자주묻는질문</th>
                         <th>등록일</th>
 
                         {% if g.user and g.user.admin_role in ['super', 'manager'] %}
