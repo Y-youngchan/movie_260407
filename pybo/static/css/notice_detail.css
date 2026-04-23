@@ -54,6 +54,8 @@
     text-align: start;
     display: flex;
     align-items: center;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
 }
 
 .section2 .forward_btn li{
@@ -63,15 +65,14 @@
     text-align: start;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #cdcdcd;
 }
 
 .recent_btn li.disabled a,
 .forward_btn li.disabled a {
     display: block;       
     width: 100%;
-    height: 100%;
-    border-top: 1px solid #cdcdcd;
-    border-bottom: 1px solid #cdcdcd;
+    height: 100%;    
 }
 
 .section2 .page-link {

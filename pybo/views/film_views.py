@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 import uuid, random, json
 
 from flask import Blueprint, flash, jsonify, render_template, request, abort, jsonify, session, redirect, url_for
@@ -144,6 +144,7 @@ def movie_info(movie_id):
     )
 
 @bp.route('/booking/<int:movie_id>', methods=['GET'])
+@login_required
 def booking(movie_id):
     movies = Movie.query.all()
 
@@ -152,6 +153,36 @@ def booking(movie_id):
 
     if not movie:
         abort(404)
+    # =====================================
+    # 청소년관람불가 영화 성인인증 체크
+    # =====================================
+    cert = (movie.certification or '').strip()
+
+    if cert in ['청소년관람불가', '청소년 관람불가', '청불', '19세', '19']:
+
+        # 이미 인증 완료했는지 체크
+        verified = session.get('adult_verified')
+
+        if not verified:
+
+            today = date.today()
+            birth = g.user.birth
+
+            age = today.year - birth.year
+
+            if (today.month, today.day) < (birth.month, birth.day):
+                age -= 1
+
+            # 미성년자 차단
+            if age < 19:
+                flash('청소년 관람불가 영화는 성인만 예매 가능합니다.')
+                return redirect(url_for('main.index'))
+
+            # 성인인데 인증창 미통과 상태
+            session['next_booking_url'] = request.url
+            return redirect(url_for('film.adult_verify'))
+
+    # =====================================
 
     theaters = Theater.query.all()
 
@@ -182,6 +213,33 @@ def booking(movie_id):
         dates=dates,
         schedules=schedules,
         selected_date=selected_date
+    )
+
+# ===============================
+# 성인 인증 페이지
+# ===============================
+@bp.route('/adult_verify')
+@login_required
+def adult_verify():
+    return render_template('adult_verify.html')
+
+
+# ===============================
+# 성인 인증 완료
+# ===============================
+@bp.route('/booking_pass')
+@login_required
+def booking_pass():
+
+    session['adult_verified'] = True
+
+    flash('성인 인증이 완료되었습니다.')
+
+    return redirect(
+        session.get(
+            'next_booking_url',
+            url_for('main.index')
+        )
     )
 
 @bp.route('/api/schedules')
