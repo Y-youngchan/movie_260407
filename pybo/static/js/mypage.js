@@ -28,3 +28,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+function cancelPayment(orderId) {
+    if (!confirm("취소하시겠습니까?")) return;
+
+    fetch(`/store/pay/cancel/${orderId}`, {
+        method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        location.reload();
+    })
+    .catch(err => {
+        console.log(err);
+        alert("취소 실패");
+    });
+}

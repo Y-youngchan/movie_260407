@@ -23,19 +23,41 @@ def mypage():
 
     reservations = Reservation.query.filter_by(user_id=user.id).all()
     orders = Order.query.filter_by(user_id=user.id).all()
+
     payment = Payment.query\
         .join(Order)\
-        .filter(Order.user_id == user.id)\
+        .filter(
+            Order.user_id == user.id,
+            Payment.status == "SUCCESS"
+        )\
         .all()
+    
+    cancel_payments = Payment.query\
+        .join(Order)\
+        .filter(
+            Order.user_id == user.id,
+            Payment.status == "CANCELLED"
+        )\
+        .all()
+    
+    cancels = []
+
+    for p in cancel_payments:
+        cancels.append({
+            "type": "payment",
+            "movie_title": p.order.product_name,
+            "cancel_date": p.approved_at.strftime("%Y-%m-%d %H:%M") if p.approved_at else "-"
+        })
 
     return render_template(
         'mypage.html',
         user=user,
         reservations=reservations,
         payment=payment,
-        orders=orders
+        orders=orders,
+        cancels=cancels
     )
-
+    
 @bp.route('/event')
 def event():
     event_images = imgs.query.filter_by(img_type='event').all()

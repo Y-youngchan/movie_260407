@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, abort, url_for, session
+from flask import Blueprint, render_template, request, redirect, abort, url_for, session, jsonify
 
 from pybo import db
 from pybo.models import Product, Order, User, Payment
 from pybo.views.auth_views import login_required
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
-import uuid
+import uuid, requests, base64
 
 bp = Blueprint('store', __name__, url_prefix='/store')
 
@@ -110,3 +110,34 @@ def pay_fail():
         db.session.commit()
 
     return f"결제 실패 (order_id={order_code})"
+
+
+@bp.route('/pay/cancel/<int:order_id>', methods=['POST'])
+@login_required
+def cancel_payment(order_id):
+
+    order = Order.query.get_or_404(order_id)
+    payment = Payment.query.filter_by(order_id=order.id).first()
+
+    if not payment:
+        return jsonify({"message": "결제 정보 없음"}), 400
+
+    if payment.status != "SUCCESS":
+        return jsonify({"message": "취소 불가 상태"}), 400
+
+    # 70일 제한 (선택)
+    if payment.approved_at:
+        now = datetime.now(timezone.utc)
+        approved_at = payment.approved_at.replace(tzinfo=timezone.utc) \
+            if payment.approved_at.tzinfo is None else payment.approved_at
+
+        if now > approved_at + timedelta(days=70):
+            return jsonify({"message": "취소 기간 초과"}), 400
+
+    # 🔥 토스 없이 DB만 처리
+    payment.status = "CANCELLED"
+    order.status = "CANCELLED"
+
+    db.session.commit()
+
+    return jsonify({"message": "취소 완료"})

@@ -62,14 +62,16 @@
                     <div class="history_box">
                         <div class="left">
                             <strong>{{ item.order.product_name }}</strong>
-                            <p>주문번호: {{ item.order_code }}</p>
+                            <p>주문번호: {{ item.order.order_code.split('_')[-1] }}</p>
                             <p>수량: {{ item.order.quantity }}</p>
-                            <p>결제금액: {{ item.amount }}원</p>
+                            <p>결제금액: {{ "{:,}".format(item.amount) }}원</p>
                         </div>
 
                         <div class="right">
                             <span class="badge">결제완료</span>
-                            <button type="button">결제취소</button>
+                            <button type="button" onclick="cancelPayment('{{ item.order.id }}')">
+                                결제취소
+                            </button>
                         </div>
                     </div>
                     {% endfor %}
@@ -109,7 +111,7 @@
                     <div><span>이메일</span><p>{{ user.email }}</p></div>
                     <div><span>생년월일</span><p>{{ user.birth }}</p></div>
                     <div><span>전화번호</span><p>{{ user.phone }}</p></div>
-                    <div><span>가입일</span><p>{{ user.created_at }}</p></div>
+                    <div><span>가입일</span><p>{{ user.created_at.strftime('%Y-%m-%d %H:%M') }}</p></div>
 
                 </div>
             </div>

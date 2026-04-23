@@ -41,7 +41,9 @@ def signup():
 
             return redirect(url_for('auth.login'))
 
-    return render_template('auth/signup.html', form=form)
+    return render_template('auth/signup.html', 
+                           form=form,
+                           reset_mode=True)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -121,7 +123,11 @@ def reset_password(user_id):
         flash('비밀번호가 변경되었습니다.')
         return redirect(url_for('auth.login'))
 
-    return render_template('auth/login.html', reset_mode=True)
+    form = UserLoginForm()
+    
+    return render_template('auth/login.html', 
+                           form=form,
+                           reset_mode=True)
 
 
 #라우팅 함수보다 먼저 실행
