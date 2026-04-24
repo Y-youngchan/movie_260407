@@ -438,7 +438,7 @@ def cancel_reservation(schedule_id):
     reservations = Reservation.query.filter_by(
         user_id=user_id,
         schedule_id=schedule_id,
-        status='RESERVED'   # ⭐ 이것도 추가
+        status='RESERVED'   
     ).all()
 
     for r in reservations:

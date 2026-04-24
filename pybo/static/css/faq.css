@@ -139,7 +139,7 @@
 }
 
 .faq-row:hover {
-    background: #f9f9f9;
+    background: #ffffff;
 }
 
 /* 답변 row */
@@ -148,11 +148,14 @@
     background: #fafafa;
 }
 
+
+
 .faq-answer-row td {
     padding: 20px;
     font-size: 13px;
     color: #555;
     line-height: 1.6;
+    background-color: lightyellow;
 }
 
 

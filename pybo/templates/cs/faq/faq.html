@@ -10,24 +10,25 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="header">
-    <div class="container">
-        <div class="menu">
-            <h3 id="sub_title">고객센터</h3>
-            <div class="service">
+        <div class="container">
+            <div class="menu">
+                <h3 id="sub_title">고객센터</h3>
+                <div class="service">
 
-                <ul>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url_for('cs.notice_list') }}">공지사항</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('cs.review_list') }}">1:1문의</a>
-                    </li>
-                </ul>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                               href="{{ url_for('cs.notice_list') }}">공지사항</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for('cs.review_list') }}">1:1문의</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -87,9 +88,9 @@
 
                         <!-- 질문 행 -->
                         <tr class="faq-row" onclick="toggleFAQ(this)">
-                            <td class="table-light category">{{ faq.kind }}</td>
+                            <td>{{ faq.kind }}</td>
 
-                            <td class="table-light">
+                            <td>
                                 {{ faq.question }}
                             </td>
 
