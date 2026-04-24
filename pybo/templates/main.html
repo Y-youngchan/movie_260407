@@ -65,9 +65,9 @@
             <div class="swiper mainSwiper">
                 <div class="swiper-wrapper">
                     {% for img in main_images %}
-                        <div class="swiper-slide">
-                            <img src="{{ img.img_url }}" alt="메인">
-                        </div>
+                    <div class="swiper-slide">
+                        <img src="{{ img.img_url }}" alt="메인">
+                    </div>
                     {% endfor %}
                 </div>
                 <div class="swiper-button-next"></div>
@@ -148,12 +148,10 @@
                 <a href="{{ url_for('store.store_main') }}"><img src="{{ icon_3.img_url }}" alt="스토어">스토어</a>
             </div>
             <div class="noticeicon">
-                <a href="{{ url_for('cs.notice_list') }}"><img src="{{ icon_4.img_url }}"
-                        alt="공지사항">공지사항</a>
+                <a href="{{ url_for('cs.notice_list') }}"><img src="{{ icon_4.img_url }}" alt="공지사항">공지사항</a>
             </div>
             <div class="movie">
-                <a href="{{ url_for('film.movie_list') }}"><img src="{{ icon_5.img_url }}"
-                        alt="현재상영">현재 상영작</a>
+                <a href="{{ url_for('film.movie_list') }}"><img src="{{ icon_5.img_url }}" alt="현재상영">현재 상영작</a>
             </div>
         </div>
 
@@ -161,7 +159,14 @@
         <div class="notice">
             <p>공지사항</p>
             <div class="noticetxt">
-                <a href="{{ url_for('cs.notice_list') }}">필름아티크 개인정보처리방침 개정 안내</a>
+                <!-- Swiper -->
+                <div class="swiper noticeSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><a href="{{ url_for('cs.notice_list') }}">필름아티크 개인정보처리방침 개정 안내</a></div>
+                        <div class="swiper-slide"><a href="{{ url_for('cs.notice_list') }}">강남스트리트점 2026년 12월 휴무일 안내</a></div>
+                        <div class="swiper-slide"><a href="{{ url_for('cs.notice_list') }}">가산디지털점 2026년 12월 휴무일 안내</a></div>
+                    </div>
+                </div>
                 <a href="{{ url_for('cs.notice_list') }}">더보기 ></a>
             </div>
         </div>
