@@ -497,6 +497,7 @@ main {
     display: flex;
 }
 .notice p{
+    margin-top: 3px;
     font-family: "Franklin Gothic Medium";
 }
 .notice p::after{
@@ -514,6 +515,29 @@ main {
 .noticetxt a:last-child{
     font-size: 12px;
 }
+.noticetxt .swiper {
+  width: 1068px;
+  height: 18px;
+  margin-top: 5px;
+}
+.noticetxt .swiper-slide {
+  text-align: left;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.noticetxt .swiper-slide a {
+  font-size: 15px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+/* .noticetxt .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+} */
 
 #banner_AD{
     width: 1207px;

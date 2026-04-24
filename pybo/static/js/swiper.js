@@ -19,3 +19,12 @@ var swiper = new Swiper(".posterSwiper", {
           prevEl: ".poster .swiper-button-prev",
         },
     });
+
+var swiper = new Swiper(".noticeSwiper", {
+    direction: "vertical",
+    slidesPerView: "auto",
+    loop: true,
+    autoplay: {
+        delay: 2000,
+    },
+  });
