@@ -126,6 +126,8 @@
 
                         <div class="answer">
 
+                            
+
 
                             {% if g.user and g.user.admin_role in ['super', 'manager'] %}
 
@@ -140,6 +142,19 @@
                                     </button>
 
                                 </form>
+
+                            
+
+                            <form method="post"
+                                action="{{ url_for('cs.review_delete', review_id=review.id) }}"
+                                onsubmit="return confirm('정말 삭제하시겠습니까?');">
+
+                                <button type="submit" class="btn btn-danger mt-2 mb-5">
+                                    삭제
+                                </button>
+
+                            </form>
+
 
 
                             {% else %}

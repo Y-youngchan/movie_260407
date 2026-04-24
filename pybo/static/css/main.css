@@ -17,6 +17,7 @@ header #logo {
     width: 1207px;
     position: relative;
     top: 20px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: center;
     border-bottom: 1px solid #888;
