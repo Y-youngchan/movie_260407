@@ -31,15 +31,15 @@
 
 ### 개발 환경
 <div align=left> 
-  <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
-  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
-  <img src="https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white">
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+    <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
+    <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+    <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+    <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+    <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+    <img src="https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white">
+    <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+    <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+    <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 </div>
 <br><br>
 
@@ -130,4 +130,5 @@
 - 유영찬 : 요즘 AI 기술의 발전으로 인해 정말 많은 정보와 다양한 도움을 받았다. 또, 아이디어 정리, 코드에 발생한 오류 문제 해결 과정에서 AI를 활용하니 시간 효율이 높아졌고, 이전보다 더 빠르고 원하는 기획에 맞게 프로젝트를 진행할 수 있었다.
 <br>
 
-- 조예연 : 아 재밌다
+- 조예연 : 프로젝트를 끝내면서 데이터베이스가 얼마나 중요한지, 그리고 내가 얼마나 부족한지 깨달았다. ChatGPT에 너무 의존한 것 같아 나중에 꼭 내 자신을 점검해야겠다는 필요성을 느꼈다. 마지막으로, 내가 직접 데이터베이스를 만든다는 점이 매우 신기하게 느껴졌다.
+
