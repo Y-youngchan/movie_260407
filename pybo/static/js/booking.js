@@ -99,7 +99,7 @@ document.addEventListener("click", (e) => {
 
   selected.date = date.dataset.date;
 
-  loadSchedules(); // 🔥 핵심
+  loadSchedules();
 });
 
 

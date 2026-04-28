@@ -1,44 +1,43 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    공지사항 - 필름아티크
+공지사항 - 필름아티크
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/question_list.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="header">
-        <div class="container">
-            <div class="menu">
-                <h3 id="sub_title">고객센터</h3>
-                <div class="service">
+<div class="header">
+    <div class="container">
+        <div class="menu">
+            <h3 id="sub_title">고객센터</h3>
+            <div class="service">
 
-                    <ul>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="{{ url_for('cs.notice_list') }}">공지사항</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for('cs.review_list') }}">1:1문의</a>
-                        </li>
-                    </ul>
-                </div>
+                <ul>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('cs.notice_list') }}">공지사항</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('cs.review_list') }}">1:1문의</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="section6">
-        <div class="container">
+<div class="section6">
+    <div class="container">
 
-            <!-- 문의 정보 -->
-            <table class="table">
-                <thead>
+        <!-- 문의 정보 -->
+        <table class="table">
+            <thead>
                 <tr class="table-secondary">
                     <th>문의유형</th>
                     <th>영화관</th>
@@ -46,8 +45,8 @@
                     <th>회원</th>
                     <th>답변상태</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <tr>
                     <td class="table-light">{{ review.cs_place }}</td>
                     <td class="table-light">{{ review.cs_ask }}</td>
@@ -55,126 +54,121 @@
                     <td class="table-light">{{ review.user.username }}</td>
                     <td class="table-light">
                         {% if review.answer_review %}
-                            답변완료
+                        답변완료
                         {% else %}
-                            답변대기
+                        답변대기
                         {% endif %}
                     </td>
                 </tr>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
 
-            <div class="outside">
+        <div class="outside">
 
-                <div class="answer1">
+            <div class="answer1">
 
-                    <!-- 이미지 -->
-                    {% if review.image_path %}
-                        {% for path in review.image_path.split(',') %}
-                            <div class="my-3">
-                                <img src="{{ url_for('static', filename=path) }}" style="max-width: 30%;"
-                                     class="img-thumbnail">
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                <!-- 이미지 -->
+                {% if review.image_path %}
+                {% for path in review.image_path.split(',') %}
+                <div class="my-3">
+                    <img src="{{ url_for('static', filename=path) }}" style="max-width: 30%;" class="img-thumbnail">
+                </div>
+                {% endfor %}
+                {% endif %}
 
-                    <p style="white-space: pre-wrap;">
-                        {{ review.content }}
-                    </p>
+                <p style="white-space: pre-wrap;">
+                    {{ review.content }}
+                </p>
 
-                    {% if g.user and g.user.id == review.user_id %}
+                {% if g.user and g.user.id == review.user_id %}
 
-                        <!-- 수정 입력 폼 (위) -->
-                        <form method="post" action="{{ url_for('cs.review_modify', review_id=review.id) }}"
-                              class="mb-3">
+                <!-- 수정 입력 폼 (위) -->
+                <form method="post" action="{{ url_for('cs.review_modify', review_id=review.id) }}" class="mb-3">
 
-                            <input type="text" name="subject" value="{{ review.subject }}" class="form-control mb-2">
+                    <input type="text" name="subject" value="{{ review.subject }}" class="form-control mb-2">
 
-                            <textarea name="content" rows="8"
-                                      class="form-control w-100 mb-2">{{ review.content }}</textarea>
+                    <textarea name="content" rows="8" class="form-control w-100 mb-2">{{ review.content }}</textarea>
 
-                            <!-- 버튼 줄 (핵심) -->
-                            <div class="d-flex gap-2 mt-2">
-                                <button type="submit" class="btn btn-primary">
-                                    수정
-                                </button>
-                        </form>
-                        </div>
+                    <!-- 버튼 줄 (핵심) -->
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="submit" class="btn btn-primary">
+                            수정
+                        </button>
+                </form>
 
-                        <form method="post" action="{{ url_for('cs.review_delete', review_id=review.id) }}"
-                              onsubmit="return confirm('정말 삭제하시겠습니까?');" class="mb-0">
+                <form method="post" action="{{ url_for('cs.review_delete', review_id=review.id) }}"
+                    onsubmit="return confirm('정말 삭제하시겠습니까?');" class="mb-0">
 
-                            <button type="submit" class="btn btn-danger">
-                                삭제
-                            </button>
-                        </form>
-                        </div>
+                    <button type="submit" class="btn btn-danger">
+                        삭제
+                    </button>
+                </form>
+            </div>
 
-                    {% endif %}
+            {% endif %}
 
-                <!-- 관리자 답변 -->
-                <div class="admin_answer">
-                    <p>(관리자 답변)</p>
+            <!-- 관리자 답변 -->
+            <div class="admin_answer">
+                <p>(관리자 답변)</p>
 
-                    <div class="answer">
+                <div class="answer">
 
 
-                        {% if g.user and g.user.admin_role in ['super', 'manager'] %}
+                    {% if g.user and g.user.admin_role in ['super', 'manager'] %}
 
-                            <form method="post" action="{{ url_for('cs.review_answer', review_id=review.id) }}">
+                    <form method="post" action="{{ url_for('cs.review_answer', review_id=review.id) }}">
 
-                        <textarea name="answer_review" rows="6" style="width:100%;"
-                                  placeholder="답변을 입력하세요.">{% if review.answer_review %}
+                        <textarea name="answer_review" rows="6" style="width:100%;" placeholder="답변을 입력하세요.">{% if review.answer_review %}
                             {{ review.answer_review }}{% endif %}</textarea>
 
-                                <div class="d-flex gap-2 mt-2">
-                                    <button type="submit" class="btn btn-primary">
-                                        답변 저장
-                                    </button>
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="submit" class="btn btn-primary">
+                                답변 저장
+                            </button>
 
-                            </form>
-
-
-
-                            <form method="post" action="{{ url_for('cs.review_delete', review_id=review.id) }}"
-                                  onsubmit="return confirm('정말 삭제하시겠습니까?');">
-
-                                <button type="submit" class="btn btn-danger mt-2 mb-5">
-                                    삭제
-                                </button>
+                    </form>
 
 
-                            </form>
-                            </div>
+
+                    <form method="post" action="{{ url_for('cs.review_delete', review_id=review.id) }}"
+                        onsubmit="return confirm('정말 삭제하시겠습니까?');">
+
+                        <button type="submit" class="btn btn-danger mt-0.5 mb-5">
+                            삭제
+                        </button>
 
 
-                        {% else %}
-
-                            {% if review.answer_review %}
-                                <p style="white-space: pre-wrap; margin:0; padding:0; text-align: start; margin-left:-100px;">
-                                    {{ review.answer_review }}
-                                </p>
-                            {% else %}
-                                <p>아직 등록된 답변이 없습니다.</p>
-                            {% endif %}
-
-                        {% endif %}
+                    </form>
                 </div>
+
+
+                {% else %}
+
+                {% if review.answer_review %}
+                <p style="white-space: pre-wrap; margin:0; padding:0; text-align: start; margin-left:-100px;">
+                    {{ review.answer_review }}
+                </p>
+                {% else %}
+                <p>아직 등록된 답변이 없습니다.</p>
+                {% endif %}
+
+                {% endif %}
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="d-grid gap-2 col-1 mx-auto">
-        <button class="inventory" type="button">
-            <a class="nav-link active" href="{{ url_for('cs.review_list') }}">
-                목록
-            </a>
-        </button>
-    </div>
+<div class="d-grid gap-2 col-1 mx-auto">
+    <button class="inventory" type="button">
+        <a class="nav-link active" href="{{ url_for('cs.review_list') }}">
+            목록
+        </a>
+    </button>
+</div>
 
-    </div>
-    </div>
+</div>
+</div>
 
 
 

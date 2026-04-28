@@ -131,6 +131,22 @@
     align-content: center;
     color: #666;
     font-size: 15px;
+    cursor: pointer;
+}
+
+.page-link {
+    color: #dc3545;
+}
+
+.page-link:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.page-item.active .page-link {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
 }
 
 /* =========================

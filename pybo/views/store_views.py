@@ -134,7 +134,7 @@ def cancel_payment(order_id):
         if now > approved_at + timedelta(days=70):
             return jsonify({"message": "취소 기간 초과"}), 400
 
-    # 🔥 토스 없이 DB만 처리
+    # 토스 없이 DB만 처리
     payment.status = "CANCELLED"
     order.status = "CANCELLED"
 

@@ -139,13 +139,6 @@
     font-weight: 500;
 }
 
-/* 날짜 */
-.section6 .admin_answer .answer small {
-    display: block;
-    margin-top: 18px;
-    font-size: 13px;
-    color: #888;
-}
 
 /* 답변 textarea */
 .section6 .admin_answer textarea {
@@ -164,8 +157,9 @@
 
 /* 답변 저장 버튼 */
 .section6 .admin_answer button {
-    margin-top: 15px;
-    padding: 10px 22px;
+    width: 102.3px;
+    height: 38px;
+    /* padding: 10px 22px; */
     font-size: 15px;
     border: none;
     border-radius: 6px;
