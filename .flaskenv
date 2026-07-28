@@ -1,3 +1,3 @@
-FLASK_APP=pybo
-FLASK_ENV=development
-FLASK_DEBUG=True
+FLASK_APP=pybo:create_app
+FLASK_ENV=production
+FLASK_DEBUG=False
