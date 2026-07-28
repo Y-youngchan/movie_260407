@@ -22,7 +22,7 @@ def mypage():
     if not user_id:
         return redirect(url_for('auth.login'))
 
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
 
     from collections import defaultdict
 
