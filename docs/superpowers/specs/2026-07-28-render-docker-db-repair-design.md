@@ -1,89 +1,103 @@
-# Render Docker DB Repair Design
+# Render Docker DB 오류 수정 설계서
 
-## Goal
+## 목표
 
-Repair the Render `/film/mypage` failure while preserving the original test
-data and publish the corrected application as:
+기존 테스트 데이터를 보존하면서 Render의 `/film/mypage` 오류를 해결하고,
+수정된 애플리케이션을 다음 Docker 이미지로 배포한다.
 
 ```text
 docker.io/dudcks9572/filmatique:2.0
 ```
 
-## Confirmed cause
+## 확인된 원인
 
-The application model and queries require `reservation.status`, but the SQLite
-database originally packaged in image `1.0` did not contain that column. The
-repaired database supplied for this release is valid and contains:
+애플리케이션은 `reservation.status` 컬럼을 사용하지만, 기존 `1.0` 이미지에
+포함된 SQLite DB에는 해당 컬럼이 없었다.
 
-- the `reservation.status` column with a `RESERVED` server default;
-- two reservation rows, both with `RESERVED`;
-- eight users, twenty movies, and 6,300 schedules;
-- no broken reservation foreign-key references.
+이번에 전달받은 수정된 DB는 다음과 같이 정상임을 확인했다.
 
-The current deployment also starts Flask's development server and includes a
-`.flaskenv` file that enables the interactive debugger.
+- `reservation.status` 컬럼과 `RESERVED` 기본값이 존재한다.
+- 예약 데이터 2건 모두 상태가 `RESERVED`이다.
+- 회원 8명, 영화 20개, 상영 일정 6,300개가 들어 있다.
+- 예약과 회원·좌석·상영 일정 사이에 끊어진 연결이 없다.
+- SQLite 무결성 검사 결과가 정상이다.
 
-## Release design
+현재 배포 설정에는 Flask 개발 서버를 사용하고 디버그 모드를 활성화하는
+`.flaskenv` 파일도 포함되어 있다.
 
-### Database
+## 수정 설계
 
-Use the verified repaired `pybo.db` as the database packaged in image `2.0`.
-This preserves the original test data and removes the immediate schema mismatch.
+### 데이터베이스
 
-Add a tracked Alembic/Flask-Migrate baseline for the current schema and stop
-ignoring the `migrations/` directory. Stamp the repaired database at the
-baseline during image construction, then run `flask db upgrade` before each
-application start. Future schema changes must be committed as migrations.
+검증한 `pybo.db`를 `2.0` 이미지에 포함한다. 이를 통해 기존 테스트 데이터를
+유지하고 `reservation.status` 오류를 해결한다.
 
-The SQLite database itself remains excluded from Git. It is supplied locally
-as a Docker build input and copied into the image. No database credentials or
-user data are committed to GitHub.
+앞으로 DB 구조 변경이 누락되지 않도록 Flask-Migrate 마이그레이션 폴더를
+Git에서 관리한다. 현재 DB 구조를 기준으로 최초 마이그레이션을 만들고, 이미지
+생성 중 수정된 DB에 현재 버전을 기록한다. 컨테이너가 시작될 때는 항상
+`flask db upgrade`를 먼저 실행한다.
 
-### Production runtime
+SQLite DB 파일 자체는 GitHub에 올리지 않는다. 로컬에서 Docker 이미지를 만들
+때만 DB 파일을 넣는다. 회원 데이터나 DB 파일이 Git 저장소에 커밋되지 않도록
+한다.
 
-Replace `flask run` with Gunicorn. Disable Flask debug mode explicitly and do
-not copy local development secrets or Git metadata into the image. The
-container listens on Render's `PORT`, defaulting to port 5000 for local tests.
+### 운영 서버 설정
 
-The startup sequence is:
+개발용 `flask run`을 운영용 Gunicorn으로 변경한다. Flask 디버그 모드는
+명확하게 끄고, 개발용 비밀 정보와 Git 내부 파일이 Docker 이미지에 들어가지
+않도록 제외한다.
+
+Render에서 제공하는 `PORT` 값을 사용하며, 로컬 테스트에서는 기본값으로
+5000번 포트를 사용한다.
+
+컨테이너 시작 순서는 다음과 같다.
 
 ```text
-flask db upgrade
-→ gunicorn starts pybo:create_app()
+DB 마이그레이션 실행
+→ 성공하면 Gunicorn으로 애플리케이션 실행
 ```
 
-If a migration fails, Gunicorn must not start. This prevents the application
-from serving requests against an incompatible schema.
+마이그레이션이 실패하면 애플리케이션을 시작하지 않는다. 잘못된 DB 구조로
+서비스가 실행되는 일을 방지하기 위해서다.
 
-### Deployment
+### 배포 순서
 
-Build and test `dudcks9572/filmatique:2.0` locally before changing Render.
-Verify login, `/film/mypage`, reservation data, and reservation cancellation.
-Only after those checks pass should image `2.0` be pushed to Docker Hub and the
-Render image reference changed from `1.0` to `2.0`.
+Render 설정을 변경하기 전에 로컬에서 `dudcks9572/filmatique:2.0` 이미지를
+만들고 테스트한다.
 
-The current Render service is not deleted. Changing the image reference gives
-a clear rollback path to `1.0`, although `1.0` still contains the known
-`reservation.status` defect.
+확인할 기능은 다음과 같다.
 
-## Tests and acceptance criteria
+- 회원 로그인
+- 마이페이지 접속
+- 기존 예약 표시
+- 예약 취소
 
-Automated checks must verify:
+모든 확인이 끝난 뒤에만 Docker Hub에 `2.0` 이미지를 올리고 Render의 이미지
+주소를 `1.0`에서 `2.0`으로 변경한다.
 
-- the packaged SQLite database passes `PRAGMA integrity_check`;
-- `reservation.status` exists and all existing reservations have a status;
-- migration upgrade creates the current schema in a new empty SQLite database;
-- the Flask app starts with debug mode disabled;
-- an authenticated request to `/film/mypage` returns HTTP 200;
-- the container starts with Gunicorn and responds on the configured port.
+현재 Render 서비스를 삭제하지 않는다. 문제가 생기면 기존 이미지로 되돌릴 수
+있도록 기존 `1.0` 이미지도 유지한다. 단, `1.0`에는 마이페이지 오류가 있다는
+점에 주의한다.
 
-Release acceptance requires all automated checks to pass and a local container
-smoke test to confirm the login and my-page flow.
+## 테스트 완료 기준
 
-## Known limitation
+다음 사항을 자동으로 검사한다.
 
-Render's free instance has no Persistent Disk. Image `2.0` preserves the
-original test data, but registrations, reservations, cancellations, and other
-changes made after deployment can be lost on a restart or redeploy. Moving the
-application to Render PostgreSQL is a separate follow-up project and is the
-recommended path before storing real user data.
+- SQLite 무결성 검사가 성공한다.
+- `reservation.status` 컬럼이 존재한다.
+- 기존 예약에 상태 값이 모두 들어 있다.
+- 빈 SQLite DB에 마이그레이션을 적용하면 현재 DB 구조가 생성된다.
+- Flask 디버그 모드가 꺼져 있다.
+- 로그인한 사용자가 마이페이지에 접속하면 HTTP 200이 반환된다.
+- 컨테이너가 Gunicorn으로 시작하고 지정된 포트에서 응답한다.
+
+자동 검사와 로컬 컨테이너 확인을 모두 통과해야 `2.0` 이미지를 배포한다.
+
+## 현재 남는 제한사항
+
+Render 무료 요금제에는 영구 디스크가 없다. `2.0` 이미지에는 기존 테스트
+데이터가 보존되지만, 배포 후 새로 가입하거나 예매한 정보는 Render가 재시작
+또는 재배포될 때 사라질 수 있다.
+
+실제 사용자 데이터를 저장하기 전에는 Render PostgreSQL로 전환하는 것이
+필요하다. PostgreSQL 전환은 이번 오류 수정과 분리하여 다음 작업으로 진행한다.
