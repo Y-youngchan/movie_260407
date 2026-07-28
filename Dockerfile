@@ -1,30 +1,26 @@
-# 베이스 이미지 선택
 FROM python:3.13-slim
 
-# [수정] 시간대 설정 (KST)
-# tzdata를 설치하고 환경 변수를 설정합니다.
-ENV TZ=Asia/Seoul
-RUN apt-get update && apt-get install -y tzdata && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    apt-get clean
+ENV TZ=Asia/Seoul \
+    FLASK_APP=pybo:create_app \
+    FLASK_ENV=production \
+    FLASK_DEBUG=0 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# 작업 디렉토리 생성 및 이동
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tzdata \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# 종속성 설치
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 전체 프로젝트 복사
 COPY . .
+RUN flask db stamp head --purge
 
-# Flask 환경변수 설정
-ENV FLASK_APP=pybo:create_app
-ENV FLASK_ENV=production
-
-# 포트 오픈
 EXPOSE 5000
 
-# 앱 실행
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["sh", "-c", "flask db upgrade && exec gunicorn --bind 0.0.0.0:${PORT:-5000} 'pybo:create_app()'"]

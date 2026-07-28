@@ -1,0 +1,9 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+.flaskenv
+test keys.txt
+docs
+tests
